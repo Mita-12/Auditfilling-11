@@ -10,7 +10,7 @@ function Footer() {
                     {/* Brand Section */}
 
                     <div className="lg:col-span-1">
-                        <h2 className="text-2xl font-bold mb-4 font-serif">AuditFiling</h2>
+                        <h2 className="text-2xl font-medium font-serif tracking-wide no-underline mb-4 ">AuditFiling</h2>
                         <p className="text-gray-400 mb-4">
                             Find the code you want at the best price
                         </p>
@@ -32,7 +32,7 @@ function Footer() {
 
                     {/* Quick Links Section */}
                     <div>
-                        <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+                        <h3 className="text-lg font-medium font-serif tracking-wide no-underline  mb-4">Quick Links</h3>
                         <ul className="space-y-2">
                             <li>
                                 <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -66,7 +66,7 @@ function Footer() {
 
 
                     <div>
-                        <h3 className="text-lg font-semibold mb-4">Contact</h3>
+                        <h3 className="text-lg font-medium font-serif tracking-wide no-underline mb-4">Contact</h3>
                         <div className="space-y-2">
                             {/* Email Row */}
                             <div className="flex items-center gap-2 text-gray-400">
@@ -92,7 +92,7 @@ function Footer() {
 
                     {/* Newsletter Section */}
                     <div>
-                        <h3 className="text-lg font-semibold mb-4">Newsletter</h3>
+                        <h3 className="text-lg font-medium font-serif tracking-wide no-underline mb-4">Newsletter</h3>
                         <p className="text-gray-400 mb-4">
                             Subscribe to get updates on new products and offers
                         </p>

@@ -1,4 +1,14 @@
 import React, { useState } from "react";
+import {
+  FaBalanceScale,
+  FaFileInvoiceDollar,
+  FaRegBuilding,
+  FaTrademark,
+  FaUniversity,
+  FaGavel,
+  FaRocket,
+} from "react-icons/fa";
+import { FaGem, FaStopwatch, FaHandPointer, FaHeart } from "react-icons/fa";
 
 function ServicesSection() {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -6,299 +16,241 @@ function ServicesSection() {
   const services = [
     {
       title: "Income Tax",
-      description: "Get complete income tax details, itr refund status, pan card info, and updates from Income Tax Department on the official income tax portal in...",
-      icon: (
-        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-        </svg>
-      ),
-      color: "blue"
+      description:
+        "Get complete income tax details, ITR refund, PAN card info, and updates from the Income Tax Department.",
+      icon: <FaFileInvoiceDollar className="text-blue-600 text-4xl" />,
     },
     {
       title: "GST",
-      description: "Easily manage GST on AuditFiling: Gst portal access, Gst login, Gst registration, check GST registration status, documents, fees, calculator,...",
-      icon: (
-        <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-        </svg>
-      ),
-      color: "green"
+      description:
+        "Easily manage GST on AuditFiling: GST portal access, login, registration, status check, calculator, and more.",
+      icon: <FaBalanceScale className="text-green-600 text-4xl" />,
     },
     {
       title: "Startup Registrations",
-      description: "Gst complete support for Startup Registration in India, including DPIIT Startup Registration (DIPP) under Startup India, MSME/Udyam...",
-      icon: (
-        <svg className="w-12 h-12 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-        </svg>
-      ),
-      color: "purple"
+      description:
+        "Complete support for Startup India, DPIIT Startup Registration, MSME/Udyam, and related services.",
+      icon: <FaRocket className="text-purple-600 text-4xl" />,
     },
     {
-      title: "Company(MCA)",
-      description: "AuditFiling offers expert services in ESI return filing, PF & ESI registration, ITR filing, and company compliance in India. From change in director forms...",
-      icon: (
-        <svg className="w-12 h-12 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-8 0H5m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-        </svg>
-      ),
-      color: "indigo"
+      title: "Company (MCA)",
+      description:
+        "Expert services in ESI return filing, PF & ESI registration, ITR filing, and company compliance in India.",
+      icon: <FaRegBuilding className="text-indigo-600 text-4xl" />,
     },
     {
-      title: "Trade Mark",
-      description: "Need protection for your brand? AuditFiling manages Trademark Registration in India, Responses to Trademark Objections, Trademark...",
-      icon: (
-        <svg className="w-12 h-12 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-        </svg>
-      ),
-      color: "yellow"
+      title: "Trademark",
+      description:
+        "We manage Trademark Registration, responses to objections, and brand protection services in India.",
+      icon: <FaTrademark className="text-yellow-600 text-4xl" />,
     },
     {
       title: "Bank Valuation",
-      description: "From bank valuations to business valuation services, AuditFiling provides reliable financial services, wealth management services,...",
-      icon: (
-        <svg className="w-12 h-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-      ),
-      color: "red"
+      description:
+        "Reliable bank and business valuation services, wealth management, and financial advisory solutions.",
+      icon: <FaUniversity className="text-red-600 text-4xl" />,
     },
     {
       title: "Legal",
-      description: "With AuditFiling, legal work is simplified through quick Legal Notice Drafting, Reliable Online Legal Advice, and safe Rent Agreement Online...",
-      icon: (
-        <svg className="w-12 h-12 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-        </svg>
-      ),
-      color: "teal"
-    }
+      description:
+        "Simplify legal work with online Legal Notices, Rent Agreements, and expert Legal Advice.",
+      icon: <FaGavel className="text-teal-600 text-4xl" />,
+    },
+  ];
+   const whyChooseUsFeatures = [
+    {
+      icon: <FaGem className="text-white text-xl" />,
+      title: "Quality Service",
+      description: "We provide top-notch service for all your business needs.",
+      bg: "bg-purple-500",
+    },
+    {
+      icon: <FaStopwatch className="text-white text-xl" />,
+      title: "Fast Delivery",
+      description: "Quick and reliable services that save your time.",
+      bg: "bg-blue-500",
+    },
+    {
+      icon: <FaHandPointer className="text-white text-xl" />,
+      title: "User Friendly",
+      description: "We focus on simplicity and usability in every project.",
+      bg: "bg-cyan-500",
+    },
+    {
+      icon: <FaHeart className="text-white text-xl" />,
+      title: "Customer Support",
+      description: "Always here to help and support our customers.",
+      bg: "bg-gray-500",
+    },
   ];
 
-  const features = [
+  const expertiseFeatures = [
     {
-      title: "Confidential & Safe",
-      description: "Enjoy our services that ensure complete safety of documents and the confidentiality of client's data.",
-      icon: (
-        <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-        </svg>
-      ),
-      color: "blue"
+      icon: <FaGem className="text-white text-xl" />,
+      title: "Web Development",
+      description: "Custom websites and web apps built with modern tech.",
+      bg: "bg-purple-500",
     },
     {
-      title: "No Hidden Fee",
-      description: "We maintain transparency and do not add any kind of hidden charges without the client's knowledge.",
-      icon: (
-        <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-        </svg>
-      ),
-      color: "green"
+      icon: <FaStopwatch className="text-white text-xl" />,
+      title: "App Development",
+      description: "Mobile apps optimized for performance and usability.",
+      bg: "bg-blue-500",
     },
     {
-      title: "Guaranteed Satisfaction",
-      description: "The dedicated services from our well experienced experts, guarantee our client's satisfaction.",
-      icon: (
-        <svg className="w-12 h-12 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905a3.61 3.61 0 01-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
-        </svg>
-      ),
-      color: "purple"
+      icon: <FaHandPointer className="text-white text-xl" />,
+      title: "UI/UX Design",
+      description: "Designs that are both attractive and user-friendly.",
+      bg: "bg-cyan-500",
     },
     {
-      title: "Expert CA/CS Assistance",
-      description: "Our in house CA and CS experts provide professional assistance/guidance service related to various legal issues.",
-      icon: (
-        <svg className="w-12 h-12 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-        </svg>
-      ),
-      color: "indigo"
-    }
+      icon: <FaHeart className="text-white text-xl" />,
+      title: "Digital Marketing",
+      description: "Strategies that help your business grow online.",
+      bg: "bg-gray-500",
+    },
   ];
 
-  const getColorClasses = (color, isHovered) => {
-    const colorMap = {
-      blue: {
-        bg: isHovered ? "bg-blue-100" : "bg-blue-50",
-        border: "border-blue-200",
-        hover: "hover:bg-blue-100",
-        text: "text-blue-600",
-        button: "text-blue-600 hover:text-blue-800",
-        accent: "from-blue-500 to-blue-600"
-      },
-      green: {
-        bg: isHovered ? "bg-green-100" : "bg-green-50",
-        border: "border-green-200",
-        hover: "hover:bg-green-100",
-        text: "text-green-600",
-        button: "text-green-600 hover:text-green-800",
-        accent: "from-green-500 to-green-600"
-      },
-      purple: {
-        bg: isHovered ? "bg-purple-100" : "bg-purple-50",
-        border: "border-purple-200",
-        hover: "hover:bg-purple-100",
-        text: "text-purple-600",
-        button: "text-purple-600 hover:text-purple-800",
-        accent: "from-purple-500 to-purple-600"
-      },
-      indigo: {
-        bg: isHovered ? "bg-indigo-100" : "bg-indigo-50",
-        border: "border-indigo-200",
-        hover: "hover:bg-indigo-100",
-        text: "text-indigo-600",
-        button: "text-indigo-600 hover:text-indigo-800",
-        accent: "from-indigo-500 to-indigo-600"
-      },
-      yellow: {
-        bg: isHovered ? "bg-yellow-100" : "bg-yellow-50",
-        border: "border-yellow-200",
-        hover: "hover:bg-yellow-100",
-        text: "text-yellow-600",
-        button: "text-yellow-600 hover:text-yellow-800",
-        accent: "from-yellow-500 to-yellow-600"
-      },
-      red: {
-        bg: isHovered ? "bg-red-100" : "bg-red-50",
-        border: "border-red-200",
-        hover: "hover:bg-red-100",
-        text: "text-red-600",
-        button: "text-red-600 hover:text-red-800",
-        accent: "from-red-500 to-red-600"
-      },
-      teal: {
-        bg: isHovered ? "bg-teal-100" : "bg-teal-50",
-        border: "border-teal-200",
-        hover: "hover:bg-teal-100",
-        text: "text-teal-600",
-        button: "text-teal-600 hover:text-teal-800",
-        accent: "from-teal-500 to-teal-600"
-      }
-    };
-    return colorMap[color] || {
-      bg: isHovered ? "bg-gray-100" : "bg-gray-50",
-      border: "border-gray-200",
-      hover: "hover:bg-gray-100",
-      text: "text-gray-600",
-      button: "text-gray-600 hover:text-gray-800",
-      accent: "from-gray-500 to-gray-600"
-    };
-  };
+  const renderColumn = (titleLines, features, circleBg) => (
+    <div className="flex flex-col md:flex-row items-center gap-8">
+      {/* Circle */}
+      <div className="relative flex-shrink-0">
+        <div className={`w-48 h-48 rounded-full ${circleBg} flex flex-col justify-center items-center text-center shadow-lg`}>
+          {titleLines.map((line, idx) => (
+            <h3 key={idx} className="text-white text-lg font-bold">{line}</h3>
+          ))}
+        </div>
+      </div>
+
+      {/* Middle Faded Circle */}
+      <div className="absolute md:hidden left-1/2 transform -translate-x-1/2 w-80 h-80 bg-gray-200 rounded-full opacity-50 -z-10"></div>
+
+      {/* Features */}
+      <div className="flex flex-col gap-6">
+        {features.map((feature, index) => (
+          <div key={index} className="flex items-center gap-5">
+            <div className={`w-12 h-12 rounded-full ${feature.bg} flex items-center justify-center shadow-md`}>
+              {feature.icon}
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-900">{feature.title}</h4>
+              <p className="text-gray-600 text-sm max-w-xs">{feature.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+
+
 
   return (
     <div className="bg-gray-50">
-      {/* Services Section */}
+      {/* Services */}
       <section className="py-16 bg-gradient-to-b from-white to-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-6">
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4 relative inline-block">
               Services We Provide
               <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mt-6">
-              Comprehensive legal and financial services to meet all your business needs
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+              Comprehensive legal and financial services to meet all your
+              business needs
             </p>
           </div>
 
-          {/* Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {services.map((service, index) => {
-              const colorClasses = getColorClasses(service.color, hoveredCard === index);
-              return (
-                <div
-                  key={index}
-                  className={`rounded-xl border-2 p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${colorClasses.bg} ${colorClasses.border} relative overflow-hidden group`}
-                  onMouseEnter={() => setHoveredCard(index)}
-                  onMouseLeave={() => setHoveredCard(null)}
-                >
-                  {/* Hover effect element */}
-                  <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${colorClasses.accent} transition-all duration-300 ${hoveredCard === index ? 'opacity-100' : 'opacity-0'}`}></div>
-
-                  {/* Icon with animation */}
-                  <div className="mb-4 transform transition-transform duration-300 group-hover:scale-110 inline-block">
-                    {service.icon}
-                  </div>
-
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-gray-800 transition-colors">{service.title}</h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed group-hover:text-gray-700 transition-colors">{service.description}</p>
-                  <button className={`font-medium flex items-center transition-all duration-300 ${colorClasses.button} group-hover:underline`}>
-                    Learn more
-                    <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                  </button>
+          {/* Grid for all except last 3 */}
+          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {services.slice(0, services.length - 3).map((service, index) => (
+              <div
+                key={index}
+                className="bg-blue-50 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2"
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <div className="flex items-center gap-3 mb-4 ">
+                  <div className=" rounded-full bg-gray-100">{service.icon}</div>
+                  <h3 className="font-semibold text-gray-900 text-lg">
+                    {service.title}
+                  </h3>
                 </div>
-              );
-            })}
+                <p className="text-gray-900 text-sm leading-relaxed mb-4">
+                  {service.description}
+                </p>
+                <button className=" hover:text-blue-800 font-medium flex items-center gap-2 transition-all duration-300 ">
+                  Learn more
+                  <svg
+                    className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            ))}
           </div>
 
-          {/* CTA Section */}
-          <div className="text-center mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-inner">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6">Need help with your legal and financial requirements?</h3>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
-              Get Free Consultation
-            </button>
+          {/* Last 3 Centered */}
+          <div className="flex flex-wrap justify-center gap-8 mt-12">
+            {services.slice(-3).map((service, index) => (
+              <div
+                key={index}
+                className="bg-blue-50 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 w-full sm:w-80"
+                onMouseEnter={() => setHoveredCard(index)}
+
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className=" rounded-full bg-gray-100">{service.icon}</div>
+                  <h3 className="font-semibold text-gray-900 text-lg">
+                    {service.title}
+                  </h3>
+                </div>
+                <p className="text-gray-900 text-sm leading-relaxed mb-4">
+                  {service.description}
+                </p>
+                <button className=" hover:text-blue-800 font-medium flex items-center gap-2 transition-all duration-300 hover:underline">
+                  Learn more
+                  <svg
+                    className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </section>
+      {/* WHY CHOOSEUS */}
+     <section className="py-16 bg-gray-50">
+      <div className="container mx-auto grid md:grid-cols-2 gap-16">
+        {/* Left Column: Why Choose Us */}
+        {renderColumn(["WHY", "CHOOSE", "US"], whyChooseUsFeatures, "bg-gradient-to-br from-purple-500 to-indigo-500")}
 
-      {/* Why Choose Auditfiling Section */}
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 relative inline-block">
-              Why Choose Auditfiling
-              <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mt-6">
-              We provide exceptional services with a focus on security, transparency, and customer satisfaction
-            </p>
-          </div>
+        {/* Right Column: Our Area Of Expertise */}
+        {renderColumn(["OUR", "AREA OF", "EXPERTISE"], expertiseFeatures, "bg-gradient-to-br from-green-500 to-teal-500")}
+      </div>
+    </section>
 
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => {
-              const colorClasses = getColorClasses(feature.color, hoveredCard === index + services.length);
-              return (
-                <div
-                  key={index}
-                  className={`rounded-xl border-2 p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${colorClasses.bg} ${colorClasses.border} relative overflow-hidden group`}
-                  onMouseEnter={() => setHoveredCard(index + services.length)}
-                  onMouseLeave={() => setHoveredCard(null)}
-                >
-                  {/* Hover effect element */}
-                  <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${colorClasses.accent} transition-all duration-300 ${hoveredCard === index + services.length ? 'opacity-100' : 'opacity-0'}`}></div>
 
-                  {/* Icon with animation */}
-                  <div className="mb-4 transform transition-transform duration-300 group-hover:scale-110 inline-block">
-                    {feature.icon}
-                  </div>
-
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-gray-800 transition-colors">{feature.title}</h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed group-hover:text-gray-700 transition-colors">{feature.description}</p>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Additional CTA Section */}
-          <div className="text-center mt-16 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-10 shadow-xl relative overflow-hidden">
-            {/* Decorative elements */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16 opacity-10"></div>
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-white rounded-full translate-x-16 translate-y-16 opacity-10"></div>
-
-            <h3 className="text-2xl font-semibold text-white mb-6 relative z-10">Ready to experience our premium services?</h3>
-            <button className="bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 relative z-10">
-              Get Started Today
-            </button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

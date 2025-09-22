@@ -4,109 +4,117 @@ import { MdAddIcCall } from "react-icons/md";
 
 function Navbar() {
     return (
-
-        <div className=" top-0  w-full bg-black/5 shadow-sm py-2 z-50">
+        <div className="top-0 w-full bg-blue-100 shadow-sm py-2 z-50">
             <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-10">
-                <div className="flex items-center gap-2">
+
+                {/* Right: Logo */}
+                <div className="flex items-center gap-2 mt-2 md:mt-0">
                     <a href="/">
                         <img
                             src="public/img/auditfile_logo.png"
                             alt="Logo"
-                            className="w-12 h-auto"  // ✅ controls logo size
+                            className="w-8 h-auto"
                         />
                     </a>
                     <a
                         href="/"
-                        className=" text-blue-950 text-4xl font-medium font-serif tracking-wide no-underline"
+                        className="text-blue-950 text-3xl font-medium font-serif tracking-wide no-underline"
                     >
                         AuditFiling
                     </a>
                 </div>
-                {/* Left: Contact Info */}
-                <div className="flex items-center text-lg text-blue-900 gap-6">
+
+                {/* Left: Contact Info + Social Links + Login */}
+                <div className="flex items-center text-lg  gap-6 text-blue-950">
+                    {/* Contact Email */}
                     <a
                         href="mailto:info@auditfiling.com"
-                        className="flex items-center gap-2 hover:text-blue-600"
+                        className="flex items-center gap-1 hover:text-blue-600"
                     >
                         <TiMail className="text-lg" />
                         info@auditfiling.com
                     </a>
-                    <span className="flex items-center gap-2 hover:text-blue-600">
+
+                    {/* Phone */}
+                    <span className="flex items-center gap-1 hover:text-blue-600">
                         <MdAddIcCall className="text-lg" />
                         +91 7428600607
                     </span>
-                </div>
 
-                {/* Right: Social Links */}
-                <div className="hidden md:flex items-center gap-4 mt-2 md:mt-0 text-gray-600 text-lg">
-                    {/* Facebook */}
-                    <a
-                        href="https://facebook.com/yourpage"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Facebook"
-                        className="p-2 rounded-full bg-gray-100 text-blue-600 hover:bg-blue-100 hover:scale-110 transition-transform"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-6 h-6"
+                    {/* Social Icons */}
+                    <div className="hidden md:flex items-center gap-2 text-gray-600 text-lg ml-4">
+                        {/* Facebook */}
+                        <a
+                            href="https://facebook.com/yourpage"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Facebook"
+                            className="p-2 rounded-full bg-gray-100 text-blue-600 hover:bg-blue-100 hover:scale-110 transition-transform"
                         >
-                            <path d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07c0 4.99 3.66 9.13 8.44 9.88v-6.99H8.06v-2.89h2.24V9.62c0-2.21 1.32-3.43 3.34-3.43.97 0 1.98.17 1.98.17v2.18h-1.12c-1.1 0-1.44.68-1.44 1.38v1.66h2.45l-.39 2.89h-2.06V22c4.78-.75 8.44-4.89 8.44-9.93z" />
-                        </svg>
-                    </a>
-
-                    {/* Instagram */}
-                    <a
-                        href="https://instagram.com/yourprofile"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Instagram"
-                        className="p-2 rounded-full bg-gray-100 text-pink-500 hover:bg-pink-100 hover:scale-110 transition-transform"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-6 h-6"
-                        >
-                            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.1a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm6.4-3.1a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM12 9.8a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4z" />
-                        </svg>
-                    </a>
-
-                    {/* YouTube */}
-                    <a
-                        href="https://youtube.com/yourchannel"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="YouTube"
-                        className="p-2 rounded-full bg-gray-100 text-red-600 hover:bg-red-100 hover:scale-110 transition-transform"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-6 h-6"
-                        >
-                            <path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.77 3.5 12 3.5 12 3.5s-7.77 0-9.38.58A3 3 0 0 0 .5 6.2 31.9 31.9 0 0 0 0 12a31.9 31.9 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12C4.23 20.5 12 20.5 12 20.5s7.77 0 9.38-.58a3 3 0 0 0 2.12-2.12A31.9 31.9 0 0 0 24 12a31.9 31.9 0 0 0-.5-5.8zM9.8 15.5V8.5L16.2 12l-6.4 3.5z" />
-                        </svg>
-                    </a>
-
-                      {/* Login Button */}
-                        <a href="#formid">
-                            <button className="bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700 ml-5">
-                                Login
-                            </button>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                className="w-5 h-5"
+                            >
+                                <path d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07c0 4.99 3.66 9.13 8.44 9.88v-6.99H8.06v-2.89h2.24V9.62c0-2.21 1.32-3.43 3.34-3.43.97 0 1.98.17 1.98.17v2.18h-1.12c-1.1 0-1.44.68-1.44 1.38v1.66h2.45l-.39 2.89h-2.06V22c4.78-.75 8.44-4.89 8.44-9.93z" />
+                            </svg>
                         </a>
+
+                        {/* LinkedIn */}
+                        <a
+                            href="https://linkedin.com/yourprofile"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="LinkedIn"
+                            className="p-2 rounded-full bg-gray-100 text-blue-700 hover:bg-blue-200 hover:scale-110 transition-transform"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                className="w-5 h-5"
+                            >
+                                <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M8.34 17V10.67H5.67V17H8.34M7 9.5A1.34 1.34 0 1 0 7 6.83 1.34 1.34 0 0 0 7 9.5M18.33 17V13.33C18.33 11.1 16.87 9.83 15 9.83C13.9 9.83 13.1 10.4 12.76 11H12.67V10.67H10V17H12.67V13.67C12.67 12.8 13.33 12.17 14.17 12.17C15 12.17 15.67 12.83 15.67 13.67V17H18.33Z" />
+                            </svg>
+                        </a>
+
+                        {/* YouTube */}
+                        <a
+                            href="https://youtube.com/yourchannel"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="YouTube"
+                            className="p-2 rounded-full bg-gray-100 text-red-600 hover:bg-red-100 hover:scale-110 transition-transform"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                className="w-5 h-5"
+                            >
+                                <path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.77 3.5 12 3.5 12 3.5s-7.77 0-9.38.58A3 3 0 0 0 .5 6.2 31.9 31.9 0 0 0 0 12a31.9 31.9 0 0 0 .5 5.8 3 3 0 0 0 2.12 2.12C4.23 20.5 12 20.5 12 20.5s7.77 0 9.38-.58a3 3 0 0 0 2.12-2.12A31.9 31.9 0 0 0 24 12a31.9 31.9 0 0 0-.5-5.8zM9.8 15.5V8.5L16.2 12l-6.4 3.5z" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    {/* Login Button */}
+                    <a href="#formid">
+                        <button className="bg-blue-600 text-white text-sm px-5 py-2 rounded-lg hover:bg-blue-700 ">
+                            Login
+                        </button>
+                    </a>
                 </div>
+
+
 
             </div>
         </div>
-
-    )
+    );
 }
+
 export default Navbar;
+
 // Navbar.jsx
 
 // import React, { useState } from "react";

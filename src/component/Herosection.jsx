@@ -2,52 +2,43 @@ import React from "react";
 
 function Herosection() {
   return (
-  <section
-  className=" bg-black/50 text-white py-28 px-6 mt-10"
-  // style={{ backgroundImage: "url('public/img/bgimag.jpg')" }}
->
-  {/* Dark overlay */}
-  {/* <div className=" bg-black/60"></div> */}
+    <section className="relative w-full min-h-[110vh] flex items-center justify-center bg-blue-50 text-gray-900">
+      <div className="container mx-auto px-6 text-center">
+        <h1 className="text-4xl md:text-5xl font-extrabold font-serif leading-tight">
+          Trusted Legal Services <br />
+          for Your Business & Compliance
+        </h1>
 
-  <div className="relative container mx-auto text-center max-w-4xl">
-    {/* Headline */}
-    <h1 className="text-4xl md:text-5xl font-bold font-serif leading-tight">
-      Trusted Legal Services <br />
-      for Your Business & Compliance
-    </h1>
+        <p className="mt-6 text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+          From <span className="font-bold text-gray-900"> Company Registration</span> to 
+          <span className="text-gray-900 font-bold"> GST, Trademarks,</span> and 
+          <span className="text-gray-900 font-bold"> Compliance</span> – 
+          <span className="font-bold text-gray-900"> AuditFiling</span> is your one-stop partner 
+          for all legal and financial needs.
+        </p>
 
-    {/* Subtext */}
-    <p className="mt-6 text-lg md:text-xl text-gray-200">
-      From company registration to GST, trademarks, and compliance –  
-      <span className="font-semibold"> AuditFiling</span> is your one-stop partner 
-      for all legal and financial needs.
-    </p>
+        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#contact"
+            className="bg-blue-600 text-white font-semibold px-8 py-3 rounded-md shadow-lg hover:bg-blue-700 hover:scale-105 transition-transform duration-300"
+          >
+            Get Started
+          </a>
+          <a
+            href="#services"
+            className="border border-blue-600 text-blue-600 px-8 py-3 rounded-md hover:bg-blue-600 hover:text-white hover:scale-105 transition-transform duration-300"
+          >
+            Explore Services
+          </a>
+        </div>
 
-    {/* CTA Buttons */}
-    <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-      <a
-        href="#contact"
-        className="bg-blue-600 text-white font-semibold px-6 py-3 rounded-md shadow-lg hover:bg-blue-700 transition"
-      >
-        Get Started
-      </a>
-      <a
-        href="#services"
-        className="border border-white text-white px-6 py-3 rounded-md hover:bg-white/20 transition"
-      >
-        Explore Services
-      </a>
-    </div>
-
-    {/* Credibility badge */}
-    <div className="mt-12 bg-gray-800 backdrop-blur-md rounded-lg p-6 inline-block shadow-md">
-      <p className="text-sm text-gray-100">
-        ✅ Trusted by 500+ Businesses | ⚖️ Expert Legal Professionals
-      </p>
-    </div>
-  </div>
-</section>
-
+        <div className="mt-12 inline-block bg-white/70 rounded-lg px-6 py-3 shadow-lg">
+          <p className="text-sm md:text-base text-gray-800 font-medium">
+            ✅ Trusted by <span className="text-blue-600 font-semibold">500+ Businesses</span> | ⚖️ Expert Legal Professionals
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 

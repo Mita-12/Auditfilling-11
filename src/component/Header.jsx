@@ -36,7 +36,7 @@
 
 
 //                     {/* Desktop Menu */}
-//                     <nav className=" flex items-center gap-4 text-white text-sm z-50 ml-10">
+//                     <nav className=" flex items-center gap-4 text-white text-sm z-50 ml-7">
 
 //                         {/* Dropdown */}
 //                         <div className=" font-serif tracking-wide font-medium">
@@ -211,7 +211,7 @@
 //                             <img
 //                                 src="public/img/auditfile_logo.png"
 //                                 alt="Logo"
-//                                 className="w-10 h-auto"  // ✅ controls logo size
+//                                 className="w-7 h-auto"  // ✅ controls logo size
 //                             />
 //                         </a>
 //                         <a
@@ -231,7 +231,7 @@
 //                                 >
 //                                     {menu.title}
 //                                 </button>
-//                                 <div className="absolute left-0 mt-2 w-48 bg-white border rounded-md shadow-lg opacity-0 group-hover:opacity-100 transform scale-95 group-hover:scale-100 transition ease-out duration-200 pointer-events-none group-hover:pointer-events-auto">
+//                                 <div className="absolute left-0 mt-2 w-48 bg-white border rounded-md shadow-lg opacity-0 group-hover:opacity-70 transform scale-95 group-hover:scale-70 transition ease-out duration-200 pointer-events-none group-hover:pointer-events-auto">
 //                                     <ul className="py-1">
 //                                         {menu.submenu.map((sub, si) => (
 //                                             <li key={si}>
@@ -239,7 +239,7 @@
 //                                                     href={`/${menu.title.toLowerCase()}/${sub
 //                                                         .toLowerCase()
 //                                                         .replace(/\s+/g, "-")}`}
-//                                                     className="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+//                                                     className="block px-4 py-2 text-gray-600 hover:bg-gray-70 hover:text-gray-900"
 //                                                 >
 //                                                     {sub}
 //                                                 </a>
@@ -351,7 +351,7 @@
 //                                             href={`/${menu.title.toLowerCase()}/${sub
 //                                                 .toLowerCase()
 //                                                 .replace(/\s+/g, "-")}`}
-//                                             className="block px-3 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+//                                             className="block px-3 py-2 text-gray-600 hover:bg-gray-70 hover:text-gray-900"
 //                                         >
 //                                             {sub}
 //                                         </a>
@@ -362,19 +362,19 @@
 
 //                         {/* <a
 //               href="/guides"
-//               className="block px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+//               className="block px-3 py-2 text-gray-700 hover:bg-gray-70 hover:text-gray-900"
 //             >
 //               Guides
 //             </a>
 //             <a
 //               href="/cities"
-//               className="block px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+//               className="block px-3 py-2 text-gray-700 hover:bg-gray-70 hover:text-gray-900"
 //             >
 //               Cities
 //             </a> */}
 //                         <a
 //                             href="/login"
-//                             className="block px-3 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+//                             className="block px-3 py-2 text-gray-700 hover:bg-gray-70 hover:text-gray-900"
 //                         >
 //                             Login
 //                         </a>
@@ -402,15 +402,15 @@ function Header() {
 
     return (
         <div className="fixed top-0 left-0 w-full z-50">
-        
+
             {/* Topbar Navbar */}
-      <div className="bg-white shadow-sm">
-        <Navbar />
-      </div>
+            <div className="bg-white shadow-sm">
+                <Navbar />
+            </div>
 
             {/* Main Header */}
-            <header className="shadow-md bg-blue-100 ">
-                <div className="container mx-auto flex items-center justify-between px-3 py-3">
+            <header className="shadow-md   bg-white">
+                <div className="container mx-auto  flex items-center justify-between px-3">
                     {/* Logo */}
                     {/* <div className="flex items-center gap-2">
                         <a href="/">
@@ -429,19 +429,19 @@ function Header() {
                     </div> */}
 
                     {/* Desktop Menu */}
-                    <nav className="hidden md:flex items-center gap-10 text-lg z-50 ml-10">
+                    <nav className=" flex items-center gap-8 text-sm z-50 ml-45 px-3 py-3">
                         {/* INCOME TAX */}
                         <div className="relative">
                             <button
                                 onClick={() =>
                                     setDropdownOpen(dropdownOpen === "income" ? null : "income")
                                 }
-                                className="font-serif tracking-wide font-medium flex items-center gap-1"
+                                className="font-serif tracking-wide font-thin flex items-center gap-1"
                             >
-                                Income Tax <FaChevronDown className="text-xs mt-1" />
+                                Income Tax <FaChevronDown size={7} className="mt-1" />
                             </button>
                             {dropdownOpen === "income" && (
-                                <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-800 rounded shadow-lg p-4 grid grid-cols-2 gap-4 z-50">
+                                <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[12px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/itr-filing" className="block hover:text-blue-600">Salaried Individual</a></li>
                                         <li><a href="/tax-notice" className="block hover:text-blue-600">Professional</a></li>
@@ -451,6 +451,7 @@ function Header() {
                                         <li><a href="/tax-planning" className="block hover:text-blue-600">Hindu Undivided Family (HUF)</a></li>
                                     </ul>
                                 </div>
+
                             )}
                         </div>
 
@@ -460,12 +461,12 @@ function Header() {
                                 onClick={() =>
                                     setDropdownOpen(dropdownOpen === "gst" ? null : "gst")
                                 }
-                                className="font-serif tracking-wide font-medium flex items-center gap-1"
+                                className="font-serif tracking-wide font-small flex items-center gap-1"
                             >
-                                GST <FaChevronDown className="text-xs mt-1" />
+                                GST <FaChevronDown size={7} className="mt-1" />
                             </button>
                             {dropdownOpen === "gst" && (
-                                <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-800 rounded shadow-lg p-4 grid grid-cols-2 gap-4 z-50">
+                                <div className="absolute left-0 mt-2 w-[250px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[12px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/gst-registration" className="block hover:text-blue-600">Proprietor New Registration</a></li>
                                         <li><a href="/gst-return-accountant" className="block hover:text-blue-600">Proprietor GST Filing</a></li>
@@ -487,12 +488,12 @@ function Header() {
                                 onClick={() =>
                                     setDropdownOpen(dropdownOpen === "startup" ? null : "startup")
                                 }
-                                className="font-serif tracking-wide font-medium flex items-center gap-1"
+                                className="font-serif tracking-wide font-small flex items-center gap-1"
                             >
-                                Startup Registration <FaChevronDown className="text-xs mt-1" />
+                                Startup Registration <FaChevronDown size={7} className="mt-1" />
                             </button>
                             {dropdownOpen === "startup" && (
-                                <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-800 rounded shadow-lg p-4 grid grid-cols-2 gap-4 z-50">
+                                <div className="absolute left-0 mt-2 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-8 z-50 text-[12px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/proprietorship" className="block hover:text-blue-600">
                                             Proprietorship Firm Registration</a></li>
@@ -501,9 +502,6 @@ function Header() {
 
                                         <li><a href="/proprietorship" className="block hover:text-blue-600">
                                             Startup India Registration</a></li>
-                                        <li><a href="/partnership" className="block hover:text-blue-600">Trade License</a></li>
-                                        <li><a href="/opc" className="block hover:text-blue-600">MSME Registration</a></li>
-                                        <li><a href="/llp" className="block hover:text-blue-600">PF Registration</a></li>
 
                                     </ul>
                                     <ul className="space-y-2">
@@ -516,9 +514,19 @@ function Header() {
                                         <li><a href="/partnership" className="block hover:text-blue-600">Import Export Code</a></li>
                                         <li><a href="/opc" className="block hover:text-blue-600">ISO Registration</a></li>
                                         <li><a href="/opc" className="block hover:text-blue-600">GEM Registration</a></li>
-                                        <li><a href="/opc" className="block hover:text-blue-600">Shop And Commercial Registration (Labour License)</a></li>
 
                                     </ul>
+                                    <ul className="space-y-2">
+                                        <li><a href="/opc" className="block hover:text-blue-600">MSME Registration</a></li>
+                                        <li><a href="/llp" className="block hover:text-blue-600">PF Registration</a></li>
+                                        <li><a href="/opc" className="block hover:text-blue-600">Shop And Commercial Registration (Labour License)</a></li>
+
+                                        <li><a href="/partnership" className="block hover:text-blue-600">Trade License</a></li>
+
+
+                                    </ul>
+
+
                                 </div>
                             )}
                         </div>
@@ -529,12 +537,12 @@ function Header() {
                                 onClick={() =>
                                     setDropdownOpen(dropdownOpen === "mca" ? null : "mca")
                                 }
-                                className="font-serif tracking-wide font-medium flex items-center gap-1"
+                                className="font-serif tracking-wide font-small flex items-center gap-1"
                             >
-                                MCA <FaChevronDown className="text-xs mt-1" />
+                                company(MCA) <FaChevronDown size={7} className="mt-1" />
                             </button>
                             {dropdownOpen === "mca" && (
-                                <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-800 rounded shadow-lg p-4 grid grid-cols-2 gap-4 z-50">
+                                <div className="absolute left-0 mt-2 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-4 z-50 text-[12px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/proprietorship" className="block hover:text-blue-600">
                                             One Person Company Registration</a></li>
@@ -543,9 +551,6 @@ function Header() {
 
                                         <li><a href="/proprietorship" className="block hover:text-blue-600">
                                             Public Limited Company Registration</a></li>
-                                        <li><a href="/partnership" className="block hover:text-blue-600">Name Change Of Company</a></li>
-                                        <li><a href="/opc" className="block hover:text-blue-600">Registered Office Address Change</a></li>
-                                        <li><a href="/llp" className="block hover:text-blue-600">Change Of Director</a></li>
 
                                     </ul>
                                     <ul className="space-y-2">
@@ -556,11 +561,18 @@ function Header() {
                                         <li><a href="/proprietorship" className="block hover:text-blue-600">
                                             PF Return Filing</a></li>
                                         <li><a href="/partnership" className="block hover:text-blue-600">ESI Return Filing</a></li>
-                                        <li><a href="/opc" className="block hover:text-blue-600">Book keeping</a></li>
                                         <li><a href="/opc" className="block hover:text-blue-600">Company ITR Filing</a></li>
+                                                                               <li><a href="/partnership" className="block hover:text-blue-600">Name Change Of Company</a></li>
+
+
+                                    </ul>
+                                    <ul className="space-y-2">
+                                        <li><a href="/opc" className="block hover:text-blue-600">Registered Office Address Change</a></li>
+                                        <li><a href="/llp" className="block hover:text-blue-600">Change Of Director</a></li>
                                         <li><a href="/opc" className="block hover:text-blue-600">Company Annual Filing</a></li>
                                         <li><a href="/opc" className="block hover:text-blue-600">ROC AGM Fililng</a></li>
                                         <li><a href="/opc" className="block hover:text-blue-600">TDS Return Filing</a></li>
+                                        <li><a href="/opc" className="block hover:text-blue-600">Book keeping</a></li>
 
                                     </ul>
                                 </div>
@@ -573,12 +585,12 @@ function Header() {
                                 onClick={() =>
                                     setDropdownOpen(dropdownOpen === "trademark" ? null : "trademark")
                                 }
-                                className="font-serif tracking-wide font-medium flex items-center gap-1"
+                                className="font-serif tracking-wide font-small flex items-center gap-1"
                             >
-                                Trademark <FaChevronDown className="text-xs mt-1" />
+                                Trademark <FaChevronDown size={7} className="mt-1" />
                             </button>
                             {dropdownOpen === "trademark" && (
-                                <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-800 rounded shadow-lg p-4 grid grid-cols-2 gap-4 z-50">
+                                <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[12px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/gst-registration" className="block hover:text-blue-600">Trademark Registration</a></li>
                                         <li><a href="/gst-return-accountant" className="block hover:text-blue-600">Trademark Objection</a></li>
@@ -601,11 +613,11 @@ function Header() {
                                 onClick={() =>
                                     setDropdownOpen(dropdownOpen === "bankvaluation" ? null : "bankvaluation")
                                 }
-                                className="font-serif tracking-wide font-medium flex items-center gap-1"
+                                className="font-serif tracking-wide font-small flex items-center gap-1"
                             >
-                                Bank Valuation <FaChevronDown className="text-xs mt-1" />                            </button>
+                                Bank Valuation <FaChevronDown size={7} className="mt-1" />                           </button>
                             {dropdownOpen === "bankvaluation" && (
-                                <div className="absolute left-0 mt-2 w-[300px] bg-white text-gray-800 rounded shadow-lg p-4 grid grid-cols-2 gap-4 z-50">
+                                <div className="absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[12px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/itr-filing" className="block hover:text-blue-600">Property Valuation Report</a></li>
                                         <li><a href="/tax-notice" className="block hover:text-blue-600">Market Valuation</a></li>
@@ -622,26 +634,26 @@ function Header() {
                             )}
                         </div>
                         {/* LegL */}
-                         <div className="relative">
+                        <div className="relative">
                             <button
                                 onClick={() =>
                                     setDropdownOpen(dropdownOpen === "legal" ? null : "legal")
                                 }
-                                className="font-serif tracking-wide font-medium flex items-center gap-1"
+                                className="font-serif tracking-wide font-small flex items-center gap-1"
                             >
-                              Legal<FaChevronDown className="text-xs mt-1" />
+                                Legal<FaChevronDown size={7} className="mt-1" />
                             </button>
                             {dropdownOpen === "legal" && (
-                                <div className="absolute left-0 mt-2 w-[300px] bg-white text-gray-800 rounded shadow-lg p-4 grid grid-cols-2 gap-4 z-50">
+                                <div className="absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[12px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/itr-filing" className="block hover:text-blue-600">Labour and Employment Law</a></li>
                                         <li><a href="/tax-notice" className="block hover:text-blue-600">Legal Notice</a></li>
-                                         <li><a href="/tax-notice" className="block hover:text-blue-600">Land Document Verification</a></li>
+                                        <li><a href="/tax-notice" className="block hover:text-blue-600">Land Document Verification</a></li>
                                     </ul>
                                     <ul className="space-y-2">
                                         <li><a href="/form-16" className="block hover:text-blue-600">Online Legal Advice</a></li>
                                         <li><a href="/tax-planning" className="block hover:text-blue-600">Banking and Financial Law</a></li>
-                                         <li><a href="/tax-notice" className="block hover:text-blue-600">Property</a></li>
+                                        <li><a href="/tax-notice" className="block hover:text-blue-600">Property</a></li>
                                     </ul>
                                 </div>
                             )}
