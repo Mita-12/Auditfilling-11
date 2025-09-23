@@ -395,6 +395,7 @@ import React, { useState } from "react";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
 import Navbar from "./Navbar";
 import Herosection from "./Herosection";
+import { Link } from "react-router-dom";
 
 function Header() {
     const [dropdownOpen, setDropdownOpen] = useState(null); // controls which menu is open
@@ -432,14 +433,14 @@ function Header() {
                     <nav className=" flex items-center gap-8 text-sm z-50 ml-45 px-3 py-3">
                         {/* INCOME TAX */}
                         <div className="relative">
-                            <button
+                           <Link to="/income-tax"> <button
                                 onClick={() =>
                                     setDropdownOpen(dropdownOpen === "income" ? null : "income")
                                 }
                                 className="font-serif tracking-wide font-thin flex items-center gap-1"
                             >
                                 Income Tax <FaChevronDown size={7} className="mt-1" />
-                            </button>
+                            </button></Link>
                             {dropdownOpen === "income" && (
                                 <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[12px] font-semibold">
                                     <ul className="space-y-2">
