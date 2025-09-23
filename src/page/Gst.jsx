@@ -3,12 +3,14 @@ import Header from "../component/Header";
 import { FaFileAlt, FaWpforms } from "react-icons/fa";
 import WhatsAppPopup from "../component/WhatsAppPopup";
 
-export default function IncomeTax() {
+export default function Gst() {
   const sidebarItems = [
-    "Salaried Individual",
-    "Professional",
-    "Self Employed",
-    "Hindu Undivided Family (HUF)",
+    "Proprietor New Registration",
+"Proprietor GST Filing",
+"Company GST Registration",
+"Company GST Filing",
+"GST Annual Filing",
+"GST Notice Compliance",
   ];
 
   return (
@@ -124,116 +126,3 @@ export default function IncomeTax() {
     </div>
   );
 }
-
-
-
-
-
-// import React from "react";
-
-// export default function IncomeTax() {
-//   const sidebarItems = [
-//     "Salaried Individual",
-//     "Professional",
-//     "Self Employed",
-//     "Hindu Undivided Family (HUF)",
-//   ];
-
-//   return (
-//     <div className="min-h-screen bg-gray-100">
-//       {/* Header Section */}
-//       <header
-//         className="fixed top-0 left-0 w-full h-64 bg-cover bg-center z-10"
-//         style={{
-//           backgroundImage: "url('/img/IncomeTax2.jpg')",
-//           backgroundPosition: "center",
-//           backgroundSize: "cover",
-//           backgroundRepeat: "no-repeat",
-//         }}
-//       >
-//         {/* Optional overlay */}
-//         <div className="absolute inset-0 flex items-center justify-center"></div>
-//       </header>
-
-//       {/* Main Content */}
-//       <div className="container mx-auto px-6 py-10 pt-72 flex gap-8">
-//         {/* Left Content */}
-//         <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
-//           <h2 className="text-2xl font-semibold mb-4">What We Offer</h2>
-//           <p className="text-gray-700 mb-4">
-//             We provide top-notch services tailored to your business needs.
-//             Explore our offerings below to find the perfect solution for your project.
-//           </p>
-//           <p className="text-gray-700">
-//             Our team of experts ensures high-quality work, timely delivery, and ongoing support.
-//           </p>
-//         </div>
-
-//         {/* Right Sidebar */}
-//         <aside className="w-64 flex flex-col gap-6">
-//           {/* Services Menu */}
-//           <div className="bg-white p-6 rounded-lg shadow-md">
-//             <h3 className="text-xl font-semibold mb-4">Services Menu</h3>
-//             <ul className="space-y-3">
-//               {sidebarItems.map((item, index) => (
-//                 <li
-//                   key={index}
-//                   className="p-3 bg-blue-50 rounded hover:bg-blue-100 cursor-pointer transition"
-//                 >
-//                   {item}
-//                 </li>
-//               ))}
-//             </ul>
-//           </div>
-
-//           {/* Form Card */}
-//           <div className="bg-white p-6 rounded-lg shadow-md">
-//             <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
-//             <form className="space-y-4">
-//               <div>
-//                 <label className="block text-gray-700 mb-1" htmlFor="name">
-//                   Name
-//                 </label>
-//                 <input
-//                   type="text"
-//                   id="name"
-//                   placeholder="Your Name"
-//                   className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-//                 />
-//               </div>
-//               <div>
-//                 <label className="block text-gray-700 mb-1" htmlFor="email">
-//                   Email
-//                 </label>
-//                 <input
-//                   type="email"
-//                   id="email"
-//                   placeholder="Your Email"
-//                   className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-//                 />
-//               </div>
-//               <div>
-//                 <label className="block text-gray-700 mb-1" htmlFor="message">
-//                   Message
-//                 </label>
-//                 <textarea
-//                   id="message"
-//                   placeholder="Your Message"
-//                   className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-//                   rows="4"
-//                 ></textarea>
-//               </div>
-//               <button
-//                 type="submit"
-//                 className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-//               >
-//                 Submit
-//               </button>
-//             </form>
-//           </div>
-//         </aside>
-//       </div>
-//     </div>
-//   );
-// }
-

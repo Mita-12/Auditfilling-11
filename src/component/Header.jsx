@@ -469,7 +469,7 @@ function Header() {
                             {dropdownOpen === "gst" && (
                                 <div className="absolute left-0 mt-2 w-[250px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[12px] font-semibold">
                                     <ul className="space-y-2">
-                                        <li><a href="/gst-registration" className="block hover:text-blue-600">Proprietor New Registration</a></li>
+                                        <li><a href="/gst-reg" className="block hover:text-blue-600">Proprietor New Registration</a></li>
                                         <li><a href="/gst-return-accountant" className="block hover:text-blue-600">Proprietor GST Filing</a></li>
                                         <li><a href="/gst-nil-return" className="block hover:text-blue-600">Company GST Registration</a></li>
 
