@@ -412,37 +412,27 @@ function Header() {
             {/* Main Header */}
             <header className="shadow-md   bg-white">
                 <div className="container mx-auto  flex items-center justify-between px-3">
-                    {/* Logo */}
-                    {/* <div className="flex items-center gap-2">
-                        <a href="/">
-                            <img
-                                src="public/img/auditfile_logo.png"
-                                alt="Logo"
-                                className="w-8 h-auto"
-                            />
-                        </a>
-                        <a
-                            href="/"
-                            className="text-white text-4xl font-medium font-serif tracking-wide no-underline"
-                        >
-                            AuditFiling
-                        </a>
-                    </div> */}
-
                     {/* Desktop Menu */}
                     <nav className=" flex items-center gap-8 text-sm z-50 ml-45 px-3 py-3">
                         {/* INCOME TAX */}
                         <div className="relative">
-                           <Link to="/income-tax"> <button
-                                onClick={() =>
-                                    setDropdownOpen(dropdownOpen === "income" ? null : "income")
-                                }
-                                className="font-serif tracking-wide font-thin flex items-center gap-1"
-                            >
-                                Income Tax <FaChevronDown size={7} className="mt-1" />
-                            </button></Link>
+                            <Link to="/income-tax">
+                                <button
+                                    onClick={() =>
+                                        setDropdownOpen(dropdownOpen === "income" ? null : "income")
+                                    }
+                                    className="font-serif tracking-wide font-thin flex items-center gap-1"
+                                >
+                                    Income Tax
+                                    <FaChevronDown
+                                        size={10}
+                                        className={`mt-1 transition-transform duration-200 ${dropdownOpen === "income" ? "rotate-180" : "rotate-0"
+                                            }`}
+                                    />
+                                </button>
+                            </Link>
                             {dropdownOpen === "income" && (
-                                <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[12px] font-semibold">
+                                <div className="absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[14px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/itr-filing" className="block hover:text-blue-600">Salaried Individual</a></li>
                                         <li><a href="/tax-notice" className="block hover:text-blue-600">Professional</a></li>
@@ -458,16 +448,23 @@ function Header() {
 
                         {/* GST */}
                         <div className="relative">
-                            <button
-                                onClick={() =>
-                                    setDropdownOpen(dropdownOpen === "gst" ? null : "gst")
-                                }
-                                className="font-serif tracking-wide font-small flex items-center gap-1"
-                            >
-                                GST <FaChevronDown size={7} className="mt-1" />
-                            </button>
+                            <Link to="/gst">
+                                <button
+                                    onClick={() =>
+                                        setDropdownOpen(dropdownOpen === "gst" ? null : "gst")
+                                    }
+                                    className="font-serif tracking-wide font-thin flex items-center gap-1"
+                                >
+                                    GST
+                                    <FaChevronDown
+                                        size={10}
+                                        className={`mt-1 transition-transform duration-200 ${dropdownOpen === "gst" ? "rotate-180" : "rotate-0"
+                                            }`}
+                                    />
+                                </button>
+                            </Link>
                             {dropdownOpen === "gst" && (
-                                <div className="absolute left-0 mt-2 w-[250px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[12px] font-semibold">
+                                <div className="absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/gst-reg" className="block hover:text-blue-600">Proprietor New Registration</a></li>
                                         <li><a href="/gst-return-accountant" className="block hover:text-blue-600">Proprietor GST Filing</a></li>
@@ -485,16 +482,23 @@ function Header() {
 
                         {/* STARTUP */}
                         <div className="relative">
-                            <button
-                                onClick={() =>
-                                    setDropdownOpen(dropdownOpen === "startup" ? null : "startup")
-                                }
-                                className="font-serif tracking-wide font-small flex items-center gap-1"
-                            >
-                                Startup Registration <FaChevronDown size={7} className="mt-1" />
-                            </button>
+                            <Link to="/startup">
+                                <button
+                                    onClick={() =>
+                                        setDropdownOpen(dropdownOpen === "startup" ? null : "startup")
+                                    }
+                                    className="font-serif tracking-wide font-thin flex items-center gap-1"
+                                >
+                                    Startup Registartion
+                                    <FaChevronDown
+                                        size={10}
+                                        className={`mt-1 transition-transform duration-200 ${dropdownOpen === "startup" ? "rotate-180" : "rotate-0"
+                                            }`}
+                                    />
+                                </button>
+                            </Link>
                             {dropdownOpen === "startup" && (
-                                <div className="absolute left-0 mt-2 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-8 z-50 text-[12px] font-semibold">
+                                <div className="absolute left-0 mt-2 w-[550px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-8 z-50 text-[14px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/proprietorship" className="block hover:text-blue-600">
                                             Proprietorship Firm Registration</a></li>
@@ -543,7 +547,7 @@ function Header() {
                                 company(MCA) <FaChevronDown size={7} className="mt-1" />
                             </button>
                             {dropdownOpen === "mca" && (
-                                <div className="absolute left-0 mt-2 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-4 z-50 text-[12px] font-semibold">
+                                <div className="absolute left-0 mt-2 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-4 z-50 text-[14px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/proprietorship" className="block hover:text-blue-600">
                                             One Person Company Registration</a></li>
@@ -563,7 +567,7 @@ function Header() {
                                             PF Return Filing</a></li>
                                         <li><a href="/partnership" className="block hover:text-blue-600">ESI Return Filing</a></li>
                                         <li><a href="/opc" className="block hover:text-blue-600">Company ITR Filing</a></li>
-                                                                               <li><a href="/partnership" className="block hover:text-blue-600">Name Change Of Company</a></li>
+                                        <li><a href="/partnership" className="block hover:text-blue-600">Name Change Of Company</a></li>
 
 
                                     </ul>
@@ -591,7 +595,7 @@ function Header() {
                                 Trademark <FaChevronDown size={7} className="mt-1" />
                             </button>
                             {dropdownOpen === "trademark" && (
-                                <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[12px] font-semibold">
+                                <div className="absolute left-0 mt-2 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/gst-registration" className="block hover:text-blue-600">Trademark Registration</a></li>
                                         <li><a href="/gst-return-accountant" className="block hover:text-blue-600">Trademark Objection</a></li>
@@ -618,7 +622,7 @@ function Header() {
                             >
                                 Bank Valuation <FaChevronDown size={7} className="mt-1" />                           </button>
                             {dropdownOpen === "bankvaluation" && (
-                                <div className="absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[12px] font-semibold">
+                                <div className="absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/itr-filing" className="block hover:text-blue-600">Property Valuation Report</a></li>
                                         <li><a href="/tax-notice" className="block hover:text-blue-600">Market Valuation</a></li>
@@ -645,7 +649,7 @@ function Header() {
                                 Legal<FaChevronDown size={7} className="mt-1" />
                             </button>
                             {dropdownOpen === "legal" && (
-                                <div className="absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[12px] font-semibold">
+                                <div className="absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold">
                                     <ul className="space-y-2">
                                         <li><a href="/itr-filing" className="block hover:text-blue-600">Labour and Employment Law</a></li>
                                         <li><a href="/tax-notice" className="block hover:text-blue-600">Legal Notice</a></li>

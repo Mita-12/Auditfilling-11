@@ -2,8 +2,8 @@ import React from "react";
 
 function Herosection() {
   return (
-    <section className=" w-full min-h-[108vh] flex items-center justify-center bg-blue-50 text-gray-900">
-    <div className="mx-auto text-center rounded-2xl px-30 py-10 bg-white max-w-6xl">
+    <section className=" w-full min-h-[100vh] flex items-center justify-center bg-white text-gray-900">
+    <div className="mx-auto text-center rounded-2xl px-30 py-10 max-w-8xl">
   <h1 className="text-4xl md:text-5xl font-extrabold font-serif leading-tight">
     Trusted Legal Services <br />
     for Your Business & Compliance
@@ -41,5 +41,6 @@ function Herosection() {
 </section>
   );
 }
+
 
 export default Herosection;

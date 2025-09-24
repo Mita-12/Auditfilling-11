@@ -1,128 +1,172 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../component/Header";
-import { FaFileAlt, FaWpforms } from "react-icons/fa";
 import WhatsAppPopup from "../component/WhatsAppPopup";
+import { FaUserTie, FaBriefcase, FaUserEdit, FaUsers } from "react-icons/fa";
 
 export default function Gst() {
-  const sidebarItems = [
-    "Proprietor New Registration",
-"Proprietor GST Filing",
-"Company GST Registration",
-"Company GST Filing",
-"GST Annual Filing",
-"GST Notice Compliance",
+  const [serviceData, setServiceData] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [animate, setAnimate] = useState(false);
+
+  const services = [
+  {
+  title: "Proprietor New Registration",
+  description:
+    "Comprehensive GST registration services for proprietors, ensuring legal compliance and smooth business operations. Our experts help you complete the registration process quickly and accurately, so you can focus on growing your business.",
+  additional:
+    "We provide step-by-step guidance, document verification, and online submission support for hassle-free GST registration.",
+  image: "/img/Proprietor Registration.png",
+},
+
+{
+  title: "Proprietor GST Filing",
+  description:
+    "Efficient GST filing services for proprietors, ensuring timely submission and compliance with Indian GST laws. Avoid penalties and maintain smooth financial operations with our expert assistance.",
+  additional:
+    "We offer guidance on document preparation, filing procedures, and error-free submission of your GST returns.",
+  image: "/img/Proprietor Filing.png",
+},
+
+{
+  title: "Company GST Registration",
+  description:
+    "Complete GST registration services for companies, helping you meet statutory obligations and start your business operations without any compliance issues.",
+  additional:
+    "We assist with documentation, application filing, and follow-up with GST authorities for a hassle-free registration process.",
+  image: "/img/Company Registration.png",
+},
+
+{
+  title: "Company GST Filing",
+  description:
+    "Professional GST filing services for companies, ensuring timely and accurate submission of returns in compliance with GST regulations.",
+  additional:
+    "We handle data verification, return preparation, and e-filing to keep your company compliant and avoid penalties.",
+  image: "/img/Company Filing.png",
+},
+
+{
+  title: "GST Annual Filing",
+  description:
+    "Annual GST return filing services to ensure your business stays compliant and avoids unnecessary penalties. Perfect for proprietors, partnerships, and companies.",
+  additional:
+    "Our team guides you through document collection, reconciliation, and submission of annual GST returns with ease.",
+  image: "/img/GST Annual Filing.png",
+},
+
+{
+  title: "GST Notice Compliance",
+  description:
+    "Expert assistance for GST notice compliance, helping businesses respond accurately and timely to notices from GST authorities.",
+  additional:
+    "We provide end-to-end support including notice analysis, documentation, response drafting, and follow-up with authorities.",
+  image: "/img/GST Notice Compliance.png",
+},
+
+  
   ];
 
+  useEffect(() => {
+    setServiceData(services[0]);
+  }, []);
+
+  const handleServiceClick = (index) => {
+    setAnimate(true);
+    setTimeout(() => {
+      setActiveIndex(index);
+      setServiceData(services[index]);
+      setAnimate(false);
+    }, 300);
+  };
+
   return (
-    <div className="bg-gray-100 min-h-screen">
-      {/* Header */}
+    <div className="min-h-screen ">
       <Header />
+      <WhatsAppPopup />
 
       {/* Sidebar */}
-      <aside className="w-64 bg-white rounded-lg shadow-md p-6 h-screen ml-5 fixed top-0 left-0 mt-28">
-        {/* add mt-16 so sidebar doesn’t overlap Header */}
-        <h3 className="text-xl font-semibold mb-4 text-center">Services</h3>
-        <ul className="space-y-3 text-center">
-          {sidebarItems.map((item, index) => (
-            <li
-              key={index}
-              className="p-3 bg-blue-50 rounded hover:bg-blue-100 cursor-pointer transition"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
+         <aside className="w-58 rounded-lg shadow-sm p-6 h-[90vh] fixed top-24 left-6 overflow-y-auto transition-all duration-300 ease-in-out hover:scale-[1.02]">
+  <ul className="space-y-3">
+    {services.map((item, index) => (
+      <li
+        key={index}
+        onClick={() => handleServiceClick(index)}
+        className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 ease-in-out transform
+          ${activeIndex === index ? "bg-blue-100 shadow-inner scale-105" : "bg-white hover:bg-blue-100 hover:scale-105"}`}
+      >
+        {item.icon}
+        <span className=" font-serif  hover:text-blue-950 ">
+          <h1 className="transition-colors duration-300">{item.title}</h1>
+        </span>
+      </li>
+    ))}
+  </ul>
+</aside>
+      {/* Main Content */}
+<main className="flex-1 ml-59 mr-59 px-5 py-8 mt-15 overflow-y-auto">
+  <div
+    key={activeIndex} // ensures smooth React re-render
+    className={`bg-white p-6 rounded-lg shadow-md min-h-[90vh] flex flex-col md:flex-row items-start gap-6 transition-transform duration-300 ease-in-out ${
+      animate ? "translate-x-full opacity-0" : "translate-x-0 opacity-100"
+    }`}
+  >
+    {/* Left Side Image */}
+    {/* <div className="md:w-1/2 w-full flex justify-center">
+      <img
+        src={serviceData?.image || "/img/default-service.png"}
+        alt={serviceData?.title || "Service Image"}
+        className="rounded-lg  object-cover h-80 w-full"
+      />
+    </div> */}
+
+    {/* Right Side Content */}
+    <div className=" w-full ">
+      <h1 className="text-3xl  font-serif text-center md:text-4xl font-bold mb-8">
+        {serviceData?.title}
+      </h1>
+      <p className="text-gray-700 mb-4">
+        {serviceData?.description}
+      </p>
+      {serviceData?.additional && (
+        <p className="text-gray-700">
+          {serviceData.additional}
+        </p>
+      )}
+    </div>
+  </div>
+</main>
+
+
+
+
+      {/* Right Form */}
+      <aside className="w-60  rounded-lg  p-6 h-[45vh] fixed top-24 right-4 flex flex-col justify-between space-y-6">
+        <div>
+          <h3 className="text-xl font-semibold mb-4 text-center">Contact Form</h3>
+          <form className="space-y-3">
+            <input
+              type="text"
+              placeholder="Name"
+              className="w-full border px-2 py-1 rounded focus:ring-2 focus:ring-blue-400 outline-none"
+            />
+            <input
+              type=""
+              placeholder="Phone No"
+              className="w-full border px-2 py-1 rounded focus:ring-2 focus:ring-blue-400 outline-none"
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full border px-2 py-1 rounded focus:ring-2 focus:ring-blue-400 outline-none"
+            />
+          
+           <button className="mt-2 w-1/2 bg-blue-600 text-white py-1 rounded hover:bg-blue-700 transition-all mx-auto block">
+  Submit
+</button>
+          </form>
+        </div>
       </aside>
-
-      {/* Main Content (pushed right) */}
-      <main className="ml-70 px-6 py-8 mt-20">
-        {/* Top 3 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {/* Image Card */}
-          <div
-            className="bg-white rounded-lg shadow-md h-75 bg-cover bg-center hover:shadow-lg transition"
-            style={{ backgroundImage: "url('/img/Blog 6.png')" }}
-          ></div>
-
-          {/* Document Card */}
-          <div className="bg-white rounded-lg shadow-md p-5 hover:shadow-lg flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <FaFileAlt className="text-blue-600 text-xl" />
-              <h3 className="text-lg font-semibold">ITR Documents</h3>
-            </div>
-
-            {/* Content */}
-            <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
-              <li>Copy of PAN Card</li>
-              <li>Copy of Aadhaar Card</li>
-              <li>Previous Year IT Return (if any)</li>
-              <li>
-                Price <b className="text-blue-700">₹ 3000/-</b>
-              </li>
-            </ul>
-
-            {/* Button */}
-            <button className="mt-auto block mx-auto w-1/2 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-              Proceed
-            </button>
-          </div>
-
-          {/* Form Card */}
-          <div className="bg-white rounded-lg shadow-md p-3 hover:shadow-lg flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <FaWpforms className="text-blue-900 text-xl" />
-              <h3 className="text-lg font-semibold">Quick Form</h3>
-            </div>
-
-            {/* Form */}
-            <form className="space-y-3 flex flex-col flex-1">
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <textarea
-                placeholder="Your Message"
-                rows="3"
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <button
-                type="submit"
-                className="mt-auto block mx-auto w-1/2 bg-gray-700 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-
-        </div>
-
-        {/* Large Card */}
-        <div className="bg-white rounded-lg shadow-md p-6 h-full">
-          <h1 className="text-2xl font-semibold mb-4 text-center">
-            What We Offer
-          </h1>
-          <p className="text-gray-700 mb-4">
-            We provide top-notch services tailored to your business needs.
-            Explore our offerings below to find the perfect solution for your
-            project.
-          </p>
-          <p className="text-gray-700">
-            Our team of experts ensures high-quality work, timely delivery,
-            and ongoing support.
-          </p>
-        </div>
-      </main>
-
-      {/* WhatsApp Popup */}
-      <WhatsAppPopup />
+        <WhatsAppPopup />
     </div>
   );
 }

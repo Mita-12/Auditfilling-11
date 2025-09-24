@@ -151,99 +151,132 @@ const expertiseFeatures = [
     </div>
   )
 
-
-
   return (
     <div className="bg-gray-50">
       {/* Services */}
-     <section className="py-8 bg-gradient-to-b from-white to-gray-50">
-      <div className="container mx-auto px-6">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 relative inline-block">
-            Services We Provide
-            <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span>
-          </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-            Comprehensive legal and financial services to meet all your business needs
+   <section className="py-12 bg-white">
+  <div className="container mx-auto px-6">
+    {/* Section Header */}
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-bold text-gray-900 mb-4 relative inline-block">
+        Services We Provide
+        <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span>
+      </h2>
+      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+        Comprehensive legal and financial services to meet all your business needs
+      </p>
+    </div>
+
+    {/* Grid for all except last 3 */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      {services.slice(0, services.length - 3).map((service, index) => (
+        <div
+          key={index}
+          className="group rounded-2xl p-6 shadow-lg transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-xl"
+          style={{ animation: `fadeInUp 0.6s ease ${index * 0.15}s both` }}
+        >
+          {/* Icon & Title */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="rounded-full bg-gray-100 p-3 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+              {service.icon}
+            </div>
+            <h3 className="font-semibold text-gray-900 text-lg transition-colors duration-300 group-hover:text-blue-700">
+              {service.title}
+            </h3>
+          </div>
+
+          {/* Description */}
+          <p className="text-gray-700 text-sm leading-relaxed mb-4 transition-colors duration-300 group-hover:text-gray-900">
+            {service.description}
           </p>
-        </div>
 
-        {/* Grid for all except last 3 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {services.slice(0, services.length - 3).map((service, index) => (
-            <div
-              key={index}
-              className="bg-blue-50 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2"
-              onMouseEnter={() => setHoveredCard(index)}
-              onMouseLeave={() => setHoveredCard(null)}
+          {/* Learn More Link */}
+          <a
+            href={service.link}
+            className="font-medium flex items-center gap-2 transition-all duration-300 text-blue-600 hover:text-blue-800"
+          >
+            Learn more
+            <svg
+              className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="rounded-full bg-gray-100">{service.icon}</div>
-                <h3 className="font-semibold text-gray-900 text-lg">{service.title}</h3>
-              </div>
-              <p className="text-gray-900 text-sm leading-relaxed mb-4">{service.description}</p>
-              <a
-                href={service.link}
-                className="hover:text-blue-800 font-medium flex items-center gap-2 transition-all duration-300 hover:underline"
-              >
-                Learn more
-                <svg
-                  className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
-                  ></path>
-                </svg>
-              </a>
-            </div>
-          ))}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
+          </a>
         </div>
+      ))}
+    </div>
 
-        {/* Last 3 Centered */}
-        <div className="flex flex-wrap justify-center gap-8 mt-12">
-          {services.slice(-3).map((service, index) => (
-            <div
-              key={index}
-              className="bg-blue-50 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 w-full sm:w-80"
-              onMouseEnter={() => setHoveredCard(index)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="rounded-full bg-gray-100">{service.icon}</div>
-                <h3 className="font-semibold text-gray-900 text-lg">{service.title}</h3>
-              </div>
-              <p className="text-gray-900 text-sm leading-relaxed mb-4">{service.description}</p>
-              <a
-                href={service.link}
-                className="hover:text-blue-800 font-medium flex items-center gap-2 transition-all duration-300 hover:underline"
-              >
-                Learn more
-                <svg
-                  className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
-                  ></path>
-                </svg>
-              </a>
+    {/* Last 3 Centered */}
+    <div className="flex flex-wrap justify-center gap-8 mt-16">
+      {services.slice(-3).map((service, index) => (
+        <div
+          key={index}
+          className="group  rounded-2xl p-6 shadow-lg transition-all duration-700 ease-out hover:-translate-y-3 hover:shadow-xl w-full sm:w-80"
+          style={{ animation: `fadeInUp 0.6s ease ${(index + services.length - 3) * 0.15}s both` }}
+        >
+          {/* Icon & Title */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="rounded-full bg-gray-100 p-3 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+              {service.icon}
             </div>
-          ))}
+            <h3 className="font-semibold text-gray-900 text-lg transition-colors duration-300 group-hover:text-blue-700">
+              {service.title}
+            </h3>
+          </div>
+
+          {/* Description */}
+          <p className="text-gray-700 text-sm leading-relaxed mb-4 transition-colors duration-300 group-hover:text-gray-900">
+            {service.description}
+          </p>
+
+          {/* Learn More Link */}
+          <a
+            href={service.link}
+            className="font-medium flex items-center gap-2 transition-all duration-300 text-blue-600 hover:text-blue-800"
+          >
+            Learn more
+            <svg
+              className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
+          </a>
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
+  </div>
+
+  {/* Animations */}
+  <style jsx>{`
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  `}</style>
+</section>
+
       {/* WHY CHOOSEUS */}
      <section className="py-16 bg-gray-50">
       <div className="container mx-auto grid md:grid-cols-2 gap-16">

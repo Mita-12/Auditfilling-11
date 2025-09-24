@@ -1,239 +1,158 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../component/Header";
-import { FaFileAlt, FaWpforms } from "react-icons/fa";
 import WhatsAppPopup from "../component/WhatsAppPopup";
+import { FaUserTie, FaBriefcase, FaUserEdit, FaUsers } from "react-icons/fa";
 
 export default function IncomeTax() {
-  const sidebarItems = [
-    "Salaried Individual",
-    "Professional",
-    "Self Employed",
-    "Hindu Undivided Family (HUF)",
+  const [serviceData, setServiceData] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [animate, setAnimate] = useState(false);
+
+  const services = [
+     {
+      title: "Income Tax",
+      description:
+        "Tax services and filing assistance for salaried individuals, ensuring compliance and maximized refunds.Professionals in India—including doctors, lawyers, consultants, freelancers, and anyone earning income from their own practice—are taxed as individuals under the same income tax slabs as salaried persons. You have the flexibility to choose between the new tax regime (which is now the default) and the old tax regime (optional), depending on which suits your financial situation better",
+      additional:
+        "We provide step-by-step guidance, document verification, and e-filing support for hassle-free tax filing.",
+      image: "/img/Blog 6.png",
+    },
+    {
+      title: "Salaried Individual",
+      description:
+        "Tax services and filing assistance for salaried individuals, ensuring compliance and maximized refunds.",
+      additional:
+        "We provide step-by-step guidance, document verification, and e-filing support for hassle-free tax filing.",
+      image: "/img/Blog 6.png",
+    },
+    {
+      title: "Professional",
+      description:
+        "Professional tax services tailored for consultants, freelancers, and small business owners.",
+      additional:
+        "Our experts handle complex cases, deductions, and compliance requirements to keep you worry-free.",
+      image: "/img/professional.png",
+    },
+    {
+      title: "Self Employed",
+      description:
+        "Comprehensive services for self-employed individuals, including GST, income tax, and business filing.",
+      additional:
+        "We simplify tax filing for self-employed professionals with personalized advice and timely support.",
+      image: "/img/self-employed.png",
+    },
+    {
+      title: "Hindu Undivided Family (HUF)",
+      description:
+        "Specialized tax filing and advisory services for HUFs with complex income structures.",
+      additional:
+        "Ensure accurate HUF filings, compliance, and optimized tax strategies with our expert guidance.",
+      image: "/img/huf.png",
+    },
   ];
 
+  useEffect(() => {
+    setServiceData(services[0]);
+  }, []);
+
+  const handleServiceClick = (index) => {
+    setAnimate(true);
+    setTimeout(() => {
+      setActiveIndex(index);
+      setServiceData(services[index]);
+      setAnimate(false);
+    }, 300);
+  };
+
   return (
-    <div className="bg-gray-100 min-h-screen">
-      {/* Header */}
+    <div className="min-h-screen ">
       <Header />
+      <WhatsAppPopup />
 
       {/* Sidebar */}
-      <aside className="w-64 bg-white rounded-lg shadow-md p-6 h-screen ml-5 fixed top-0 left-0 mt-28">
-        {/* add mt-16 so sidebar doesn’t overlap Header */}
-        <h3 className="text-xl font-semibold mb-4 text-center">Services</h3>
-        <ul className="space-y-3 text-center">
-          {sidebarItems.map((item, index) => (
-            <li
-              key={index}
-              className="p-3 bg-blue-50 rounded hover:bg-blue-100 cursor-pointer transition"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
+         <aside className="w-58 rounded-lg shadow-sm p-6 h-[90vh] fixed top-24 left-6 overflow-y-auto transition-all duration-300 ease-in-out hover:scale-[1.02]">
+  <ul className="space-y-3">
+    {services.map((item, index) => (
+      <li
+        key={index}
+        onClick={() => handleServiceClick(index)}
+        className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 ease-in-out transform
+          ${activeIndex === index ? "bg-blue-100 shadow-inner scale-105" : "bg-white hover:bg-blue-100 hover:scale-105"}`}
+      >
+        {item.icon}
+        <span className=" font-serif text-[15px] hover:text-blue-950 ">
+          <h1 className="transition-colors duration-300">{item.title}</h1>
+        </span>
+      </li>
+    ))}
+  </ul>
+</aside>
+
+      {/* Main Content */}
+<main className="flex-1 ml-59 mr-59 px-5 py-8 mt-15 overflow-y-auto">
+  <div
+    key={activeIndex} // ensures smooth React re-render
+    className={`bg-white p-6 rounded-lg shadow-md min-h-[90vh] flex flex-col md:flex-row items-start gap-6 transition-transform duration-300 ease-in-out ${
+      animate ? "translate-x-full opacity-0" : "translate-x-0 opacity-100"
+    }`}
+  >
+    {/* Left Side Image */}
+    {/* <div className="md:w-1/2 w-full flex justify-center">
+      <img
+        src={serviceData?.image || "/img/default-service.png"}
+        alt={serviceData?.title || "Service Image"}
+        className="rounded-lg  object-cover h-80 w-full"
+      />
+    </div> */}
+
+    {/* Right Side Content */}
+    <div className=" w-full ">
+      <h1 className="text-3xl  font-serif text-center md:text-4xl font-bold mb-8">
+        {serviceData?.title}
+      </h1>
+      <p className="text-gray-700 mb-4">
+        {serviceData?.description}
+      </p>
+      {serviceData?.additional && (
+        <p className="text-gray-700">
+          {serviceData.additional}
+        </p>
+      )}
+    </div>
+  </div>
+</main>
+
+
+
+
+      {/* Right Form */}
+      <aside className="w-60  rounded-lg  p-6 h-[45vh] fixed top-24 right-4 flex flex-col justify-between space-y-6">
+        <div>
+          <h3 className="text-xl font-semibold mb-4 text-center">Contact Form</h3>
+          <form className="space-y-3">
+            <input
+              type="text"
+              placeholder="Name"
+              className="w-full border px-2 py-1 rounded focus:ring-2 focus:ring-blue-400 outline-none"
+            />
+            <input
+              type=""
+              placeholder="Phone No"
+              className="w-full border px-2 py-1 rounded focus:ring-2 focus:ring-blue-400 outline-none"
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full border px-2 py-1 rounded focus:ring-2 focus:ring-blue-400 outline-none"
+            />
+          
+           <button className="mt-2 w-1/2 bg-blue-600 text-white py-1 rounded hover:bg-blue-700 transition-all mx-auto block">
+  Submit
+</button>
+          </form>
+        </div>
       </aside>
-
-      {/* Main Content (pushed right) */}
-      <main className="ml-70 px-6 py-8 mt-20">
-        {/* Top 3 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {/* Image Card */}
-          <div
-            className="bg-white rounded-lg shadow-md h-75 bg-cover bg-center hover:shadow-lg transition"
-            style={{ backgroundImage: "url('/img/Blog 6.png')" }}
-          ></div>
-
-          {/* Document Card */}
-          <div className="bg-white rounded-lg shadow-md p-5 hover:shadow-lg flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <FaFileAlt className="text-blue-600 text-xl" />
-              <h3 className="text-lg font-semibold">ITR Documents</h3>
-            </div>
-
-            {/* Content */}
-            <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
-              <li>Copy of PAN Card</li>
-              <li>Copy of Aadhaar Card</li>
-              <li>Previous Year IT Return (if any)</li>
-              <li>
-                Price <b className="text-blue-700">₹ 3000/-</b>
-              </li>
-            </ul>
-
-            {/* Button */}
-            <button className="mt-auto block mx-auto w-1/2 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-              Proceed
-            </button>
-          </div>
-
-          {/* Form Card */}
-          <div className="bg-white rounded-lg shadow-md p-3 hover:shadow-lg flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <FaWpforms className="text-blue-900 text-xl" />
-              <h3 className="text-lg font-semibold">Quick Form</h3>
-            </div>
-
-            {/* Form */}
-            <form className="space-y-3 flex flex-col flex-1">
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <textarea
-                placeholder="Your Message"
-                rows="3"
-                className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <button
-                type="submit"
-                className="mt-auto block mx-auto w-1/2 bg-gray-700 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-
-        </div>
-
-        {/* Large Card */}
-        <div className="bg-white rounded-lg shadow-md p-6 h-full">
-          <h1 className="text-2xl font-semibold mb-4 text-center">
-            What We Offer
-          </h1>
-          <p className="text-gray-700 mb-4">
-            We provide top-notch services tailored to your business needs.
-            Explore our offerings below to find the perfect solution for your
-            project.
-          </p>
-          <p className="text-gray-700">
-            Our team of experts ensures high-quality work, timely delivery,
-            and ongoing support.
-          </p>
-        </div>
-      </main>
-
-      {/* WhatsApp Popup */}
-      <WhatsAppPopup />
+        <WhatsAppPopup />
     </div>
   );
 }
-
-
-
-
-
-// import React from "react";
-
-// export default function IncomeTax() {
-//   const sidebarItems = [
-//     "Salaried Individual",
-//     "Professional",
-//     "Self Employed",
-//     "Hindu Undivided Family (HUF)",
-//   ];
-
-//   return (
-//     <div className="min-h-screen bg-gray-100">
-//       {/* Header Section */}
-//       <header
-//         className="fixed top-0 left-0 w-full h-64 bg-cover bg-center z-10"
-//         style={{
-//           backgroundImage: "url('/img/IncomeTax2.jpg')",
-//           backgroundPosition: "center",
-//           backgroundSize: "cover",
-//           backgroundRepeat: "no-repeat",
-//         }}
-//       >
-//         {/* Optional overlay */}
-//         <div className="absolute inset-0 flex items-center justify-center"></div>
-//       </header>
-
-//       {/* Main Content */}
-//       <div className="container mx-auto px-6 py-10 pt-72 flex gap-8">
-//         {/* Left Content */}
-//         <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
-//           <h2 className="text-2xl font-semibold mb-4">What We Offer</h2>
-//           <p className="text-gray-700 mb-4">
-//             We provide top-notch services tailored to your business needs.
-//             Explore our offerings below to find the perfect solution for your project.
-//           </p>
-//           <p className="text-gray-700">
-//             Our team of experts ensures high-quality work, timely delivery, and ongoing support.
-//           </p>
-//         </div>
-
-//         {/* Right Sidebar */}
-//         <aside className="w-64 flex flex-col gap-6">
-//           {/* Services Menu */}
-//           <div className="bg-white p-6 rounded-lg shadow-md">
-//             <h3 className="text-xl font-semibold mb-4">Services Menu</h3>
-//             <ul className="space-y-3">
-//               {sidebarItems.map((item, index) => (
-//                 <li
-//                   key={index}
-//                   className="p-3 bg-blue-50 rounded hover:bg-blue-100 cursor-pointer transition"
-//                 >
-//                   {item}
-//                 </li>
-//               ))}
-//             </ul>
-//           </div>
-
-//           {/* Form Card */}
-//           <div className="bg-white p-6 rounded-lg shadow-md">
-//             <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
-//             <form className="space-y-4">
-//               <div>
-//                 <label className="block text-gray-700 mb-1" htmlFor="name">
-//                   Name
-//                 </label>
-//                 <input
-//                   type="text"
-//                   id="name"
-//                   placeholder="Your Name"
-//                   className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-//                 />
-//               </div>
-//               <div>
-//                 <label className="block text-gray-700 mb-1" htmlFor="email">
-//                   Email
-//                 </label>
-//                 <input
-//                   type="email"
-//                   id="email"
-//                   placeholder="Your Email"
-//                   className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-//                 />
-//               </div>
-//               <div>
-//                 <label className="block text-gray-700 mb-1" htmlFor="message">
-//                   Message
-//                 </label>
-//                 <textarea
-//                   id="message"
-//                   placeholder="Your Message"
-//                   className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-//                   rows="4"
-//                 ></textarea>
-//               </div>
-//               <button
-//                 type="submit"
-//                 className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-//               >
-//                 Submit
-//               </button>
-//             </form>
-//           </div>
-//         </aside>
-//       </div>
-//     </div>
-//   );
-// }
-

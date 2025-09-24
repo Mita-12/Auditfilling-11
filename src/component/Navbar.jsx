@@ -5,7 +5,7 @@ import { MdAddIcCall } from "react-icons/md";
 function Navbar() {
     return (
         <div className="top-0 w-full bg-blue-100 shadow-sm py-2 z-50">
-            <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-10">
+            <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-16">
 
                 {/* Right: Logo */}
                 <div className="flex items-center gap-2 mt-2 md:mt-0">
