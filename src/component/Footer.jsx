@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import { FaFacebook, FaYoutube, FaInstagram, FaEnvelope, FaPhone } from "react-icons/fa";
 
 
@@ -40,9 +42,13 @@ function Footer() {
                                 </a>
                             </li>
                             <li>
-                                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+
+                                <Link
+                                    to="/cleartax"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
                                     Blog
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a href="#" className="text-gray-400 hover:text-white transition-colors">

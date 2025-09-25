@@ -6,8 +6,9 @@ import Footer from "./component/Footer.jsx";
 import ServicesSection from "./component/Services.jsx";
 import IncomeTax from "./page/IncomeTax.jsx";
 import Gst from "./page/Gst.jsx";
-import WhatsAppPopup from "./component/WhatsAppPopup.jsx";
+import WhatsAppPopup from "./form/WhatsAppPopup.jsx";
 import StartUp from "./page/Startup.jsx";
+// import Cleartax from "./page/Cleartax.jsx";
 
 function App() {
   return (
@@ -21,14 +22,17 @@ function App() {
               <Herosection />
               <ServicesSection />
               <Footer />
-                    <WhatsAppPopup />
-              
+              <WhatsAppPopup />
+
             </>
           }
         />
         <Route path="/income-tax" element={<IncomeTax />} />
         <Route path="/gst" element={<Gst />} />
-  <Route path="/startup" element={<StartUp />} />
+        <Route path="/startup" element={<StartUp />} />
+        {/* <Route path="/cleartax" element={<Cleartax />} /> */}
+
+
       </Routes>
     </Router>
   );

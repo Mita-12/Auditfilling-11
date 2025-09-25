@@ -154,7 +154,7 @@ const expertiseFeatures = [
   return (
     <div className="bg-gray-50">
       {/* Services */}
-   <section className="py-12 bg-white">
+   <section className=" bg-white">
   <div className="container mx-auto px-6">
     {/* Section Header */}
     <div className="text-center mb-16">
