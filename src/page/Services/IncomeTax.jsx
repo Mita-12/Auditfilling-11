@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Header from "../component/Header";
-import WhatsAppPopup from "../form/WhatsAppPopup";
+import Header from "../../component/Header";
+import WhatsAppPopup from "../../form/WhatsAppPopup";
 import { FaUserTie, FaBriefcase, FaUserEdit, FaUsers } from "react-icons/fa";
-import QuickForm from "../form/QuickForm";
+import QuickForm from "../../form/QuickForm";
 
 export default function IncomeTax() {
   const [serviceData, setServiceData] = useState(null);
@@ -66,26 +66,37 @@ export default function IncomeTax() {
   };
 
   return (
-    <div className="min-h-screen ">
+    <div className=" ">
       {/* Header */}
       <Header />
 
       {/* Sidebar */}
-         <aside className="w-58 rounded-lg shadow-sm p-6 h-[90vh] fixed top-24 left-6 overflow-y-auto transition-all duration-300 ease-in-out hover:scale-[1.02]">
+    <aside className="w-58 rounded-lg p-6 h-[90vh] fixed top-20 left-6 overflow-y-auto transition-all duration-300 ease-in-out">
   <ul className="space-y-3">
-    {services.map((item, index) => (
-      <li
-        key={index}
-        onClick={() => handleServiceClick(index)}
-        className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 ease-in-out transform
-          ${activeIndex === index ? "bg-blue-100 shadow-inner scale-105" : "bg-white hover:bg-blue-100 hover:scale-105"}`}
-      >
-        {item.icon}
-        <span className=" font-serif text-[15px] hover:text-blue-950 ">
-          <h1 className="transition-colors duration-300">{item.title}</h1>
-        </span>
-      </li>
-    ))}
+    {services.map((item, index) => {
+      const isActive = activeIndex === index;
+      return (
+        <li
+          key={index}
+          onClick={() => handleServiceClick(index)}
+          className={`
+            flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-all duration-300 ease-in-out transform
+            ${isActive ? "bg-blue-100 shadow-inner scale-105" : "bg-white hover:bg-blue-100 hover:scale-105"}
+          `}
+        >
+          {item.icon}
+          <span
+            className={`font-serif transition-all duration-300 ${
+              isActive
+                ? " text-sm font-semibold" // active service
+                : " text-base"             // inactive services
+            }`}
+          >
+            {item.title}
+          </span>
+        </li>
+      );
+    })}
   </ul>
 </aside>
 
@@ -93,18 +104,11 @@ export default function IncomeTax() {
 <main className="flex-1 ml-59 mr-59 px-5 py-8 mt-15 overflow-y-auto">
   <div
     key={activeIndex} // ensures smooth React re-render
-    className={`bg-white p-6 rounded-lg shadow-md min-h-[90vh] flex flex-col md:flex-row items-start gap-6 transition-transform duration-300 ease-in-out ${
+    className={`bg-white p-6 rounded-lg  min-h-[90vh] flex flex-col md:flex-row items-start gap-6 transition-transform duration-300 ease-in-out ${
       animate ? "translate-x-full opacity-0" : "translate-x-0 opacity-100"
     }`}
   >
-    {/* Left Side Image */}
-    {/* <div className="md:w-1/2 w-full flex justify-center">
-      <img
-        src={serviceData?.image || "/img/default-service.png"}
-        alt={serviceData?.title || "Service Image"}
-        className="rounded-lg  object-cover h-80 w-full"
-      />
-    </div> */}
+
 
     {/* Right Side Content */}
     <div className=" w-full ">
@@ -127,32 +131,8 @@ export default function IncomeTax() {
 
 
       {/* Right Form */}
-      <aside className="w-60  rounded-lg  p-6 h-[45vh] fixed top-24 right-4 flex flex-col justify-between space-y-6">
-        <div>
-          <h3 className="text-xl font-semibold mb-4 text-center">Contact Form</h3>
-          <form className="space-y-3">
-            <input
-              type="text"
-              placeholder="Name"
-              className="w-full border px-2 py-1 rounded focus:ring-2 focus:ring-blue-400 outline-none"
-            />
-            <input
-              type=""
-              placeholder="Phone No"
-              className="w-full border px-2 py-1 rounded focus:ring-2 focus:ring-blue-400 outline-none"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full border px-2 py-1 rounded focus:ring-2 focus:ring-blue-400 outline-none"
-            />
-          
-           <button className="mt-2 w-1/2 bg-blue-600 text-white py-1 rounded hover:bg-blue-700 transition-all mx-auto block">
-  Submit
-</button>
-          </form>
-        </div>
-      </aside>
+      <QuickForm/>
+   
         <WhatsAppPopup />
     </div>
   );

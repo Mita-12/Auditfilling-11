@@ -173,8 +173,8 @@ export default function StartUp() {
           <span
             className={`font-serif transition-all duration-300 ${
               isActive
-                ? "text-blue-950 text-lg font-semibold" // active service
-                : "text-gray-500 text-base"             // inactive services
+                ? " text-sm font-semibold" // active service
+                : " text-base"             // inactive services
             }`}
           >
             {item.title}
@@ -194,14 +194,6 @@ export default function StartUp() {
           className={`bg-white p-6 rounded-lg shadow-md min-h-[90vh] flex flex-col md:flex-row items-start gap-6 transition-transform duration-300 ease-in-out ${animate ? "translate-x-full opacity-0" : "translate-x-0 opacity-100"
             }`}
         >
-          {/* Left Side Image */}
-          {/* <div className="md:w-1/2 w-full flex justify-center">
-      <img
-        src={serviceData?.image || "/img/default-service.png"}
-        alt={serviceData?.title || "Service Image"}
-        className="rounded-lg  object-cover h-80 w-full"
-      />
-    </div> */}
 
           {/* Right Side Content */}
           <div className=" w-full ">

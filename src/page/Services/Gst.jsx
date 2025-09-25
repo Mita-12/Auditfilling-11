@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Header from "../component/Header";
-import WhatsAppPopup from "../form/WhatsAppPopup";
+import Header from "../../component/Header";
+import WhatsAppPopup from "../../form/WhatsAppPopup";
 import { FaUserTie, FaBriefcase, FaUserEdit, FaUsers } from "react-icons/fa";
-import QuickForm from "../form/QuickForm";
+import QuickForm from "../../form/QuickForm";
 
 export default function Gst() {
   const [serviceData, setServiceData] = useState(null);
@@ -86,28 +86,34 @@ export default function Gst() {
       <WhatsAppPopup />
 
       {/* Sidebar */}
-     <aside className="w-62 rounded-lg  p-6 h-[90vh] fixed top-28 left-6 overflow-y-auto transition-all duration-300 ease-in-out hover:scale-[1.02] bg-white">
-          <ul className="space-y-3">
-            {services.map((item, index) => (
-              <li
-                key={index}
-                onClick={() => handleServiceClick(index)}
-                className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 ease-in-out transform
-                  ${activeIndex === index
-                    ? "bg-blue-100 shadow-inner scale-105"
-                    : "bg-white hover:bg-blue-100 hover:scale-105"
-                  }`}
-              >
-                {item.icon}
-                <span className="font-serif text-[15px] hover:text-blue-950">
-                  <h1 className="transition-colors duration-300">
-                    {item.title}
-                  </h1>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </aside>
+      <aside className="w-58 rounded-lg p-6 h-[90vh] fixed top-20 left-6 overflow-y-auto transition-all duration-300 ease-in-out">
+  <ul className="space-y-3">
+    {services.map((item, index) => {
+      const isActive = activeIndex === index;
+      return (
+        <li
+          key={index}
+          onClick={() => handleServiceClick(index)}
+          className={`
+            flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-all duration-300 ease-in-out transform
+            ${isActive ? "bg-blue-100 shadow-inner scale-105" : "bg-white hover:bg-blue-100 hover:scale-105"}
+          `}
+        >
+          {item.icon}
+          <span
+            className={`font-serif transition-all duration-300 ${
+              isActive
+                ? " text-sm font-semibold" // active service
+                : " text-base"             // inactive services
+            }`}
+          >
+            {item.title}
+          </span>
+        </li>
+      );
+    })}
+  </ul>
+</aside>
 
       {/* Main Content */}
       <main className="flex-1 ml-59 mr-59 px-5 py-8 mt-20 overflow-y-auto">
