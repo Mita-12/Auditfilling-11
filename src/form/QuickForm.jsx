@@ -2,10 +2,10 @@ import React from "react";
 
 export default function QuickForm() {
   return (
-    <aside className="w-70 rounded-lg p-6 h-[45vh] fixed top-28 right-4 bg-white  flex flex-col justify-between space-y-6">
+    <aside className="w-65 bg-white rounded-lg p-6 h-[45vh]  fixed top-28  flex flex-col justify-between space-y-6">
       <div>
         <h3 className="text-xl font-semibold mb-4 text-center">
-          Contact Form
+         Quick Form
         </h3>
         <form className="space-y-3">
           <input

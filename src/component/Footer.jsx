@@ -6,7 +6,13 @@ import {
   FaInstagram,
   FaLinkedin,
 } from "react-icons/fa";
-import { HiOutlineMail, HiOutlinePhone } from "react-icons/hi";
+import {
+  HiOutlineMail,
+  HiOutlinePhone,
+  HiOutlineLocationMarker,
+} from "react-icons/hi";
+import { HiOutlineBuildingOffice } from "react-icons/hi2";
+
 
 function Footer() {
   return (
@@ -17,7 +23,7 @@ function Footer() {
           {/* Brand Section */}
           <div>
             <h2 className="text-2xl font-bold font-serif mb-4">AuditFiling</h2>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-400 text-lg leading-relaxed font-serif">
               Your trusted partner for tax, compliance, and business solutions.
             </p>
             <div className="flex gap-4 mt-6">
@@ -39,35 +45,114 @@ function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-lg font-semibold font-serif mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-gray-400 text-sm">
-              <li><Link to="/about" className="hover:text-white">About Us</Link></li>
-              <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
-              <li><Link to="/terms" className="hover:text-white">Terms & Conditions</Link></li>
-              <li><Link to="/privacy" className="hover:text-white">Privacy Policy</Link></li>
-              <li><Link to="/refund" className="hover:text-white">Refund Policy</Link></li>
+            <ul className="space-y-3 text-gray-400 text-lg font-serif">
+              <li>
+                <Link
+                  to="/about"
+                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
+                >
+                  About Us
+                </Link>
+              </li>
+              
+              <li>
+                <Link
+                  to="/blog"
+                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
+                >
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/terms"
+                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
+                >
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/privacy"
+                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/refund"
+                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
+                >
+                  Refund Policy
+                </Link>
+              </li>
             </ul>
           </div>
+
 
           {/* Services */}
           <div>
             <h3 className="text-lg font-semibold font-serif mb-4">Cloudsat's Entities</h3>
-            <ul className="space-y-2 text-gray-400 text-sm">
-              <li><Link to="/income-tax" className="hover:text-white">Audifiling</Link></li>
-              <li><Link to="/gst" className="hover:text-white">GST</Link></li>
-              <li><Link to="/startup-registration" className="hover:text-white">Tracolab</Link></li>
-              <li><Link to="/company" className="hover:text-white">Coddor</Link></li>
-              <li><Link to="/trademark" className="hover:text-white">Sociomint</Link></li>
-              <li><Link to="/bank-valuation" className="hover:text-white">Xbiz</Link></li>
-              <li><Link to="/legal" className="hover:text-white">Legal</Link></li>
+            <ul className="space-y-3 text-gray-400 text-lg font-serif">
+              <li>
+                <Link
+                  to="/income-tax"
+                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
+                >
+                  Audifiling
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/startup-registration"
+                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
+                >
+                  Tracolab
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/company"
+                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
+                >
+                  Coddor
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/trademark"
+                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
+                >
+                  Sociomint
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/bank-valuation"
+                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
+                >
+                  XpBIz
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/legal"
+                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
+                >
+                  CSAAP
+                </Link>
+              </li>
             </ul>
           </div>
 
+
           {/* Contact - Highlighted */}
           <div>
-            <h3 className="text-lg font-semibold font-serif mb-4">Contact</h3>
-            <div className="space-y-4">
+            <h3 className="text-lg font-semibold font-serif mb-4 text-center">Contact</h3>
+            <div className="space-y-4 font-serif ">
               {/* Email */}
-              <div className="flex items-center gap-3 bg-gray-800 px-4 py-3 rounded-lg">
+              <div className="flex items-center gap-3  px-1 py-1 rounded-sm">
                 <HiOutlineMail className="text-yellow-400 text-2xl" />
                 <a
                   href="mailto:info@auditfiling.com"
@@ -78,7 +163,7 @@ function Footer() {
               </div>
 
               {/* Phone */}
-              <div className="flex items-center gap-3 bg-gray-800 px-4 py-3 rounded-lg">
+              <div className="flex items-center gap-3  px-1 py-1 rounded-sm">
                 <HiOutlinePhone className="text-green-400 text-2xl" />
                 <a
                   href="tel:+917428600607"
@@ -87,14 +172,37 @@ function Footer() {
                   +91 7428600607
                 </a>
               </div>
-              <p className="text-gray-400 text-sm">Send us your queries anytime!</p>
+
+
+              {/* Head Office */}
+              <div className="flex items-start gap-3  px-1 py-1 rounded-sm">
+                <HiOutlineBuildingOffice className="text-red-400 text-6xl mt-1" />
+                <div>
+                  <h4 className="text-white font-semibold mb-1">Head Office</h4>
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    H No-511, Sarahah Tower, Subhash Nagar, Gurugram, India.
+                  </p>
+                </div>
+              </div>
+
+              {/* Branch Office */}
+              <div className="flex items-start gap-3  px-1 py-1 rounded-sm">
+                <HiOutlineLocationMarker className="text-red-400 text-8xl mt-1" />
+                <div>
+                  <h4 className="text-white font-semibold mb-1">Branch Office</h4>
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    Room No-12, 2nd Floor, BMC Panchadeep Market Complex,
+                    Bhoumya Nagar, Unit-4, Bhubaneswar, India.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Newsletter */}
           <div>
             <h3 className="text-lg font-semibold font-serif mb-4">Newsletter</h3>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-gray-400 text-sm mb-4 font-serif">
               Subscribe to get updates on our latest services and offers.
             </p>
             <form className="flex flex-col space-y-3">
@@ -115,7 +223,7 @@ function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-gray-800 mt-10 pt-6 text-center">
+        <div className="border-t border-gray-800 mt-5 pt-6 text-center">
           <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} AuditFiling. All rights reserved.
           </p>

@@ -81,78 +81,70 @@ export default function Gst() {
   };
 
   return (
-    <div className="min-h-screen ">
+     <div className="min-h-screen ">
+      {/* Header */}
       <Header />
-      <WhatsAppPopup />
 
-      {/* Sidebar */}
-      <aside className="w-58 rounded-lg p-6 h-[90vh] fixed top-20 left-6 overflow-y-auto transition-all duration-300 ease-in-out">
-  <ul className="space-y-3">
-    {services.map((item, index) => {
-      const isActive = activeIndex === index;
-      return (
-        <li
-          key={index}
-          onClick={() => handleServiceClick(index)}
-          className={`
-            flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-all duration-300 ease-in-out transform
-            ${isActive ? "bg-blue-100 shadow-inner scale-105" : "bg-white hover:bg-blue-100 hover:scale-105"}
-          `}
-        >
-          {item.icon}
-          <span
-            className={`font-serif transition-all duration-300 ${
-              isActive
-                ? " text-sm font-semibold" // active service
-                : " text-base"             // inactive services
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-70 rounded-lg p-4 h-[90vh] bg-white  fixed top-28 left-18 overflow-y-auto">
+          <ul className="space-y-4">
+            {services.map((item, index) => {
+              const isActive = activeIndex === index;
+              return (
+                <li
+                  key={index}
+                  onClick={() => handleServiceClick(index)}
+                  className={`flex items-center gap-4 p-4 mt-5 rounded-lg cursor-pointer transition-all duration-300 ${
+                    isActive
+                      ? "bg-grey-50 shadow-inner scale-105"
+                      : "bg-white hover:bg-blue-50 hover:scale-105"
+                  }`}
+                >
+                  {item.icon}
+                  <span
+                    className={`font-serif ${
+                      isActive ? "text-2xl text-blue-950 font-semibold " : "text-xl"
+                    }`}
+                  >
+                    {item.title}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 ml-82 px-6  py-10  ">
+          <div
+            key={activeIndex}
+            className={`bg-white p-8  mt-20  min-h-[90vh] transition-all duration-500 ease-in-out ${
+              animate
+                ? "translate-x-6 opacity-0"
+                : "translate-x-0 opacity-100"
             }`}
           >
-            {item.title}
-          </span>
-        </li>
-      );
-    })}
-  </ul>
-</aside>
-
-      {/* Main Content */}
-      <main className="flex-1 ml-59 mr-59 px-5 py-8 mt-20 overflow-y-auto">
-        <div
-          key={activeIndex} // ensures smooth React re-render
-          className={`bg-white p-6 rounded-lg  min-h-[90vh] flex flex-col md:flex-row items-start gap-6 transition-transform duration-300 ease-in-out ${animate ? "translate-x-full opacity-0" : "translate-x-0 opacity-100"
-            }`}
-        >
-          {/* Left Side Image */}
-          {/* <div className="md:w-1/2 w-full flex justify-center">
-      <img
-        src={serviceData?.image || "/img/default-service.png"}
-        alt={serviceData?.title || "Service Image"}
-        className="rounded-lg  object-cover h-80 w-full"
-      />
-    </div> */}
-
-          {/* Right Side Content */}
-          <div className=" w-full ">
-            <h1 className="text-3xl  font-serif text-center md:text-4xl font-bold mb-8">
+            <h1 className="text-3xl md:text-4xl font-serif text-center font-bold mb-6 text-gray-900">
               {serviceData?.title}
             </h1>
-            <p className="text-gray-700 mb-4">
+            <p className="text-gray-700 mb-4 leading-relaxed">
               {serviceData?.description}
             </p>
             {serviceData?.additional && (
-              <p className="text-gray-700">
+              <p className="text-gray-700 leading-relaxed">
                 {serviceData.additional}
               </p>
             )}
           </div>
+        </main>
+
+        {/* Right Form */}
+        <div className="hidden lg:block w-80 pr-6 mr-5">
+          <QuickForm />
         </div>
-      </main>
+      </div>
 
-
-
-
-      {/* Right Form */}
-     <QuickForm/>
       <WhatsAppPopup />
     </div>
   );

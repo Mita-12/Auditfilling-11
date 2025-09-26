@@ -1,395 +1,3 @@
-// import React, { useState } from "react";
-
-// import { FaChevronDown, FaChevronRight, FaBars, FaTimes } from "react-icons/fa";
-// import Herosection from "./Herosection";
-// import Navbar from "./Navbar";
-
-// function Header() {
-//     const [mobileOpen, setMobileOpen] = useState(false);
-
-
-
-//     return (
-
-//         <div className="">
-//             {/* Topbar */}
-//             <Navbar/>
-//             {/* Navbar */}
-//             <header className=" shadow-md fixed w-full z-50 mb-6 bg-blue-950">
-//                 <div className="container mx-auto flex items-center justify-between px-4 py-3">
-//                     {/* Logo */}
-//                     <div className="flex items-center gap-2">
-//                         <a href="/">
-//                             <img
-//                                 src="public/img/auditfile_logo.png"
-//                                 alt="Logo"
-//                                 className="w-12 h-auto"  // ✅ controls logo size
-//                             />
-//                         </a>
-//                         <a
-//                             href="/"
-//                             className=" text-white text-4xl font-medium font-serif tracking-wide no-underline"
-//                         >
-//                             AuditFiling
-//                         </a>
-//                     </div>
-
-
-//                     {/* Desktop Menu */}
-//                     <nav className=" flex items-center gap-4 text-white text-sm z-50 ml-7">
-
-//                         {/* Dropdown */}
-//                         <div className=" font-serif tracking-wide font-medium">
-//                             INCOME TAX
-
-//                         </div>
-//                         <div className=" font-serif tracking-wide">
-//                             GST
-
-//                         </div>
-//                         <div className=" font-serif tracking-wide">
-//                             STARTUP REGISTARTION
-
-//                         </div>
-//                         <div className=" font-serif tracking-wide">
-//                             COMPANY(MCA)
-
-//                         </div>
-//                         <div className=" font-serif tracking-wide">
-//                             TRADE MARK
-
-//                         </div>
-//                         <div className=" font-serif tracking-wide">
-//                             BANK EVALUATION
-
-//                         </div>
-//                         <div className=" font-serif tracking-wide">
-//                             trademark
-
-//                         </div>
-
-
-//                         <a href="#formid">
-//                             <button className="bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700 ml-5">
-//                                 Login
-//                             </button>
-//                         </a>
-//                     </nav>
-
-//                     {/* Mobile Menu Button */}
-//                     <button
-//                         className="md:hidden text-sm"
-//                         onClick={() => setMobileOpen(!mobileOpen)}
-//                     >
-//                         {mobileOpen ? <FaTimes /> : <FaBars />}
-//                     </button>
-//                 </div>
-
-//                 {/* Mobile Menu */}
-//                 {mobileOpen && (
-//                     <div className="md:hidden bg-white shadow-lg px-4 py-3">
-//                         <ul className="flex flex-col gap-3">
-//                             <li><a href="index.html" className="block">Home</a></li>
-//                             <li><a href="service.html" className="block">Services</a></li>
-//                             <li><a href="products.html" className="block">Products</a></li>
-//                         </ul>
-//                     </div>
-//                 )}
-//             </header>
-
-//         </div>
-
-
-//     );
-// }
-
-// export default Header;
-
-// Navbar.jsx
-
-// import React, { useState } from "react";
-
-// export default function Header() {
-//     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-//     const menuItems = [
-//         {
-//             title: "Income Tax",
-//             submenu: [
-//                 "Salaried Individual",
-//                 "Professional",
-//                 "Self Employed",
-//                 "Hindu Undivided Family (HUF)",
-//                 // etc
-//             ],
-//         },
-//         {
-//             title: "GST",
-//             submenu: [
-//                 "GST Registration",
-//                 "GST Return Filing",
-//                 "E-Invoicing",
-//                 // … etc
-//             ],
-//         },
-//         {
-//             title: "Registrations",
-//             submenu: [
-//                 "Startup",
-//                 "Proprietorship",
-//                 "Partnership",
-//                 "OPC",
-//                 "LLP",
-//                 "Private Limited Company",
-//                 "Section 8 Company",
-//                 "Trust Registration",
-//                 "Producer Company",
-//                 "Indian Subsidiary",
-//                 // … add more as needed
-//             ],
-//         },
-//         {
-//             title: "MCA",
-//             submenu: [
-//                 "Company Compliance",
-//                 "Name Change",
-//                 "Director Change",
-//                 // etc
-//             ],
-//         },
-//         {
-//             title: "trademark",
-//             submenu: [
-//                 "trademark Registration",
-//                 "trademark Objection",
-//                 "Logo Designing",
-//                 // … etc
-//             ],
-//         },
-
-
-//         {
-//             title: "trademark",
-//             submenu: [
-//                 "Company Compliance",
-//                 "Name Change",
-//                 "Director Change",
-//                 // etc
-//             ],
-//         },
-
-
-//         {
-//             title: "Bank valuation",
-//             submenu: [
-//                 "Company Compliance",
-//                 "Name Change",
-//                 "Director Change",
-//                 // etc
-//             ],
-//         },
-//         // add more top level items as needed
-//     ];
-
-//     return (
-//         <nav className="bg-white shadow fixed w-full ">
-//             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
-//                 <div className="flex justify-between h-16">
-//                     {/* Logo Section */}
-//                     {/* <div className="flex-shrink-0 flex items-center">
-//             <a href="/" className="flex items-center">
-//               <img
-//                 className="h-8 w-auto"
-//                 src="public/img/auditfile_logo.png"
-//                 alt="auditfilelogo"
-//               />
-//             </a>
-//           </div> */}
-
-//                     <div className="flflex-shrink-0 flex items-center gap-2">
-//                         <a href="/">
-//                             <img
-//                                 src="public/img/auditfile_logo.png"
-//                                 alt="Logo"
-//                                 className="w-7 h-auto"  // ✅ controls logo size
-//                             />
-//                         </a>
-//                         <a
-//                             href="/"
-//                             className=" text-blue-950 text-4xl font-medium font-serif tracking-wide no-underline"
-//                         >
-//                             AuditFiling
-//                         </a>
-//                     </div>
-
-//                     {/* Desktop Menu */}
-//                     <div className="hidden md:flex md:items-center space-x-6">
-//                         {menuItems.map((menu, idx) => (
-//                             <div key={idx} className="relative group">
-//                                 <button
-//                                     className="text-gray-700 hover:text-gray-900 px-3 py-2 font-medium focus:outline-none"
-//                                 >
-//                                     {menu.title}
-//                                 </button>
-//                                 <div className="absolute left-0 mt-2 w-48 bg-white border rounded-md shadow-lg opacity-0 group-hover:opacity-70 transform scale-95 group-hover:scale-70 transition ease-out duration-200 pointer-events-none group-hover:pointer-events-auto">
-//                                     <ul className="py-1">
-//                                         {menu.submenu.map((sub, si) => (
-//                                             <li key={si}>
-//                                                 <a
-//                                                     href={`/${menu.title.toLowerCase()}/${sub
-//                                                         .toLowerCase()
-//                                                         .replace(/\s+/g, "-")}`}
-//                                                     className="block px-4 py-2 text-gray-600 hover:bg-gray-70 hover:text-gray-900"
-//                                                 >
-//                                                     {sub}
-//                                                 </a>
-//                                             </li>
-//                                         ))}
-//                                     </ul>
-//                                 </div>
-//                             </div>
-//                         ))}
-
-//                         {/* Other links: e.g., Guides, Cities etc */}
-//                         {/* <a
-//               href="/guides"
-//               className="text-gray-700 hover:text-gray-900 px-3 py-2 font-medium"
-//             >
-//               Guides
-//             </a>
-//             <a
-//               href="/cities"
-//               className="text-gray-700 hover:text-gray-900 px-3 py-2 font-medium"
-//             >
-//               Cities
-//             </a> */}
-//                     </div>
-
-//                     {/* Auth / Login Signup */}
-//                     <div className="hidden md:flex md:items-center space-x-4">
-//                         <a
-//                             href="/login"
-//                             className="text-gray-700 hover:text-gray-900 px-3 py-2"
-//                         >
-//                             Login
-//                         </a>
-//                         <a
-//                             href="/signup"
-//                             className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-//                         >
-//                             Signup
-//                         </a>
-//                     </div>
-
-//                     {/* Mobile menu button */}
-//                     <div className="flex items-center md:hidden">
-//                         <button
-//                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-//                             className="text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-//                         >
-//                             <span className="sr-only">Open main menu</span>
-//                             {mobileMenuOpen ? (
-//                                 // Close icon
-//                                 <svg
-//                                     className="h-6 w-6"
-//                                     xmlns="http://www.w3.org/2000/svg"
-//                                     fill="none"
-//                                     viewBox="0 0 24 24"
-//                                     stroke="currentColor"
-//                                 >
-//                                     <path
-//                                         strokeLinecap="round"
-//                                         strokeLinejoin="round"
-//                                         strokeWidth={2}
-//                                         d="M6 18L18 6M6 6l12 12"
-//                                     />
-//                                 </svg>
-//                             ) : (
-//                                 // Hamburger icon
-//                                 <svg
-//                                     className="h-6 w-6"
-//                                     xmlns="http://www.w3.org/2000/svg"
-//                                     fill="none"
-//                                     viewBox="0 0 24 24"
-//                                     stroke="currentColor"
-//                                 >
-//                                     <path
-//                                         strokeLinecap="round"
-//                                         strokeLinejoin="round"
-//                                         strokeWidth={2}
-//                                         d="M4 6h16M4 12h16M4 18h16"
-//                                     />
-//                                 </svg>
-//                             )}
-//                         </button>
-//                     </div>
-//                 </div>
-//             </div>
-
-//             {/* Mobile Menu */}
-//             {mobileMenuOpen && (
-//                 <div className="md:hidden border-t border-gray-200 bg-white">
-//                     <div className="px-2 pt-2 pb-3 space-y-1">
-//                         {menuItems.map((menu, idx) => (
-//                             <div key={idx}>
-//                                 <button
-//                                     className="w-full text-left text-gray-700 hover:text-gray-900 px-3 py-2 font-medium focus:outline-none"
-//                                     onClick={() =>
-//                                         setMobileMenuOpen(prev => {
-//                                             // optional: expand submenu toggling logic
-//                                             return prev;
-//                                         })
-//                                     }
-//                                 >
-//                                     {menu.title}
-//                                 </button>
-//                                 {/* Could add collapsible submenu items here if you want */}
-//                                 <div className="pl-4">
-//                                     {menu.submenu.map((sub, si) => (
-//                                         <a
-//                                             key={si}
-//                                             href={`/${menu.title.toLowerCase()}/${sub
-//                                                 .toLowerCase()
-//                                                 .replace(/\s+/g, "-")}`}
-//                                             className="block px-3 py-2 text-gray-600 hover:bg-gray-70 hover:text-gray-900"
-//                                         >
-//                                             {sub}
-//                                         </a>
-//                                     ))}
-//                                 </div>
-//                             </div>
-//                         ))}
-
-//                         {/* <a
-//               href="/guides"
-//               className="block px-3 py-2 text-gray-700 hover:bg-gray-70 hover:text-gray-900"
-//             >
-//               Guides
-//             </a>
-//             <a
-//               href="/cities"
-//               className="block px-3 py-2 text-gray-700 hover:bg-gray-70 hover:text-gray-900"
-//             >
-//               Cities
-//             </a> */}
-//                         <a
-//                             href="/login"
-//                             className="block px-3 py-2 text-gray-700 hover:bg-gray-70 hover:text-gray-900"
-//                         >
-//                             Login
-//                         </a>
-//                         <a
-//                             href="/signup"
-//                             className="block px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-//                         >
-//                             Signup
-//                         </a>
-//                     </div>
-//                 </div>
-//             )}
-//         </nav>
-//     );
-// }
 
 import React, { useState, useEffect } from "react";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
@@ -427,10 +35,10 @@ function Header() {
 
       {/* Main Header */}
       <header className="shadow-md bg-white transition-all duration-300">
-        <div className="container mx-auto flex items-center justify-between px-3">
+        <div className="container mx-auto flex items-center justify-between px-15">
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center gap-8 text-sm z-50 ml-45 px-3 py-3">
+          <nav className="hidden md:flex items-center gap-8 text-sm z-50 ml-45 px-4 py-4">
 
             {/* ================= Income Tax ================= */}
             <div
@@ -443,7 +51,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "income" ? null : "income")
                   }
-                  className="font-serif tracking-wide font-thin flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Income Tax
                   <FaChevronDown
@@ -453,7 +61,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "income" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "income" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -478,7 +86,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "gst" ? null : "gst")
                   }
-                  className="font-serif tracking-wide font-thin flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   GST
                   <FaChevronDown
@@ -488,7 +96,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "gst" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "gst" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -515,7 +123,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "startup" ? null : "startup")
                   }
-                  className="font-serif tracking-wide font-thin flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Startup Registration
                   <FaChevronDown
@@ -525,7 +133,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-2 w-[550px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-8 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "startup" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[550px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-8 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "startup" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -562,7 +170,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "company" ? null : "company")
                   }
-                  className="font-serif tracking-wide font-thin flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Company(MCA)
                   <FaChevronDown
@@ -572,7 +180,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-2 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "mca" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "mca" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -611,7 +219,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "trademark" ? null : "trademark")
                   }
-                  className="font-serif tracking-wide font-thin flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Trade Mark
                   <FaChevronDown
@@ -621,7 +229,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-2 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "trademark" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "trademark" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -650,7 +258,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "bankvaluation" ? null : "bankvaluation")
                   }
-                  className="font-serif tracking-wide font-thin flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Bank Valuation
                   <FaChevronDown
@@ -660,7 +268,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "bankvaluation" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "bankvaluation" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -688,7 +296,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "legal" ? null : "legal")
                   }
-                  className="font-serif tracking-wide font-thin flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Legal
                   <FaChevronDown
@@ -698,7 +306,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4
     grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300
     ${dropdownOpen === "legal"
                     ? "opacity-100 scale-100 visible pointer-events-auto"
@@ -732,7 +340,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "blog" ? null : "blog")
                   }
-                  className="font-serif tracking-wide font-thin flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Blog
                   <FaChevronDown
@@ -742,7 +350,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-2 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4
     grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300
     ${dropdownOpen === "blog"
                     ? "opacity-100 scale-100 visible pointer-events-auto"

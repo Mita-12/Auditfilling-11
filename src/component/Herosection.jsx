@@ -5,56 +5,59 @@ export default function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="w-full min-h-[96vh] flex items-center justify-center bg-white text-gray-900">
-        <div className="mx-auto text-center rounded-2xl px-8 md:px-20 py-12 max-w-7xl">
-          {/* Hero Heading */}
-          <h1 className="text-4xl md:text-5xl font-extrabold font-serif leading-tight">
-            Trusted Legal Services <br />
-            for Your Business & Compliance
-          </h1>
+     <section className="w-full min-h-[70vh] flex flex-col items-center justify-center  text-gray-900 text-center  px-6 md:px-12 py-16 ">
+  {/* Hero Heading */}
+  <h1 className="text-4xl md:text-6xl font-bold font-serif mt-20 leading-tight ">
+    Trusted Legal Services <br />
+    for Your <span className="text-black">Business & Compliance</span>
+  </h1>
 
-          <p className="mt-6 text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
-            From <span className="font-bold text-blue-600">Company Registration</span> to{" "}
-            <span className="text-blue-600 font-bold">GST, Trademarks,</span> and{" "}
-            <span className="text-blue-600 font-bold">Compliance</span> –{" "}
-            <span className="font-bold text-gray-900">AuditFiling</span> is your one-stop partner{" "}
-            for all legal and financial needs.
-          </p>
+  {/* Subheading */}
+  <p className="mt-6 text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
+    From{" "}
+    <span className="font-semibold text-blue-600">Company Registration</span>{" "}
+    to{" "}
+    <span className="text-blue-600 font-semibold">GST, Trademarks</span>, and{" "}
+    <span className="text-blue-600 font-semibold">Compliance</span> —{" "}
+    <span className="font-bold text-gray-900">AuditFiling</span> is your trusted
+    one-stop partner for all legal and financial needs.
+  </p>
 
-          {/* Hero Buttons */}
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#contact"
-              className="bg-blue-600 text-white font-semibold px-8 py-3 rounded-md shadow-lg hover:bg-blue-700 hover:scale-105 transition-transform duration-300"
-            >
-              Get Started
-            </a>
-            <a
-              href="#services"
-              className="border border-blue-600 text-blue-600 px-8 py-3 rounded-md hover:bg-blue-50 hover:text-blue-700 hover:scale-105 transition-transform duration-300"
-            >
-              Explore Services
-            </a>
-          </div>
+  {/* Hero Buttons */}
+  <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+    <a
+      href="#contact"
+      className="bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg shadow-md hover:bg-blue-700 hover:scale-105 transition-transform duration-300"
+    >
+      Get Started
+    </a>
+    <a
+      href="#services"
+      className="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-700 hover:scale-105 transition-transform duration-300"
+    >
+      Explore Services
+    </a>
+  </div>
 
-          {/* Trust Badge */}
-          <div className="mt-12 inline-block bg-white/80 backdrop-blur-md rounded-lg px-6 py-3 shadow-lg">
-            <p className="text-sm md:text-base text-gray-800 font-medium">
-              ✅ Trusted by <span className="text-blue-600 font-semibold">500+ Businesses</span> | ⚖️ Expert Legal Professionals
-            </p>
-          </div>
-        </div>
-      </section>
+  {/* Trust Badge */}
+  <div className="mt-12 inline-flex items-center gap-2 bg-white/90 backdrop-blur-md rounded-lg px-6 py-3 shadow-lg border">
+    <span className="text-lg">✅</span>
+    <p className="text-sm md:text-base text-gray-800 font-medium">
+      Trusted by <span className="text-blue-600 font-semibold">500+ Businesses</span> | ⚖️ Expert Legal Professionals
+    </p>
+  </div>
+</section>
+
 {/* Hero-style Section (ThemeForest Layout) with your content */}
-<section className="w-full ">
-  <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 px-6 md:px-12">
+<section className="w-full py-12">
+  <div className="flex flex-col-reverse md:flex-row items-center gap-8 px-6 md:px-12 lg:px-20">
 
     {/* Text Content */}
-    <div className="md:w-1/2 text-center md:text-left">
-      <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+    <div className="w-full md:w-1/2 text-center md:text-left">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 font-serif leading-tight">
         Who Are We?
       </h2>
-      <p className="text-lg text-gray-700 leading-relaxed mb-6">
+      <p className="text-base sm:text-lg text-gray-700 leading-relaxed mb-6">
         With experienced attorneys, we can handle a broad range of compliance issues 
         for businesses, government entities, organizations, professionals, and individuals 
         at the local, regional, and national levels.
@@ -73,16 +76,17 @@ export default function HomePage() {
     </div>
 
     {/* Image */}
-    <div className="md:w-1/2">
+    <div className="w-full md:w-1/2 flex justify-center md:justify-end mb-6 md:mb-0">
       <img
         src="/img/support.jpg"
         alt="Who Are We"
-        className="rounded-lg hover:scale-105 transition-transform duration-300"
+        className="w-full sm:w-4/5 md:w-full rounded-xl hover:scale-105 transition-transform duration-300"
       />
     </div>
 
   </div>
 </section>
+
 
 
 

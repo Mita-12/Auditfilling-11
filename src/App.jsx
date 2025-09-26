@@ -13,6 +13,8 @@ import Company from "./page/Services/Company.jsx";
 import Trademark from "./page/Services/TradeMark.jsx";
 import Legal from "./page/Services/Legal.jsx";
 import Bankvaluation from "./page/Services/BankValuation.jsx";
+import AboutUsPage from "./page/AboutUs.jsx";
+// import Contact from "./page/ContactPage.jsx";
 // import Cleartax from "./page/Cleartax.jsx";
 
 function App() {
@@ -35,16 +37,15 @@ function App() {
         <Route path="/income-tax" element={<IncomeTax />} />
         <Route path="/gst" element={<Gst />} />
         <Route path="/startup" element={<StartUp />} />
-                <Route path="/company" element={<Company />} />
-                <Route path="/trademark" element={<Trademark />} />
-                                                <Route path="/bankvaluation" element={<Bankvaluation />} />
-
-                                <Route path="/legal" element={<Legal />} />
-
-
-
+        <Route path="/company" element={<Company />} />
+        <Route path="/trademark" element={<Trademark />} />
+        <Route path="/bankvaluation" element={<Bankvaluation />} />
+        <Route path="/legal" element={<Legal />} />
 
         <Route path="/blog" element={<BlogPage />} />
+                {/* <Route path="/contact" element={<Contact />} /> */}
+
+        <Route path="/about" element={<AboutUsPage />} />
 
 
 
