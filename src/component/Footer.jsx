@@ -54,6 +54,14 @@ function Footer() {
                   About Us
                 </Link>
               </li>
+                 <li>
+                <Link
+                  to="/contact"
+                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
+                >
+                  Contact Us
+                </Link>
+              </li>
               
               <li>
                 <Link

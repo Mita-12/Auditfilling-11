@@ -1,100 +1,147 @@
-// import React from 'react';
+import React from "react";
+import Header from "../component/Header";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
+import Footer from "../component/Footer";
 
-// const Contact = () => {
-//   return (
-//     <section className="py-16 px-8 bg-gray-50">
-//       <div className="max-w-screen-xl mx-auto">
-//         <div className="text-center mb-12">
-//           <h2 className="text-3xl font-bold text-gray-800 mb-4">
-//             Connect With PrimeNotary For Fast Legal Assistance
-//           </h2>
-//           <p className="text-lg text-gray-600">
-//             You can easily reach us through phone or email for any notary or legal inquiries. Our dedicated team is always ready to provide quick and reliable assistance whenever you need it.
-//           </p>
-//         </div>
-        
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-//           <div className="bg-white shadow-lg rounded-lg p-6">
-//             <div className="flex items-center justify-center mb-4">
-//               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-//                 <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0 2a10 10 0 1 1 0-20 10 10 0 0 1 0 20z" clipRule="evenodd" />
-//               </svg>
-//             </div>
-//             <h3 className="text-xl font-semibold text-gray-800">Head Office</h3>
-//             <p className="text-gray-600">Jln Cempaka Wangi No 22, Jakarta - Indonesia</p>
-//           </div>
 
-//           <div className="bg-white shadow-lg rounded-lg p-6">
-//             <div className="flex items-center justify-center mb-4">
-//               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-//                 <path d="M2 2a2 2 0 012-2h12a2 2 0 012 2v16a2 2 0 01-2 2H4a2 2 0 01-2-2V2z" />
-//               </svg>
-//             </div>
-//             <h3 className="text-xl font-semibold text-gray-800">Let's Talk</h3>
-//             <p className="text-gray-600">Phone: +6221.2002.2012</p>
-//             <p className="text-gray-600">Fax: +6221.2002.2013</p>
-//           </div>
+const Contact = () => {
+  return (
+    <section className="py-16 px-8 bg-gray-50">
+      <Header />
+      <div className="max-w-screen-xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12 mt-28">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            Connect With PrimeNotary For Fast Legal Assistance
+          </h2>
+          <p className="text-lg text-gray-600">
+            You can easily reach us through phone or email for any notary or
+            legal inquiries. Our dedicated team is always ready to provide quick
+            and reliable assistance whenever you need it.
+          </p>
+        </div>
 
-//           <div className="bg-white shadow-lg rounded-lg p-6">
-//             <div className="flex items-center justify-center mb-4">
-//               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-//                 <path d="M2 2a2 2 0 012-2h12a2 2 0 012 2v16a2 2 0 01-2 2H4a2 2 0 01-2-2V2z" />
-//               </svg>
-//             </div>
-//             <h3 className="text-xl font-semibold text-gray-800">Email Support</h3>
-//             <p className="text-gray-600">support@yourdomain.tld</p>
-//             <p className="text-gray-600">hello@yourdomain.tld</p>
-//           </div>
+        {/* Contact Info + Map */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* Contact Info */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Head Office */}
+            <div className="bg-white shadow-lg rounded-lg p-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Head Office
+              </h3>
+              <p className="text-gray-600">
+                H No-511, Sarahah Tower, Subhash Nagar, Gurugram, India
+              </p>
+            </div>
 
-//           <div className="bg-white shadow-lg rounded-lg p-6">
-//             <div className="flex items-center justify-center mb-4">
-//               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-//                 <path fillRule="evenodd" d="M5.23 2.46a7.538 7.538 0 0110.04 0A7.538 7.538 0 0118.54 5.77a7.535 7.535 0 010 10.04 7.537 7.537 0 01-3.27 3.27c-.52.26-1.06.46-1.61.67-.48-.47-.96-.95-1.43-1.42a6.543 6.543 0 00-8.19 0c-.48.47-.96.95-1.43 1.42a6.545 6.545 0 01-1.61-.67A7.537 7.537 0 012.46 5.77a7.538 7.538 0 011.77-3.31zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-//               </svg>
-//             </div>
-//             <h3 className="text-xl font-semibold text-gray-800">Office Hour</h3>
-//             <p className="text-gray-600">Monday - Friday</p>
-//             <p className="text-gray-600">9:00 AM to 6:00 PM</p>
-//           </div>
-//         </div>
+            {/* Branch Office */}
+            <div className="bg-white shadow-lg rounded-lg p-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Branch Office
+              </h3>
+              <p className="text-gray-600">
+                Room No-12, 2nd Floor, BMC Panchadeep Market Complex, Bhoumya
+                Nagar, Unit-4, Bhubaneswar, India
+              </p>
+            </div>
 
-//         <div className="text-center mt-8">
-//           <button className="bg-orange-500 text-white px-6 py-2 rounded-lg mr-4">
-//             Live Chat
-//           </button>
-//           <button className="bg-transparent text-orange-500 border-2 border-orange-500 px-6 py-2 rounded-lg">
-//             Discover more
-//           </button>
-//         </div>
+            {/* Phone */}
+            <div className="bg-white shadow-lg rounded-lg p-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Let’s Talk
+              </h3>
+              <p className="text-gray-600">Phone: +91 98765 43210</p>
+              <p className="text-gray-600">Fax: +91 11223 44556</p>
+            </div>
 
-//         <div className="text-center mt-8">
-//           <p className="text-gray-600">Follow Our Social Media:</p>
-//           <div className="flex justify-center space-x-4 mt-2">
-//             <a href="#" className="text-gray-600 hover:text-orange-500">
-//               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-//                 <path d="M12 2a10 10 0 1 1-10 10A10 10 0 0 1 12 2zm-1 15V9h2v8h-2zm-1-9h4V6h-4z" />
-//               </svg>
-//             </a>
-//             <a href="#" className="text-gray-600 hover:text-orange-500">
-//               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-//                 <path d="M22 12a10 10 0 1 0-10 10 10 10 0 0 0 10-10zM12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20zm3 5h2v4h-2V7zm-4 0h2v4h-2V7z" />
-//               </svg>
-//             </a>
-//             <a href="#" className="text-gray-600 hover:text-orange-500">
-//               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-//                 <path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm1 13h-2v-4h2zm-1-6c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z" />
-//               </svg>
-//             </a>
-//             <a href="#" className="text-gray-600 hover:text-orange-500">
-//               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-//                 <path d="M2 4h3v16H2zm18 0h3v16h-3z" />
-//               </svg>
-//             </a>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
+            {/* Email */}
+            <div className="bg-white shadow-lg rounded-lg p-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Email Support
+              </h3>
+              <p className="text-gray-600">support@primenotary.in</p>
+              <p className="text-gray-600">info@primenotary.in</p>
+            </div>
+          </div>
 
-// export default Contact;
+          {/* Map */}
+          <div className="rounded-lg overflow-hidden shadow-lg h-96">
+            <iframe
+              title="PrimeNotary Location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.281204176034!2d77.04275631508068!3d28.64727998241021!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19b3e8f2c3b9%3A0x6aef8e65d4b7b6e6!2sSubhash%20Nagar%2C%20Gurugram%2C%20Haryana!5e0!3m2!1sen!2sin!4v1695723456789"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="text-center mt-12">
+          <button className="bg-red-400 text-white px-6 py-2 rounded-lg mr-4 hover:bg-red-700 transition">
+            Live Chat
+          </button>
+          <button className="bg-transparent text-orange-500 border-2 border-red-600 px-6 py-2 rounded-lg hover:bg-red-600 hover:text-white transition">
+            Discover More
+          </button>
+        </div>
+
+        {/* Social Media */}
+
+        <div className="text-center mt-8">
+          <p className="text-gray-600">Follow Our Social Media:</p>
+          <div className="flex justify-center space-x-6 mt-4">
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-orange-500 text-2xl"
+            >
+              <FaFacebookF />
+            </a>
+            <a
+              href="https://twitter.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-orange-500 text-2xl"
+            >
+              <FaTwitter />
+            </a>
+            <a
+              href="https://www.instagram.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-orange-500 text-2xl"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href="https://www.linkedin.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-orange-500 text-2xl"
+            >
+              <FaLinkedinIn />
+            </a>
+            <a
+              href="https://www.youtube.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-orange-500 text-2xl"
+            >
+              <FaYoutube />
+            </a>
+          </div>
+        </div>
+
+      </div>
+      <Footer/>
+    </section>
+  );
+};
+
+export default Contact;

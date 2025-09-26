@@ -29,7 +29,7 @@ const values = [
         title: 'VISION & MISSION',
         description:
             'AUDITFILING is already a known name, and with its close alignment with auditfiling.com and auditfilling.com, we are equipped to offer better value to start-up India.We are working round the clock to give unmatched quality and efficient service to the business of all type and size. We wish to be known for our quality.',
-            
+
     },
     {
         title: 'Future Trust',
@@ -89,7 +89,7 @@ export default function AboutUsPage() {
                     </div>
                 </div>
             </section>
-            <Footer/>
+            <Footer />
         </div>
     );
 }

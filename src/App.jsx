@@ -14,7 +14,11 @@ import Trademark from "./page/Services/TradeMark.jsx";
 import Legal from "./page/Services/Legal.jsx";
 import Bankvaluation from "./page/Services/BankValuation.jsx";
 import AboutUsPage from "./page/AboutUs.jsx";
-// import Contact from "./page/ContactPage.jsx";
+import { MdContactPage } from "react-icons/md";
+import { Contact2 } from "lucide-react";
+import Contact from "./page/ContactPage.jsx";
+import PrivacyPolicy from "./page/PrivecyPolicy.jsx";
+import TermsAndConditions from "./page/TermCondition.jsx";
 // import Cleartax from "./page/Cleartax.jsx";
 
 function App() {
@@ -43,9 +47,13 @@ function App() {
         <Route path="/legal" element={<Legal />} />
 
         <Route path="/blog" element={<BlogPage />} />
-                {/* <Route path="/contact" element={<Contact />} /> */}
+                <Route path="/contact" element={<Contact />} />
 
         <Route path="/about" element={<AboutUsPage />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                                <Route path="/terms" element={<TermsAndConditions/>} />
+
+
 
 
 

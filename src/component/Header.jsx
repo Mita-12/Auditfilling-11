@@ -26,7 +26,7 @@ function Header() {
   const handleLeave = () => setDropdownOpen(null);
 
   return (
-    <div className={`fixed top-0 left-0 w-full z-50 transition-shadow duration-300 ${isScrolled ? "shadow-lg" : ""}`}>
+    <div className={`fixed top-0 left-0 w-full z-50 transition-shadow duration-300 ${isScrolled ? "shadow-sm" : ""}`}>
 
       {/* Topbar Navbar */}
       <div className="bg-white shadow-sm">
