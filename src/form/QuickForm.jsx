@@ -2,7 +2,7 @@ import React from "react";
 
 export default function QuickForm() {
   return (
-    <aside className="w-65 bg-white rounded-lg p-6 h-[45vh]  fixed top-28  flex flex-col justify-between space-y-6">
+    <aside className="w-65  bg-white rounded-lg p-6 h-[45vh]  lg:sticky top-28  flex flex-col justify-between space-y-6">
       <div>
         <h3 className="text-xl font-semibold mb-4 text-center">
          Quick Form

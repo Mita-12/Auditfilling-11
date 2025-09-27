@@ -300,7 +300,7 @@ export default function PrivacyPolicy() {
     <section className="min-h-screen  text-gray-800">
         <Header/>
       {/* Hero Section */}
-      <div className="relative bg-blue-100 mt-25 py-20 lg:py-24">
+      <div className="relative  mt-20 py-20 lg:py-24">
         <div className="absolute inset-0 "></div>
         <div className="relative max-w-6xl mx-auto px-6 text-center">
           <h1 className="text-4xl text-black md:text-5xl font-serif  lg:text-6xl font-bold  mb-4 leading-tight">
@@ -336,8 +336,8 @@ export default function PrivacyPolicy() {
                   onClick={() => handleSectionClick(sec.id)}
                   className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
                     activeSection === sec.id
-                      ? "bg-orange-50 text-orange-600 border-l-4 border-orange-500 font-medium"
-                      : "text-gray-600 hover:text-orange-500 hover:bg-gray-50"
+                      ? "bg-orange-50 text-red-600 border-l-4 border-red-600  font-medium"
+                      : "text-gray-600 hover:text-red-600  hover:bg-gray-50"
                   }`}
                 >
                   <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
@@ -523,7 +523,7 @@ function SubSection({ title, children }) {
 function ListItem({ children }) {
   return (
     <li className="flex items-start">
-      <span className="text-orange-500 mr-3 mt-1">•</span>
+      <span className="text-red-600  mr-3 mt-1">•</span>
       <span>{children}</span>
     </li>
   );
@@ -531,7 +531,7 @@ function ListItem({ children }) {
 
 function ImportantNote({ children }) {
   return (
-    <div className=" p-2 bg-orange-50 border-l-2 border-orange-500 rounded-r-sm">
+    <div className=" p-2 bg-orange-50 border-l-2 border-red-600 rounded-r-sm">
       <p className="text-gray-800 font-medium text-lg">{children}</p>
     </div>
   );
@@ -544,7 +544,7 @@ function ContactInfo({ label, value, href }) {
       {href ? (
         <a 
           href={href} 
-          className="text-orange-600 hover:text-orange-700 hover:underline font-medium transition-colors"
+          className="text-red-600  hover:text-red-600 00 hover:underline font-medium transition-colors"
         >
           {value}
         </a>

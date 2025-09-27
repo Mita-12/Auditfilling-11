@@ -1,13 +1,13 @@
 import React from "react";
 // import WhoWeAreImg from "../assets/images/who-we-are.jpg"; // Make sure the path is correct
 
-export default function HomePage() {
+export default function Herosection() {
   return (
     <>
       {/* Hero Section */}
      <section className="w-full min-h-[70vh] flex flex-col items-center justify-center  text-gray-900 text-center  px-6 md:px-12 py-16 ">
   {/* Hero Heading */}
-  <h1 className="text-4xl md:text-6xl font-bold font-serif mt-20 leading-tight ">
+  <h1 className="text-4xl md:text-6xl font-bold font-serif mt-25 leading-tight ">
     Trusted Legal Services <br />
     for Your <span className="text-black">Business & Compliance</span>
   </h1>
@@ -49,8 +49,8 @@ export default function HomePage() {
 </section>
 
 {/* Hero-style Section (ThemeForest Layout) with your content */}
-<section className="w-full py-12">
-  <div className="flex flex-col-reverse md:flex-row items-center gap-8 px-6 md:px-12 lg:px-20">
+<section className="w-full ">
+  <div className="flex flex-col-reverse md:flex-row items-center gap-10 px-6 md:px-25 ">
 
     {/* Text Content */}
     <div className="w-full md:w-1/2 text-center md:text-left">
@@ -80,7 +80,7 @@ export default function HomePage() {
       <img
         src="/img/support.jpg"
         alt="Who Are We"
-        className="w-full sm:w-4/5 md:w-full rounded-xl hover:scale-105 transition-transform duration-300"
+        className="w-full sm:w-4/5 md:w-full rounded-sm hover:scale-105 transition-transform duration-300"
       />
     </div>
 

@@ -131,7 +131,7 @@ function BlogPage() {
   {
     id: 1,
     title: "Understanding Income Tax Slabs for FY 2024-25",
-    image: "https://images.unsplash.com/photo-1603570411035-0ee2f1c76c41?auto=format&fit=crop&w=800&q=80",
+    image: "/img/Blog 6.png",
     excerpt: "Learn about the latest income tax slabs and how to optimize your tax savings for the financial year 2024-25.",
     content: `Comprehensive guide on income tax slabs, deductions, and tax planning strategies for individuals and businesses...`,
     date: "2024-01-15",
@@ -142,7 +142,7 @@ function BlogPage() {
   {
     id: 2,
     title: "GST Registration Process Simplified",
-    image: "https://images.unsplash.com/photo-1581090700227-0e2f96748c30?auto=format&fit=crop&w=800&q=80",
+    image: "/img/incomeTax.jpg",
     excerpt: "Step-by-step guide to GST registration for new businesses with common pitfalls to avoid.",
     content: `Complete walkthrough of GST registration process, documentation required, and post-registration compliance...`,
     date: "2024-01-12",
@@ -153,7 +153,7 @@ function BlogPage() {
   {
     id: 3,
     title: "Startup India Registration Benefits",
-    image: "https://images.unsplash.com/photo-1612831661645-b9d0e682aa3f?auto=format&fit=crop&w=800&q=80",
+    image: "/img/professional.png",
     excerpt: "Discover the benefits and process of registering your startup under Startup India scheme.",
     content: `Detailed analysis of tax benefits, funding opportunities, and compliance relaxations for registered startups...`,
     date: "2024-01-10",
@@ -186,7 +186,7 @@ function BlogPage() {
   {
     id: 6,
     title: "Bank Valuation Methods for Businesses",
-    image: "https://images.unsplash.com/photo-1611162617211-96de5aa0e96e?auto=format&fit=crop&w=800&q=80",
+    image: "/img/support.jpg",
     excerpt: "Understanding different valuation methods used by banks for business loans.",
     content: `Comparative analysis of asset-based, income-based, and market-based valuation approaches...`,
     date: "2024-01-03",
@@ -197,7 +197,7 @@ function BlogPage() {
   {
     id: 7,
     title: "Legal Compliance for Small Businesses",
-    image: "https://images.unsplash.com/photo-1596079898418-0d3a37c77f2b?auto=format&fit=crop&w=800&q=80",
+    image: "",
     excerpt: "Essential legal compliance requirements every small business should know.",
     content: `Comprehensive guide to labor laws, contract requirements, and regulatory compliance for SMEs...`,
     date: "2024-01-01",
@@ -208,7 +208,7 @@ function BlogPage() {
   {
     id: 8,
     title: "GST Return Filing Checklist",
-    image: "https://images.unsplash.com/photo-1581090700227-0e2f96748c30?auto=format&fit=crop&w=800&q=80",
+    image: "",
     excerpt: "Monthly GST return filing checklist to avoid penalties and interest.",
     content: `Detailed checklist for GSTR-1, GSTR-3B, and annual return filing with common mistakes to avoid...`,
     date: "2023-12-28",
@@ -219,7 +219,7 @@ function BlogPage() {
   {
     id: 9,
     title: "Income Tax Deductions Under Section 80C",
-    image: "https://images.unsplash.com/photo-1603570411035-0ee2f1c76c41?auto=format&fit=crop&w=800&q=80",
+    image: "",
     excerpt: "Maximize your tax savings with these Section 80C deduction options.",
     content: `Complete list of investments and expenses eligible for deduction under Section 80C...`,
     date: "2023-12-25",
@@ -258,7 +258,7 @@ function BlogPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen ">
       {/* Header */}
       <Header />
 
@@ -292,7 +292,7 @@ function BlogPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           
           {/* Left Sidebar - Categories */}
           <aside className="lg:col-span-1">
@@ -358,7 +358,7 @@ function BlogPage() {
 
             {/* Blog Cards Grid */}
             {filteredBlogs.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {filteredBlogs.map((blog) => (
                   <article 
                     key={blog.id}

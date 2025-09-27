@@ -38,7 +38,7 @@ function Header() {
         <div className="container mx-auto flex items-center justify-between px-15">
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center gap-8 text-sm z-50 ml-45 px-4 py-4">
+          <nav className="hidden md:flex items-center gap-8 text-lg z-50 ml-45 px-4 py-4">
 
             {/* ================= Income Tax ================= */}
             <div
@@ -61,7 +61,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "income" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "income" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -96,7 +96,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "gst" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "gst" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -133,7 +133,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[550px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-8 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "startup" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[550px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-8 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "startup" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -180,7 +180,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "mca" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "mca" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -229,7 +229,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "trademark" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "trademark" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -268,7 +268,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "bankvaluation" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "bankvaluation" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -307,7 +307,7 @@ function Header() {
               </Link>
               <div
                 className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4
-    grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300
+    grid grid-cols-2 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300
     ${dropdownOpen === "legal"
                     ? "opacity-100 scale-100 visible pointer-events-auto"
                     : "opacity-0 scale-95 invisible pointer-events-none"}`}
@@ -351,7 +351,7 @@ function Header() {
               </Link>
               <div
                 className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4
-    grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300
+    grid grid-cols-2 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300
     ${dropdownOpen === "blog"
                     ? "opacity-100 scale-100 visible pointer-events-auto"
                     : "opacity-0 scale-95 invisible pointer-events-none"}`}

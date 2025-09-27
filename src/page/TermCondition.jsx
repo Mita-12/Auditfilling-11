@@ -12,6 +12,7 @@ import {
   RefreshCw,
   Scale
 } from 'lucide-react';
+import Header from "../component/Header";
 
 const sections = [
   { id: "accepting-terms", title: "Accepting the Terms", icon: UserCheck },
@@ -78,59 +79,26 @@ export default function TermsAndConditions() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-blue-200/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-3">
-              <div className="bg-blue-600 p-2 rounded-lg">
-                <FileText className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">Terms & Conditions</h1>
-                <p className="text-sm text-gray-600">Auditfiling.com • Cloudsat Pvt. Ltd.</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="hidden md:flex items-center space-x-2 bg-blue-50 px-3 py-1 rounded-full">
-                <div className="w-24 bg-blue-200 rounded-full h-2">
-                  <div 
-                    className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                <span className="text-sm font-medium text-blue-700">{progress}% read</span>
-              </div>
-              <button 
-                onClick={scrollToTop}
-                className={`p-2 bg-blue-600 text-white rounded-lg transition-all duration-300 transform ${
-                  showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                }`}
-              >
-                <ArrowUp className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+<Header/>
 
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 py-16 lg:py-20">
+      <div className="relative  py-20 lg:py-30">
         <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative max-w-7xl mx-auto font-serif px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 mb-6">
-            <Calendar className="h-4 w-4 text-white" />
-            <span className="text-white/90 text-sm">Last Updated: {new Date().toLocaleDateString('en-IN')}</span>
+            <Calendar className="h-4 w-4 text-black" />
+            <span className="text-black text-sm">Last Updated: {new Date().toLocaleDateString('en-IN')}</span>
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-boldtext-black mb-4 leading-tight">
             Terms & Conditions
           </h1>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-black max-w-3xl mx-auto leading-relaxed">
             Please read these terms carefully before using Auditfiling.com services
           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Navigation */}
           <nav className="lg:w-80 lg:sticky lg:top-24 lg:self-start">
@@ -184,22 +152,7 @@ export default function TermsAndConditions() {
                 })}
               </div>
 
-              {/* Progress Card */}
-              <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200/50">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-blue-900">Reading Progress</span>
-                  <span className="text-sm font-bold text-blue-700">{progress}%</span>
-                </div>
-                <div className="w-full bg-blue-200 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all duration-500"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                <p className="text-xs text-blue-600 mt-2">
-                  {readSections.size} of {sections.length} sections completed
-                </p>
-              </div>
+           
             </div>
           </nav>
 

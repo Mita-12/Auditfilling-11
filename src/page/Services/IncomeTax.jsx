@@ -9,6 +9,7 @@ import {
   FaUsers,
   FaLandmark,
 } from "react-icons/fa";
+import Footer from "../../component/Footer";
 
 export default function IncomeTax() {
   const [serviceData, setServiceData] = useState(null);
@@ -73,7 +74,7 @@ export default function IncomeTax() {
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-70 rounded-lg p-4 h-[90vh] bg-white  fixed top-28 left-18 overflow-y-auto">
+        <aside className="w-70 rounded-lg p-4 h-[90vh] bg-white  fixed  top-28 left-18 overflow-y-auto">
           <ul className="space-y-4">
             {services.map((item, index) => {
               const isActive = activeIndex === index;
@@ -130,7 +131,6 @@ export default function IncomeTax() {
           <QuickForm />
         </div>
       </div>
-
       <WhatsAppPopup />
     </div>
   );
