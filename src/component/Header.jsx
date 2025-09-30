@@ -35,10 +35,10 @@ function Header() {
 
       {/* Main Header */}
       <header className="shadow-md bg-white transition-all duration-300">
-        <div className="container mx-auto flex items-center justify-between px-15">
+        <div className="container mx-auto flex items-center justify-between px-10">
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center gap-8 text-sm z-50 ml-45 px-4 py-4">
+          <nav className="hidden md:flex items-center gap-7 text-sm z-50 ml-45 px-3 py-3">
 
             {/* ================= Income Tax ================= */}
             <div
@@ -51,7 +51,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "income" ? null : "income")
                   }
-                  className="font-serif tracking-wide text-lg flex items-center gap-1"
+                  className="font-serif tracking-wide text-sm flex items-center gap-1"
                 >
                   Income Tax
                   <FaChevronDown
@@ -86,7 +86,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "gst" ? null : "gst")
                   }
-                  className="font-serif tracking-wide text-lg flex items-center gap-1"
+                  className="font-serif tracking-wide text-sm flex items-center gap-1"
                 >
                   GST
                   <FaChevronDown
@@ -123,7 +123,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "startup" ? null : "startup")
                   }
-                  className="font-serif tracking-wide text-lg flex items-center gap-1"
+                  className="font-serif tracking-wide text-sm flex items-center gap-1"
                 >
                   Startup Registration
                   <FaChevronDown
@@ -170,7 +170,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "company" ? null : "company")
                   }
-                  className="font-serif tracking-wide text-lg flex items-center gap-1"
+                  className="font-serif tracking-wide text-sm flex items-center gap-1"
                 >
                   Company(MCA)
                   <FaChevronDown
@@ -219,7 +219,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "trademark" ? null : "trademark")
                   }
-                  className="font-serif tracking-wide text-lg flex items-center gap-1"
+                  className="font-serif tracking-wide text-sm flex items-center gap-1"
                 >
                   Trade Mark
                   <FaChevronDown
@@ -258,7 +258,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "bankvaluation" ? null : "bankvaluation")
                   }
-                  className="font-serif tracking-wide text-lg flex items-center gap-1"
+                  className="font-serif tracking-wide text-sm flex items-center gap-1"
                 >
                   Bank Valuation
                   <FaChevronDown
@@ -296,7 +296,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "legal" ? null : "legal")
                   }
-                  className="font-serif tracking-wide text-lg flex items-center gap-1"
+                  className="font-serif tracking-wide text-sm flex items-center gap-1"
                 >
                   Legal
                   <FaChevronDown
@@ -340,7 +340,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "blog" ? null : "blog")
                   }
-                  className="font-serif tracking-wide text-lg flex items-center gap-1"
+                  className="font-serif tracking-wide text-sm flex items-center gap-1"
                 >
                   Blog
                   <FaChevronDown
