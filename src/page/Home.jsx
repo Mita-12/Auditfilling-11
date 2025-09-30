@@ -1,19 +1,24 @@
-// // Home.jsx
-// import React from "react";
-// import Header from "../component/Header.jsx";
-// import Herosection from "../component/Herosection.jsx";
-// import Footer from "../component/Footer.jsx";
-// import ServicesSection from "../component/Services.jsx";
+// Home.jsx
+import React from "react";
+import Header from "../component/Header";
+import ServicesSection from "../component/Services";
+import Testimonials from "./Testimonial";
+import Footer from "../component/Footer";
+import WhatsAppPopup from "../form/WhatsAppPopup";
+import Herosection from "../component/Herosection";
+;
 
-// function Home() {
-//   return (
-//     <>
-//       <Header />
-//       <Herosection />
-//       <ServicesSection />
-//       <Footer />
-//     </>
-//   );
-// }
+function Home() {
+  return (
+    <>
+      <Header />
+      <Herosection />
+      <ServicesSection />
+      <Testimonials />
+      <Footer />
+      <WhatsAppPopup />
+    </>
+  );
+}
 
-// export default Home;
+export default Home;

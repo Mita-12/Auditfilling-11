@@ -107,7 +107,7 @@ export default function Header() {
           </div>
 
           {/* Login Button */}
-          <a href="#formid" className="mt-2 md:mt-0">
+          <a href="/login" className="mt-2 md:mt-0">
             <button className="bg-blue-600 text-white text-sm px-5 py-2 rounded-lg hover:bg-blue-700">
               Login
             </button>

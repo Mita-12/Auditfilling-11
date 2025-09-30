@@ -83,7 +83,7 @@ export default function Trademark() {
   };
 
   return (
-    <div className="min-h-screen ">
+   <div className="min-h-screen ">
       {/* Header */}
       <Header />
 

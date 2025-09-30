@@ -35,10 +35,10 @@ function Header() {
 
       {/* Main Header */}
       <header className="shadow-md bg-white transition-all duration-300">
-        <div className="container mx-auto flex items-center justify-between px-10">
+        <div className="container mx-auto flex items-center justify-between px-15">
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center gap-7 text-sm z-50 ml-45 px-3 py-3">
+          <nav className="hidden md:flex items-center gap-8 text-lg z-50 ml-45 px-4 py-4">
 
             {/* ================= Income Tax ================= */}
             <div
@@ -51,7 +51,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "income" ? null : "income")
                   }
-                  className="font-serif tracking-wide text-sm flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Income Tax
                   <FaChevronDown
@@ -61,7 +61,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "income" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "income" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -86,7 +86,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "gst" ? null : "gst")
                   }
-                  className="font-serif tracking-wide text-sm flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   GST
                   <FaChevronDown
@@ -96,7 +96,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "gst" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "gst" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -123,7 +123,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "startup" ? null : "startup")
                   }
-                  className="font-serif tracking-wide text-sm flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Startup Registration
                   <FaChevronDown
@@ -133,7 +133,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[550px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-8 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "startup" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[550px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-8 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "startup" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -170,7 +170,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "company" ? null : "company")
                   }
-                  className="font-serif tracking-wide text-sm flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Company(MCA)
                   <FaChevronDown
@@ -180,7 +180,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "mca" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[600px] bg-white text-gray-900 rounded shadow-sm p-6 grid grid-cols-3 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "mca" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -219,7 +219,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "trademark" ? null : "trademark")
                   }
-                  className="font-serif tracking-wide text-sm flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Trade Mark
                   <FaChevronDown
@@ -229,7 +229,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "trademark" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[400px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "trademark" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -258,7 +258,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "bankvaluation" ? null : "bankvaluation")
                   }
-                  className="font-serif tracking-wide text-sm flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Bank Valuation
                   <FaChevronDown
@@ -268,7 +268,7 @@ function Header() {
                 </button>
               </Link>
               <div
-                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300 ${dropdownOpen === "bankvaluation" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === "bankvaluation" ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                   }`}
               >
                 <ul className="space-y-2">
@@ -296,7 +296,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "legal" ? null : "legal")
                   }
-                  className="font-serif tracking-wide text-sm flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Legal
                   <FaChevronDown
@@ -307,7 +307,7 @@ function Header() {
               </Link>
               <div
                 className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4
-    grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300
+    grid grid-cols-2 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300
     ${dropdownOpen === "legal"
                     ? "opacity-100 scale-100 visible pointer-events-auto"
                     : "opacity-0 scale-95 invisible pointer-events-none"}`}
@@ -340,7 +340,7 @@ function Header() {
                   onClick={() =>
                     setDropdownOpen(dropdownOpen === "blog" ? null : "blog")
                   }
-                  className="font-serif tracking-wide text-sm flex items-center gap-1"
+                  className="font-serif tracking-wide text-lg flex items-center gap-1"
                 >
                   Blog
                   <FaChevronDown
@@ -351,7 +351,7 @@ function Header() {
               </Link>
               <div
                 className={`absolute left-0 mt-4 w-[350px] bg-white text-gray-900 rounded shadow-sm p-4
-    grid grid-cols-2 gap-4 z-50 text-[14px] font-semibold transform transition-all duration-300
+    grid grid-cols-2 gap-4 z-50 text-[15px] font-semibold transform transition-all duration-300
     ${dropdownOpen === "blog"
                     ? "opacity-100 scale-100 visible pointer-events-auto"
                     : "opacity-0 scale-95 invisible pointer-events-none"}`}
