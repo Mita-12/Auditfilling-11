@@ -105,7 +105,7 @@ function Footer() {
             <ul className="space-y-3 text-gray-400 text-lg font-serif">
               <li>
                 <Link
-                  to="/income-tax"
+                  to="/"
                   className="block hover:text-white px-2 py-2 rounded-md transition-colors"
                 >
                   Audifiling
@@ -113,7 +113,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  to="/startup-registration"
+                  to="/http://localhost:5173/income-tax"
                   className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
                 >
                   Tracolab
@@ -121,7 +121,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  to="/company"
+                  to="/https://coddor.com/"
                   className="block hover:text-white px-2 py-2 rounded-md transition-colors"
                 >
                   Coddor
@@ -129,7 +129,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  to="/trademark"
+                  to="/https://sociomint.com/"
                   className="block hover:text-white px-2 py-2 rounded-md transition-colors"
                 >
                   Sociomint
@@ -137,7 +137,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  to="/bank-valuation"
+                  to="/https://www.xpbiz.com/"
                   className="block hover:text-white px-2 py-2 rounded-md transition-colors"
                 >
                   XpBIz
@@ -145,7 +145,7 @@ function Footer() {
               </li>
               <li>
                 <Link
-                  to="/legal"
+                  to="/https://csaap.com/"
                   className="block hover:text-white px-2 py-2 rounded-md transition-colors"
                 >
                   CSAAP
