@@ -132,14 +132,8 @@
 //     </section>
 //   );
 // }
-import React, { useState, useEffect } from "react";
-import {
-  FaStar,
-  FaChevronLeft,
-  FaChevronRight,
-  FaQuoteLeft,
-  FaQuoteRight,
-} from "react-icons/fa";
+import React from "react";
+import { FaStar, FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
 const testimonials = [
   {
@@ -180,97 +174,43 @@ const testimonials = [
   },
 ];
 
-
-export default function TestimonialSlider() {
-  const [current, setCurrent] = useState(1);
-
-  const prevSlide = () => {
-    setCurrent((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
-  };
-
-  const nextSlide = () => {
-    setCurrent((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
-  };
-
-  // Auto slide
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
+export default function TestimonialGrid() {
   return (
-    <section className="bg-white py-16">
+    <section className="bg-gray-50 py-16">
       <div className="container mx-auto px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-10">
-          Happy <span className="text-blue-600">Users</span> Say About MargBooks
+        <h2 className="text-3xl md:text-4xl font-bold mb-12">
+          What <span className="text-blue-600">Our Users</span> Say About AuditFilling
         </h2>
 
-        {/* Slider */}
-        <div className="relative flex items-center justify-center gap-6">
-          {/* Left Button */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 text-gray-500 hover:text-gray-800"
-          >
-            <FaChevronLeft size={30} />
-          </button>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {testimonials.map((t) => (
+            <div
+              key={t.id}
+              className="bg-white p-6 md:p-8 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-2xl"
+            >
+              <div className="flex justify-center text-yellow-400 mb-4">
+                {Array.from({ length: t.rating }).map((_, i) => (
+                  <FaStar key={i} />
+                ))}
+              </div>
 
-          {/* Testimonial Cards */}
-          <div className="flex items-center justify-center gap-6">
-            {testimonials.map((t, index) => {
-              // Check relative position
-              let position =
-                index === current
-                  ? "center"
-                  : index === (current - 1 + testimonials.length) % testimonials.length
-                  ? "left"
-                  : index === (current + 1) % testimonials.length
-                  ? "right"
-                  : "hidden";
+              <p className="text-gray-600 italic mb-4">
+                <FaQuoteLeft className="inline mr-2 text-blue-500" />
+                {t.review}
+                <FaQuoteRight className="inline ml-2 text-blue-500" />
+              </p>
 
-              return (
-                <div
-                  key={t.id}
-                  className={`transition-all duration-500 ease-in-out ${
-                    position === "center"
-                      ? "w-96 p-8 bg-white shadow-xl rounded-xl scale-100 opacity-100 z-10"
-                      : position === "left" || position === "right"
-                      ? "w-80 p-6 bg-white shadow-md rounded-lg scale-90 opacity-60"
-                      : "hidden"
-                  }`}
-                >
-                  {/* Stars */}
-                  <div className="flex justify-center text-yellow-500 mb-4">
-                    {Array.from({ length: t.rating }).map((_, i) => (
-                      <FaStar key={i} />
-                    ))}
-                  </div>
-
-                  {/* Review */}
-                  <p className="text-gray-600 italic">
-                    <FaQuoteLeft className="inline mr-2 text-blue-500" />
-                    {t.review}
-                    <FaQuoteRight className="inline ml-2 text-blue-500" />
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Right Button */}
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 text-gray-500 hover:text-gray-800"
-          >
-            <FaChevronRight size={30} />
-          </button>
+              <h3 className="font-semibold text-gray-800">{t.name}</h3>
+              <p className="text-gray-500 text-sm">{t.company}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
+
 
 
 

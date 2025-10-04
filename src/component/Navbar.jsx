@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { TiMail } from "react-icons/ti";
 import { MdAddIcCall } from "react-icons/md";
-import { FaBars, FaTimes } from "react-icons/fa";
+import LoginForm from "../form/LoginForm";
 
-export default function Header() {
+export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-    const [showLogin, setShowLogin] = useState(false);
-
+  const [showLogin, setShowLogin] = useState(false);
 
   return (
-    <header className="top-0 w-full bg-blue-100 shadow-sm py-3 z-50">
+    <header className="top-0 w-full bg-blue-100 shadow-sm py-3 z-50 relative">
       <div className="container mx-auto px-10 flex flex-col md:flex-row justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2">
@@ -24,21 +23,10 @@ export default function Header() {
           </a>
         </div>
 
-        {/* Hamburger for mobile */}
-        {/* <div className="md:hidden mt-2">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="text-blue-950 text-xl"
-          >
-            {menuOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div> */}
-
-        {/* Menu: Contact + Social + Login */}
+        {/* Menu + Contact */}
         <div
-          className={`${
-            menuOpen ? "flex" : "hidden"
-          } flex-col md:flex-row md:flex md:items-center gap-4 md:gap-6 w-full md:w-auto mt-4 md:mt-0`}
+          className={`${menuOpen ? "flex" : "flex"
+            } flex-col md:flex-row md:items-center gap-4 md:gap-6 w-full md:w-auto mt-4 md:mt-0`}
         >
           {/* Contact Email */}
           <a
@@ -60,7 +48,7 @@ export default function Header() {
           <div className="flex flex-wrap items-center gap-2 mt-2 md:mt-0">
             {/* Facebook */}
             <a
-              href="https://facebook.com/yourpage"
+              href="https://www.facebook.com/profile.php?id=100075888295123"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -72,7 +60,7 @@ export default function Header() {
             </a>
             {/* Instagram */}
             <a
-              href="https://instagram.com/yourpage"
+              href="https://www.instagram.com/audit.filling/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -84,7 +72,7 @@ export default function Header() {
             </a>
             {/* LinkedIn */}
             <a
-              href="https://linkedin.com/yourprofile"
+              href="https://www.linkedin.com/in/audit-filing-3a394a194/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -96,7 +84,7 @@ export default function Header() {
             </a>
             {/* YouTube */}
             <a
-              href="https://youtube.com/yourchannel"
+              href="https://youtube.com/@auditfilling?si=GUxfX6wapvqnNkRr	"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
@@ -109,13 +97,22 @@ export default function Header() {
           </div>
 
           {/* Login Button */}
-          <a href="/login" className="mt-2 md:mt-0">
-            <button className="bg-blue-600 text-white text-sm px-5 py-2 rounded-lg hover:bg-blue-700">
-              Login
-            </button>
-          </a>
+          <button
+            onClick={() => setShowLogin(true)}
+            className="bg-blue-600 text-white px-4 py-2 rounded mt-2 md:mt-0"
+          >
+            Login
+          </button>
         </div>
       </div>
+
+      {/* Login Popup */}
+      {showLogin && (
+  <LoginForm 
+    isOpen={showLogin} 
+    onClose={() => setShowLogin(false)} 
+  />
+)}
     </header>
   );
 }

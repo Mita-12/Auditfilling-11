@@ -87,7 +87,7 @@ export default function Gst() {
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-70 rounded-lg p-4 h-[90vh] bg-white  fixed top-28 left-18 overflow-y-auto">
+        <aside className="w-70 rounded-lg p-4 h-[90vh] bg-white  sticky top-28 left-18 overflow-y-auto">
           <ul className="space-y-4">
             {services.map((item, index) => {
               const isActive = activeIndex === index;
@@ -116,7 +116,7 @@ export default function Gst() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 ml-82 px-6  py-10  ">
+        <main className="flex-1 ml-20 px-6  py-10  ">
           <div
             key={activeIndex}
             className={`bg-white p-8  mt-20  min-h-[90vh] transition-all duration-500 ease-in-out ${

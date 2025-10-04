@@ -87,14 +87,7 @@ function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/refund"
-                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
-                >
-                  Refund Policy
-                </Link>
-              </li>
+              
             </ul>
           </div>
 

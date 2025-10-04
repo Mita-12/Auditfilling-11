@@ -50,7 +50,7 @@ export default function Herosection() {
 
 {/* Hero-style Section (ThemeForest Layout) with your content */}
 <section className="w-full ">
-  <div className="flex flex-col-reverse md:flex-row items-center gap-10 px-12 md:px-25 ">
+  <div className="flex flex-col-reverse md:flex-row items-center gap-10 px-12 md:px-28 ">
 
     {/* Text Content */}
     <div className="w-full md:w-1/2 text-center md:text-left">

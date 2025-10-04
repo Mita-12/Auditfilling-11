@@ -13,6 +13,7 @@ import {
   Scale
 } from 'lucide-react';
 import Header from "../component/Header";
+import Footer from "../component/Footer";
 
 const sections = [
   { id: "accepting-terms", title: "Accepting the Terms", icon: UserCheck },
@@ -381,7 +382,7 @@ export default function TermsAndConditions() {
             </Section>
 
             {/* Acceptance Footer */}
-            <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-200 p-8 text-center">
+            <div className="bg-white rounded-2xl shadow-lg border-2 mb-15 border-blue-200 p-8 text-center">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="h-8 w-8 text-blue-600" />
               </div>
@@ -402,7 +403,9 @@ export default function TermsAndConditions() {
           </div>
         </div>
       </div>
+       <Footer/>
     </div>
+   
   );
 }
 

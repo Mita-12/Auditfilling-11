@@ -1,413 +1,307 @@
-// // src/components/LoginForm.jsx
-// import React, { useState } from "react";
-
-// export default function LoginForm() {
-//   const [loginOption, setLoginOption] = useState("password");
-//   const [showPassword, setShowPassword] = useState(false);
-//   const [showOtp, setShowOtp] = useState(false);
-//   const [userName, setUserName] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [otp, setOtp] = useState("");
-//   const [error, setError] = useState("");
-//   const [loading, setLoading] = useState(false);
-
-//   const handleLogin = async (e) => {
-//     e.preventDefault();
-//     setError("");
-//     setLoading(true);
-//     try {
-//       const response = await fetch("https://auditfiling.com/login_auth_page", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           "X-CSRF-TOKEN": "220djcZdAF8cyQic2BC473KQ54v1wDGBJeFSLJbZ",
-//         },
-//         body: JSON.stringify({
-//           user_name: userName,
-//           password: loginOption === "password" ? password : undefined,
-//           otp: loginOption === "otp" ? otp : undefined,
-//           login_option: loginOption,
-//         }),
-//       });
-//       const data = await response.json();
-//       if (response.ok) {
-//         console.log("Login successful:", data);
-//       } else {
-//         setError(data.message || "Login failed. Please try again.");
-//       }
-//     } catch (err) {
-//       setError("Something went wrong. Please try again.");
-//       console.error(err);
-//     }
-//     setLoading(false);
-//   };
-
-//   return (
-//     <form
-//       onSubmit={handleLogin}
-//       className="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-6"
-//     >
-//       {/* Mobile/Email */}
-//       <div className="mb-5">
-//         <label className="block text-gray-700 font-medium mb-2">
-//           Mobile No/Email ID
-//         </label>
-//         <div className="flex items-center border rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-teal-400">
-//           <span className="px-3 text-gray-500">
-//             <i className="fa fa-envelope"></i>
-//           </span>
-//           <input
-//             type="text"
-//             placeholder="Enter Mobile No/Email ID"
-//             required
-//             className="w-full p-2 outline-none"
-//             value={userName}
-//             onChange={(e) => setUserName(e.target.value)}
-//           />
-//         </div>
-//       </div>
-
-//       {/* Login Option */}
-//       <div className="mb-5 flex justify-between">
-//         <label className="flex items-center space-x-2">
-//           <input
-//             type="radio"
-//             className="form-radio text-teal-500"
-//             checked={loginOption === "password"}
-//             onChange={() => setLoginOption("password")}
-//           />
-//           <span>Login with Password</span>
-//         </label>
-//         <label className="flex items-center space-x-2">
-//           <input
-//             type="radio"
-//             className="form-radio text-teal-500"
-//             checked={loginOption === "otp"}
-//             onChange={() => setLoginOption("otp")}
-//           />
-//           <span>Login with OTP</span>
-//         </label>
-//       </div>
-
-//       {/* Password Field */}
-//       {loginOption === "password" && (
-//         <div className="mb-5">
-//           <label className="block text-gray-700 font-medium mb-2">Your Password</label>
-//           <div className="flex items-center border rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-teal-400">
-//             <span className="px-3 text-gray-500">
-//               <i className="fa fa-lock"></i>
-//             </span>
-//             <input
-//               type={showPassword ? "text" : "password"}
-//               placeholder="Enter Password"
-//               className="w-full p-2 outline-none"
-//               value={password}
-//               onChange={(e) => setPassword(e.target.value)}
-//             />
-//             <button
-//               type="button"
-//               className="px-3"
-//               onClick={() => setShowPassword(!showPassword)}
-//             >
-//               {showPassword ? (
-//                 <i className="fa fa-eye-slash text-gray-400"></i>
-//               ) : (
-//                 <i className="fa fa-eye text-gray-400"></i>
-//               )}
-//             </button>
-//           </div>
-//         </div>
-//       )}
-
-//       {/* OTP Field */}
-//       {loginOption === "otp" && (
-//         <div className="mb-5">
-//           <label className="block text-gray-700 font-medium mb-2">Your OTP</label>
-//           <div className="flex items-center border rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-teal-400">
-//             <span className="px-3 text-gray-500">
-//               <i className="fa fa-lock"></i>
-//             </span>
-//             <input
-//               type={showOtp ? "text" : "password"}
-//               placeholder="Enter OTP"
-//               className="w-full p-2 outline-none"
-//               value={otp}
-//               onChange={(e) => setOtp(e.target.value)}
-//             />
-//             <button
-//               type="button"
-//               className="px-3"
-//               onClick={() => setShowOtp(!showOtp)}
-//             >
-//               {showOtp ? (
-//                 <i className="fa fa-eye-slash text-gray-400"></i>
-//               ) : (
-//                 <i className="fa fa-eye text-gray-400"></i>
-//               )}
-//             </button>
-//           </div>
-//         </div>
-//       )}
-
-//       {error && <p className="text-red-500 mb-4">{error}</p>}
-
-//       {/* Submit Button */}
-//       <div className="text-center">
-//         <button
-//           type="submit"
-//           className="bg-teal-500 text-white font-semibold py-2 px-8 rounded-xl hover:bg-teal-600 transition-colors disabled:opacity-50"
-//           disabled={loading}
-//         >
-//           {loading ? "Logging in..." : "Login"}
-//         </button>
-//       </div>
-//     </form>
-//   );
-// }
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { TiMail } from "react-icons/ti"; // example icon
+import { FiLock, FiKey } from "react-icons/fi"; // lock icon,otp icon
 
-export default function LoginForm() {
-  const [userName, setUserName] = useState("");
+
+
+
+export default function LoginForm({ isOpen, onClose }) {
+  const [user_name, setuser_name] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
-  const [loginOption, setLoginOption] = useState("password"); // 'password' or 'otp'
+  const [loginOption, setLoginOption] = useState("password");
   const [showPassword, setShowPassword] = useState(false);
   const [showOtp, setShowOtp] = useState(false);
+  const [user_nameError, setuser_nameError] = useState("");
+  const [passError, setPassError] = useState("");
+  const [otpError, setOtpError] = useState("");
   const [passMsg, setPassMsg] = useState("");
   const [otpMsg, setOtpMsg] = useState("");
-  const [userNameMsg, setUserNameMsg] = useState("");
-  const [isLoginDisabled, setIsLoginDisabled] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loginDisabled, setLoginDisabled] = useState(true);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-  const handleLoginOptionChange = (option) => {
-    setLoginOption(option);
-    setPassMsg("");
-    setOtpMsg("");
-    setUserNameMsg("");
-    setPassword("");
-    setOtp("");
-    setIsLoginDisabled(false);
+  const navigate = useNavigate();
+
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  const mobileRegex = /^[0-9]{10}$/;
+  const serialNumberRegex = /^(?:1234567890|9876543210|0123456789)$/;
+
+  const validateuser_name = () => {
+    if (!user_name.trim()) {
+      setuser_nameError("Please enter Mobile No/Email ID");
+      setLoginDisabled(true);
+      return false;
+    }
+    if (!(emailRegex.test(user_name) || (mobileRegex.test(user_name) && !serialNumberRegex.test(user_name)))) {
+      setuser_nameError("Please enter a valid Mobile No/Email ID");
+      setLoginDisabled(true);
+      return false;
+    }
+    setuser_nameError("");
+    return true;
   };
 
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
+  // -------------------- OTP SEND --------------------
+  const handleOtpSend = async () => {
+    if (!validateuser_name()) return;
+
+    try {
+      const response = await fetch("https://auditfiling.com/api/v1/sendOtp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_name }),
+      });
+      const data = await response.json();
+
+      if (data.status === "success") {
+        setOtpMsg(data.message || "OTP sent successfully");
+        setOtpError("");
+        setLoginDisabled(false);
+      } else {
+        setuser_nameError(data.message || "Failed to send OTP");
+        setLoginDisabled(true);
+      }
+    } catch {
+      setuser_nameError("Network Error: Could not send OTP");
+      setLoginDisabled(true);
+    }
+  };
+
+  // -------------------- OTP VERIFY --------------------
+  const handleVerifyOtp = async () => {
+    if (otp.length !== 6) {
+      setOtpError(otp.length === 0 ? "Please Enter OTP" : "OTP must be 6 Digits");
+      setLoginDisabled(true);
+      return;
+    }
+
+    try {
+      const response = await fetch("https://auditfiling.com/api/v1/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_name, otp }),
+      });
+      const data = await response.json();
+
+      if (data.status === "success") {
+        setOtpError("");
+        setOtpMsg(data.message || "OTP verified successfully");
+        setLoginDisabled(false);
+
+        // Optional auto-close after 3 seconds
+        setTimeout(() => {
+          setShowSuccessPopup(false);
+          onClose();
+          navigate("/");
+        }, 3000);
+      } else {
+        setOtpError(data.message || "Invalid OTP");
+        setLoginDisabled(true);
+      }
+    } catch {
+      setOtpError("Network Error: Could not verify OTP");
+      setLoginDisabled(true);
+    }
+  };
+
+  // -------------------- PASSWORD VERIFY --------------------
+  const handleVerifyPassword = async () => {
+    if (!password) {
+      setPassError("Please Enter Password");
+      setLoginDisabled(true);
+      return;
+    }
+
+    if (password.length < 8) {
+      setPassError("Password must be minimum 8 characters");
+      setLoginDisabled(true);
+      return;
+    }
+
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
-
-    if (value.length === 0) {
-      setPassMsg("Please Enter Password");
-      setIsLoginDisabled(true);
-    } else if (value.length < 8) {
-      setPassMsg("Password must be minimum 8 characters");
-      setIsLoginDisabled(true);
-    } else if (!passwordRegex.test(value)) {
-      setPassMsg(
-        "❌ Weak Password - Use uppercase, lowercase, number, and special character."
-      );
-      setIsLoginDisabled(true);
-    } else {
-      setPassMsg("");
-      setIsLoginDisabled(false);
-    }
-  };
-
-  const handleOtpChange = (e) => {
-    const value = e.target.value;
-    setOtp(value);
-
-    if (value.length === 0) {
-      setOtpMsg("Please Enter OTP");
-      setIsLoginDisabled(true);
-    } else if (value.length < 6) {
-      setOtpMsg("OTP must be 6 Digits");
-      setIsLoginDisabled(true);
-    } else {
-      setOtpMsg("");
-      setIsLoginDisabled(false);
-    }
-  };
-
-  const sendOtp = async () => {
-    if (!userName) {
-      setUserNameMsg("Please enter Mobile No / Email ID");
+    if (!passwordRegex.test(password)) {
+      setPassError("❌ Weak Password - Use uppercase, lowercase, number, and special character.");
+      setLoginDisabled(true);
       return;
     }
 
-    setLoading(true);
     try {
-      const res = await fetch("https://auditfiling.com/api/v1/sendOtp", {
+      const response = await fetch("https://auditfiling.com/api/v1/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user_name: userName }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_name, password, login_type: "password" }),
       });
+      const data = await response.json();
 
-      const data = await res.json();
       if (data.status === "success") {
-        setOtpMsg(data.message);
-        setIsLoginDisabled(false);
+        setPassError("");
+        setPassMsg(data.message || "Login Successful");
+        setLoginDisabled(false);
+
+        // Auto-close after popup
+        setTimeout(() => {
+          setShowSuccessPopup(false);
+          onClose();
+          navigate("/");
+        }, 3000);
       } else {
-        setUserNameMsg(data.message || "Failed to send OTP");
-        setIsLoginDisabled(true);
+        setPassError(data.message || "Invalid Credentials");
+        setLoginDisabled(true);
       }
-    } catch (err) {
-      setUserNameMsg("Error sending OTP");
-      setIsLoginDisabled(true);
-    } finally {
-      setLoading(false);
+    } catch {
+      setPassError("Network Error: Could not login");
+      setLoginDisabled(true);
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!userName) {
-      setUserNameMsg("Please enter Mobile No / Email ID");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      let payload = { user_name: userName };
-      if (loginOption === "password") {
-        payload.password = password;
-      } else {
-        payload.otp = otp;
-      }
-
-      const res = await fetch("https://auditfiling.com/api/v1/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-
-      if (data.status === "success") {
-        alert("Login successful!");
-        // Handle success (redirect, save token, etc.)
-      } else {
-        if (loginOption === "password") {
-          setPassMsg(data.message || "Invalid credentials");
-        } else {
-          setOtpMsg(data.message || "Invalid OTP");
-        }
-      }
-    } catch (err) {
-      alert("Login failed. Please try again.");
-    } finally {
-      setLoading(false);
+    validateuser_name();
+    if (loginOption === "password") {
+      handleVerifyPassword();
+    } else {
+      handleVerifyOtp();
     }
   };
+
+  if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">User Login</h2>
-          <button
-            className="text-gray-400 hover:text-gray-600"
-            onClick={() => console.log("Close modal")}
-          >
-            ✕
-          </button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center ">
+      <div className="bg-white rounded-2xl- w-full max-w-md shadow-2xl p-6 relative">
+        <div className="flex justify-between items-center border-b  border-gray-400 pb-4 mb-4">
+          <h2 className="text-2xl font-bold font-serif ml-30 text-gray-900 ">User Login</h2>
+          <button onClick={onClose} className="text-gray-600 hover:text-gray-600 text-3xl font-bold">&times;</button>
         </div>
-        <form onSubmit={handleSubmit}>
-          {/* User Name */}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* user_name */}
           <div className="mb-4">
-            <label className="block mb-1">Mobile No / Email ID</label>
-            <div className="flex">
+            <label className="block font-semibold mb-2 text-gray-900">
+              Mobile No / Email ID
+            </label>
+            <div className="relative">
+
+
               <input
                 type="text"
-                value={userName}
+                className="w-full border border-gray-300 rounded-lg px-10 py-2 focus:outline-none focus:ring-2 focus:ring-blue-100  transition"
+                value={user_name}
                 onChange={(e) => {
-                  setUserName(e.target.value);
-                  setUserNameMsg("");
+                  setuser_name(e.target.value);
+                  setuser_nameError("");
                 }}
-                className="flex-1 border border-gray-300 rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                placeholder="Enter Mobile No/Email ID"
-                required
+                onBlur={validateuser_name}
+                placeholder="Enter mobile or email"
               />
-              {loginOption === "otp" && (
+              <TiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
+            </div>
+            {user_nameError && (
+              <p className="text-red-600 text-sm mt-1 font-medium">
+                {user_nameError}
+              </p>
+            )}
+          </div>
+
+          {/* Login Option */}
+          <div className="flex justify-between">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="login_option"
+                className="w-4 h-4 accent-blue-700"
+                checked={loginOption === "password"}
+                onChange={() => setLoginOption("password")}
+              />
+              Login with Password
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="login_option"
+                className="w-4 h-4 accent-blue-700"
+                checked={loginOption === "otp"}
+                onChange={() => setLoginOption("otp")}
+              />
+              Login with OTP
+            </label>
+          </div>
+
+          {/* Password Login */}
+          {loginOption === "password" && (
+            <div className="mb-4">
+              <label className="block font-semibold mb-2 text-gray-800">Your Password</label>
+              <div className="relative flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                {/* Lock icon */}
+                <FiLock className="absolute left-3 text-gray-400" size={20} />
+
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="flex-1 pl-10 pr-12 py-2 focus:outline-none" // pl-10 to avoid icon overlap, pr-12 to avoid button overlap
+                  placeholder="Enter Password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setPassError("");
+                  }}
+                />
+
+                {/* Show/hide password button */}
                 <button
                   type="button"
-                  onClick={sendOtp}
-                  disabled={loading}
-                  className="bg-teal-500 hover:bg-teal-600 text-white px-4 rounded-r"
+                  className="absolute right-3 text-gray-500 hover:text-gray-700 transition"
+                  onClick={() => setShowPassword(!showPassword)}
                 >
-                  {loading ? "Sending..." : "Send OTP"}
+                  {showPassword ? "🙈" : "👁️"}
                 </button>
-              )}
-            </div>
-            {userNameMsg && <p className="text-red-500 text-sm mt-1">{userNameMsg}</p>}
-          </div>
+              </div>
 
-          {/* Login Options */}
-          <div className="flex justify-between mb-4">
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                checked={loginOption === "password"}
-                onChange={() => handleLoginOptionChange("password")}
-              />
-              <span>Login with Password</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                checked={loginOption === "otp"}
-                onChange={() => handleLoginOptionChange("otp")}
-              />
-              <span>Login with OTP</span>
-            </label>
-          </div>
-
-          {/* Password Field */}
-          {loginOption === "password" && (
-            <div className="mb-4 relative">
-              <label className="block mb-1">Password</label>
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={handlePasswordChange}
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                placeholder="Enter Password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-9 text-gray-500"
-              >
-                {showPassword ? "🙈" : "👁️"}
-              </button>
-              {passMsg && <p className="text-red-500 text-sm mt-1">{passMsg}</p>}
+              {passError && <p className="text-red-600 text-sm mt-1 font-medium">{passError}</p>}
+              {passMsg && <p className="text-green-600 text-sm mt-1 font-medium">{passMsg}</p>}
             </div>
           )}
 
-          {/* OTP Field */}
+          {/* OTP Login */}
           {loginOption === "otp" && (
-            <div className="mb-4 relative">
-              <label className="block mb-1">OTP</label>
-              <input
-                type={showOtp ? "text" : "password"}
-                value={otp}
-                onChange={handleOtpChange}
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400"
-                placeholder="Enter OTP"
-              />
+            <div className="mb-4">
+              <label className="block font-semibold mb-2 text-gray-700">Your OTP</label>
+              <div className="relative flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                {/* OTP icon */}
+                <FiKey className="absolute left-3 text-gray-400" size={20} />
+
+                <input
+                  type={showOtp ? "text" : "password"}
+                  className="flex-1 pl-10 pr-12 py-2 focus:outline-none" // pl-10 for icon, pr-12 for button
+                  placeholder="Enter OTP"
+                  value={otp}
+                  onChange={(e) => {
+                    setOtp(e.target.value);
+                    setOtpError("");
+                  }}
+                />
+
+                {/* Show/hide OTP button */}
+                <button
+                  type="button"
+                  className="absolute right-3 text-gray-500 hover:text-gray-700 transition"
+                  onClick={() => setShowOtp(!showOtp)}
+                >
+                  {showOtp ? "🙈" : "👁️"}
+                </button>
+              </div>
+
               <button
                 type="button"
-                onClick={() => setShowOtp(!showOtp)}
-                className="absolute right-2 top-9 text-gray-500"
+                className="mt-2 px-4 py-2 bg-blue-700 text-white rounded-lg shadow hover:bg-blue-800 transition"
+                onClick={handleOtpSend}
               >
-                {showOtp ? "🙈" : "👁️"}
+                Send OTP
               </button>
-              {otpMsg && <p className="text-red-500 text-sm mt-1">{otpMsg}</p>}
+
+              {otpError && <p className="text-red-600 text-sm mt-1 font-medium">{otpError}</p>}
+              {otpMsg && <p className="text-green-600 text-sm mt-1 font-medium">{otpMsg}</p>}
             </div>
           )}
 
@@ -415,19 +309,48 @@ export default function LoginForm() {
           <div className="text-center">
             <button
               type="submit"
-              disabled={isLoginDisabled || loading}
-              className={`px-6 py-2 rounded-lg text-white font-semibold ${
-                isLoginDisabled || loading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-teal-500 hover:bg-teal-600"
-              }`}
+              disabled={
+                loginOption === "password"
+                  ? !user_name || !password || passError
+                  : !user_name || !otp || otpError
+              }
+              className={`px-6 py-2 rounded-full text-white font-semibold shadow transition ${(loginOption === "password"
+                  ? !user_name || !password || passError
+                  : !user_name || !otp || otpError)
+                  ? "bg-blue-700 cursor-not-allowed"
+                  : "bg-teal-500 hover:bg-teal-600 active:bg-teal-700"
+                }`}
             >
-              {loading ? "Processing..." : "Login"}
+              Login
             </button>
           </div>
         </form>
+
+        {/* Success Popup */}
+        {showSuccessPopup && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
+            <div className="bg-white p-8 rounded-2xl shadow-2xl text-center">
+              <h2 className="text-2xl font-bold text-green-600 mb-2">🎉 Login Successful!</h2>
+              <p className="text-gray-700 mb-4">Welcome back to AuditFiling!</p>
+              <button
+                onClick={() => {
+                  setShowSuccessPopup(false);
+                  onClose();
+                  navigate("/");
+                }}
+                className="px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 }
+
+
+
+
 
