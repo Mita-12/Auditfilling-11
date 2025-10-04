@@ -26,13 +26,13 @@ export default function Herosection() {
   {/* Hero Buttons */}
   <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
     <a
-      href="#contact"
+      href="contact"
       className="bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg shadow-md hover:bg-blue-700 hover:scale-105 transition-transform duration-300"
     >
       Get Started
     </a>
     <a
-      href="#services"
+      href="services"
       className="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-700 hover:scale-105 transition-transform duration-300"
     >
       Explore Services
@@ -50,7 +50,7 @@ export default function Herosection() {
 
 {/* Hero-style Section (ThemeForest Layout) with your content */}
 <section className="w-full ">
-  <div className="flex flex-col-reverse md:flex-row items-center gap-10 px-6 md:px-25 ">
+  <div className="flex flex-col-reverse md:flex-row items-center gap-10 px-12 md:px-25 ">
 
     {/* Text Content */}
     <div className="w-full md:w-1/2 text-center md:text-left">
@@ -80,6 +80,7 @@ export default function Herosection() {
       <img
         src="/img/support.jpg"
         alt="Who Are We"
+         loading="lazy" 
         className="w-full sm:w-4/5 md:w-full rounded-sm hover:scale-105 transition-transform duration-300"
       />
     </div>

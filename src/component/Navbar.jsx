@@ -8,7 +8,7 @@ export default function Header() {
 
   return (
     <header className="top-0 w-full bg-blue-100 shadow-sm py-3 z-50">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+      <div className="container mx-auto px-10 flex flex-col md:flex-row justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2">
           <a href="/">
@@ -23,14 +23,14 @@ export default function Header() {
         </div>
 
         {/* Hamburger for mobile */}
-        <div className="md:hidden mt-2">
+        {/* <div className="md:hidden mt-2">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-blue-950 text-xl"
           >
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
-        </div>
+        </div> */}
 
         {/* Menu: Contact + Social + Login */}
         <div

@@ -71,7 +71,7 @@ function ServicesSection() {
       {/* Services Section */}
 
 <section className="py-5">
-  <div className="container mx-auto px-6">
+  <div className="container mx-auto px-12">
     {/* Section Header */}
     <div className="text-center mb-16">
       <h2 className="text-5xl font-bold font-serif text-gray-900 mb-4 relative inline-block">
