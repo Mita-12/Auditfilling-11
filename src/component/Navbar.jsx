@@ -5,6 +5,8 @@ import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
+
 
   return (
     <header className="top-0 w-full bg-blue-100 shadow-sm py-3 z-50">

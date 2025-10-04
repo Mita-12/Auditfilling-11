@@ -19,7 +19,7 @@ import Contact from "./page/ContactPage.jsx";
 import PrivacyPolicy from "./page/PrivecyPolicy.jsx";
 import TermsAndConditions from "./page/TermCondition.jsx";
 import Testimonials from "./page/Testimonial.jsx";
-import LoginForm from "./page/LoginForm.jsx";
+import LoginForm from "./form/LoginForm.jsx";
 import Footer from "./component/Footer.jsx";
 
 function App() {
