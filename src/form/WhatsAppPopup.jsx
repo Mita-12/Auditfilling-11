@@ -72,10 +72,12 @@ export default function WhatsAppButton() {
 " // Replace with your WhatsApp number
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded-lg shadow-lg transition-all duration-300 animate-bounce"
+      className="fixed bottom-25 right-10 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded-lg shadow-lg transition-all duration-300 animate-bounce"
     >
       <FaWhatsapp className="text-2xl animate-pulse" />
-      <span className="whitespace-nowrap">Live Chat with Experts</span>
+      {/* <span className="whitespace-nowrap">Live Chat with Experts</span> */}
+            <span className="whitespace-nowrap">We're here to Help </span>
+
     </a>
   );
 }

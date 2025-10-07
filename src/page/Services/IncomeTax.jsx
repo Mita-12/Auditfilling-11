@@ -2,60 +2,35 @@
 // import Header from "../../component/Header";
 // import WhatsAppPopup from "../../form/WhatsAppPopup";
 // import QuickForm from "../../form/QuickForm";
-// import {
-//   FaUserTie,
-//   FaBriefcase,
-//   FaUserEdit,
-//   FaUsers,
-//   FaLandmark,
-// } from "react-icons/fa";
 // import Footer from "../../component/Footer";
 
 // export default function IncomeTax() {
-//   const [serviceData, setServiceData] = useState(null);
+//   const [services, setServices] = useState([]);
 //   const [activeIndex, setActiveIndex] = useState(0);
+//   const [serviceData, setServiceData] = useState(null);
 //   const [animate, setAnimate] = useState(false);
-
-//   const services = [
-//     {
-//       title: "Income Tax",
-//       description:
-//         "Tax services and filing assistance for salaried individuals, ensuring compliance and maximized refunds. Professionals in India—including doctors, lawyers, consultants, freelancers, and anyone earning income from their own practice—are taxed as individuals under the same income tax slabs as salaried persons. You have the flexibility to choose between the new tax regime (which is now the default) and the old tax regime (optional), depending on which suits your financial situation better.",
-//       additional:
-//         "We provide step-by-step guidance, document verification, and e-filing support for hassle-free tax filing.",
-//     },
-//     {
-//       title: "Salaried Individual",
-//       description:
-//         "Tax services and filing assistance for salaried individuals, ensuring compliance and maximized refunds.",
-//       additional:
-//         "We provide step-by-step guidance, document verification, and e-filing support for hassle-free tax filing.",
-//     },
-//     {
-//       title: "Professional",
-//       description:
-//         "Professional tax services tailored for consultants, freelancers, and small business owners.",
-//       additional:
-//         "Our experts handle complex cases, deductions, and compliance requirements to keep you worry-free.",
-//     },
-//     {
-//       title: "Self Employed",
-//       description:
-//         "Comprehensive services for self-employed individuals, including GST, income tax, and business filing.",
-//       additional:
-//         "We simplify tax filing for self-employed professionals with personalized advice and timely support.",
-//     },
-//     {
-//       title: "Hindu Undivided Family (HUF)",
-//       description:
-//         "Specialized tax filing and advisory services for HUFs with complex income structures.",
-//       additional:
-//         "Ensure accurate HUF filings, compliance, and optimized tax strategies with our expert guidance.",
-//     },
-//   ];
+//   const [loading, setLoading] = useState(true);
 
 //   useEffect(() => {
-//     setServiceData(services[0]);
+//     fetch("https://auditfiling.com/api/v1/menus")
+//       .then((res) => res.json())
+//       .then((data) => {
+//         console.log("API Response:", data);
+//         const incomeTaxMenu = data.menus.find(
+//           (menu) => menu.name.toLowerCase() === "income tax"
+//         );
+
+//         if (incomeTaxMenu && Array.isArray(incomeTaxMenu.services)) {
+//           setServices(incomeTaxMenu.services);
+//           setServiceData(incomeTaxMenu.services[0]);
+//         }
+
+//         setLoading(false);
+//       })
+//       .catch((err) => {
+//         console.error("API fetch error:", err);
+//         setLoading(false);
+//       });
 //   }, []);
 
 //   const handleServiceClick = (index) => {
@@ -67,34 +42,48 @@
 //     }, 300);
 //   };
 
+//   if (loading) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center">
+//         <p className="text-gray-700 text-xl">Loading services...</p>
+//       </div>
+//     );
+//   }
+
+//   if (!Array.isArray(services) || services.length === 0) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center">
+//         <p className="text-gray-700 text-xl">No services available.</p>
+//       </div>
+//     );
+//   }
+
 //   return (
-//     <div className="min-h-screen ">
-//       {/* Header */}
+//     <div className="min-h-screen">
 //       <Header />
 
 //       <div className="flex">
 //         {/* Sidebar */}
-//         <aside className="w-70 rounded-lg p-4 h-[90vh] bg-white sticky   top-28 left-30 overflow-y-auto">
+//         <aside className="w-70 rounded-lg p-4 h-[90vh] bg-white sticky ml-25 top-28 overflow-y-auto">
 //           <ul className="space-y-4">
 //             {services.map((item, index) => {
 //               const isActive = activeIndex === index;
 //               return (
 //                 <li
-//                   key={index}
+//                   key={item.id}
 //                   onClick={() => handleServiceClick(index)}
-//                   className={`flex items-center gap-4 p-4 mt-5 rounded-lg cursor-pointer transition-all duration-300 ${
-//                     isActive
-//                       ? "bg-grey-50 shadow-inner scale-105"
+//                   className={`flex items-center gap-4 p-4 mt-5 rounded-lg cursor-pointer transition-all duration-300 ${isActive
+//                       ? "bg-gray-100 shadow-inner scale-105"
 //                       : "bg-white hover:bg-blue-50 hover:scale-105"
-//                   }`}
-//                 >
-//                   {item.icon}
-//                   <span
-//                     className={`font-serif ${
-//                       isActive ? "text-2xl text-blue-950 font-semibold " : "text-xl"
 //                     }`}
+//                 >
+//                   <span
+//                     className={`font-serif ${isActive
+//                         ? "text-2xl text-blue-950 font-semibold"
+//                         : "text-xl"
+//                       }`}
 //                   >
-//                     {item.title}
+//                     {item.service_name}
 //                   </span>
 //                 </li>
 //               );
@@ -102,27 +91,41 @@
 //           </ul>
 //         </aside>
 
+
 //         {/* Main Content */}
-//         <main className="flex-1 ml-20 px-6  py-10  ">
+//         <main className="flex-1 ml-20 px-6 py-10">
 //           <div
 //             key={activeIndex}
-//             className={`bg-white p-8  mt-20  min-h-[90vh] transition-all duration-500 ease-in-out ${
-//               animate
-//                 ? "translate-x-6 opacity-0"
-//                 : "translate-x-0 opacity-100"
-//             }`}
+//             className={`bg-white p-8 mt-20 min-h-[90vh] transition-all duration-500 ease-in-out ${animate ? "translate-x-6 opacity-0" : "translate-x-0 opacity-100"
+//               }`}
 //           >
-//             <h1 className="text-3xl md:text-4xl font-serif text-center font-bold mb-6 text-gray-900">
-//               {serviceData?.title}
+//             <h1 className="text-3xl md:text-4xl font-serif text-center font-bold mb-10 text-gray-900">
+//               {serviceData?.service_name}
 //             </h1>
-//             <p className="text-gray-700 mb-4 leading-relaxed">
-//               {serviceData?.description}
-//             </p>
-//             {serviceData?.additional && (
-//               <p className="text-gray-700 leading-relaxed">
-//                 {serviceData.additional}
-//               </p>
-//             )}
+
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+//               {/* Left Side - Image */}
+//               <div className="flex justify-center md:justify-end">
+//                 <div className="w-full md:w-auto max-w-[450px]">
+//                   <img
+//                     src={serviceData?.service_image || "/default-IncomeTax2.jpg"}
+//                     alt={serviceData?.service_image}
+//                     className="rounded-2xl shadow-lg w-full h-auto object-contain"
+//                   />
+//                 </div>
+//               </div>
+
+
+//               {/* Right Side - Description */}
+//               <div className="text-gray-700 leading-relaxed">
+//                 {/* Render HTML description */}
+//                 <div
+//                   dangerouslySetInnerHTML={{
+//                     __html: serviceData?.service_description || "",
+//                   }}
+//                 ></div>
+//               </div>
+//             </div>
 //           </div>
 //         </main>
 
@@ -131,130 +134,240 @@
 //           <QuickForm />
 //         </div>
 //       </div>
+
 //       <WhatsAppPopup />
 //     </div>
 //   );
 // }
 
 
+
+
+
+// import React, { useEffect, useState } from "react";
+// import Header from "../../component/Header";
+// import WhatsAppPopup from "../../form/WhatsAppPopup";
+// import QuickForm from "../../form/QuickForm";
+// import Footer from "../../component/Footer";
+
+// export default function IncomeTax() {
+//   const [services, setServices] = useState([]);
+//   const [loading, setLoading] = useState(true);
+
+//   // ✅ Fetch all services from API
+// useEffect(() => {
+//   fetch("https://auditfiling.com/api/v1/service/1")
+//     .then((res) => res.json())
+//     .then((data) => {
+//       console.log("Full API Response:", data); // <- important!
+//       setLoading(false);
+//     })
+//     .catch((err) => {
+//       console.error("Service API error:", err);
+//       setLoading(false);
+//     });
+// }, []);
+
+
+
+
+//   return (
+//     <div className="min-h-screen">
+//       <Header />
+
+//       <div className="flex">
+//         {/* Left Sidebar */}
+//         <aside className="w-70 rounded-lg p-4 h-[90vh] bg-white sticky top-28 left-30 overflow-y-auto hidden md:block">
+//           <ul className="space-y-4">
+//             {services.map((item, index) => (
+//               <li
+//                 key={index}
+//                 className="flex items-center gap-4 p-4 mt-5 rounded-lg cursor-pointer transition-all duration-300 bg-white hover:bg-blue-50 hover:scale-105"
+//               >
+//                 <span className="font-serif text-xl">{item.name}</span>
+//               </li>
+//             ))}
+//           </ul>
+//         </aside>
+
+//         {/* Main Content */}
+//         <main className="flex-1 ml-0 md:ml-20 px-6 py-10">
+//           {loading ? (
+//             <div className="flex justify-center items-center min-h-[70vh]">
+//               <p className="text-gray-500 text-lg">Loading services...</p>
+//             </div>
+//           ) : services.length === 0 ? (
+//             <div className="flex justify-center items-center min-h-[70vh]">
+//               <p className="text-gray-500 text-lg">No services found.</p>
+//             </div>
+//           ) : (
+//             <div className="space-y-20 mt-20">
+//               {services.map((service, index) => (
+//                 <div
+//                   key={index}
+//                   className="bg-white p-8 rounded-2xl shadow-md transition-all duration-500"
+//                 >
+//                   {/* Title */}
+//                   <h2 className="text-3xl md:text-4xl font-serif text-center font-bold mb-10 text-gray-900">
+//                     {service.name}
+//                   </h2>
+
+//                   {/* Grid Layout */}
+//                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+//                     {/* Left - Image */}
+//                     <div className="flex justify-center md:justify-end">
+//                       <img
+//                         src={service?.image || "/default-IncomeTax2.jpg"}
+//                         alt={service?.name}
+//                         className="rounded-2xl shadow-lg max-w-full md:max-w-[450px] object-cover"
+//                       />
+//                     </div>
+
+//                     {/* Right - Description */}
+//                     <div>
+//                       <p className="text-gray-700 mb-4 leading-relaxed">
+//                         {service?.description || "No description available."}
+//                       </p>
+
+//                       {service?.additional && (
+//                         <div className="mt-4">
+//                           <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+//                             {service.additional}
+//                           </p>
+//                         </div>
+//                       )}
+//                     </div>
+//                   </div>
+//                 </div>
+//               ))}
+//             </div>
+//           )}
+//         </main>
+
+//         {/* Right Form */}
+//         <div className="hidden lg:block w-80 pr-6 mr-5">
+//           <QuickForm />
+//         </div>
+//       </div>
+
+//       <WhatsAppPopup />
+//       <Footer />
+//     </div>
+//   );
+// }
+
+
+
 import React, { useEffect, useState } from "react";
 import Header from "../../component/Header";
-import WhatsAppPopup from "../../form/WhatsAppPopup";
 import QuickForm from "../../form/QuickForm";
-import { FaUserTie, FaBriefcase, FaUserEdit, FaUsers, FaLandmark } from "react-icons/fa";
+import WhatsAppPopup from "../../form/WhatsAppPopup";
 import Footer from "../../component/Footer";
 
 export default function IncomeTax() {
   const [services, setServices] = useState([]);
-  const [serviceData, setServiceData] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [animate, setAnimate] = useState(false);
+  const [activeService, setActiveService] = useState(null);
 
-  // Fetch sidebar menu
   useEffect(() => {
-  const fetchMenu = async () => {
-    try {
-      const res = await fetch("https://auditfiling.com/api/v1/menu/1");
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-      const data = await res.json();
-      console.log("Menu API Response:", data); // debug log
-      // Adjust this depending on actual API structure
-      setServices(data?.data || data?.services || []);
-    } catch (err) {
-      console.error("Menu API error:", err);
-    }
-  };
-
-  fetchMenu();
-}, []);
-
-useEffect(() => {
-  const fetchService = async () => {
-    try {
-      const res = await fetch("https://auditfiling.com/api/v1/service/1");
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-      const data = await res.json();
-      console.log("Service API Response:", data); // debug log
-      setServiceData(data?.data || data); // adjust based on API
-    } catch (err) {
-      console.error("Service API error:", err);
-    }
-  };
-
-  fetchService();
-}, []);
-
-  const handleServiceClick = (index) => {
-    setAnimate(true);
-    const serviceId = services[index]?.id; // Assuming each service object has an 'id'
-    // Fetch service details dynamically
-    fetch(`https://auditfiling.com/api/v1/service/${serviceId}`)
+    fetch("https://auditfiling.com/api/v1/menus")
       .then((res) => res.json())
       .then((data) => {
-        setTimeout(() => {
-          setActiveIndex(index);
-          setServiceData(data);
-          setAnimate(false);
-        }, 300);
+        const incomeTaxMenu = data.menus.find(
+          (menu) => menu.name.toLowerCase() === "income tax"
+        );
+        if (incomeTaxMenu?.services?.length) {
+          setServices(incomeTaxMenu.services);
+          setActiveService(incomeTaxMenu.services[0]);
+        }
       })
-      .catch((err) => console.error("Service API error:", err));
+      .catch(console.error);
+  }, []);
+
+  // Scroll spy for sidebar highlighting
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 100;
+      for (let i = services.length - 1; i >= 0; i--) {
+        const el = document.getElementById(`service-${services[i].id}`);
+        if (el && el.offsetTop <= scrollPos) {
+          setActiveService(services[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [services]);
+
+  const handleClick = (service) => {
+    setActiveService(service);
+    const el = document.getElementById(`service-${service.id}`);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
       <Header />
 
-      <div className="flex">
+      <div className="w-full mx-auto px-4 md:px-15  py-10 flex flex-col md:flex-row gap-6">
         {/* Sidebar */}
-        <aside className="w-70 rounded-lg p-4 h-[90vh] bg-white sticky top-28 left-30 overflow-y-auto">
-          <ul className="space-y-4">
-            {services.map((item, index) => {
-              const isActive = activeIndex === index;
-              return (
-                <li
-                  key={index}
-                  onClick={() => handleServiceClick(index)}
-                  className={`flex items-center gap-4 p-4 mt-5 rounded-lg cursor-pointer transition-all duration-300 ${
-                    isActive
-                      ? "bg-grey-50 shadow-inner scale-105"
-                      : "bg-white hover:bg-blue-50 hover:scale-105"
-                  }`}
-                >
-                  {item.icon || <FaUserTie />} {/* fallback icon */}
-                  <span
-                    className={`font-serif ${
-                      isActive ? "text-2xl text-blue-950 font-semibold" : "text-xl"
+        <aside className="sticky top-30 bg-white rounded-xl p-4 md:p-6 md:w-72 h-auto md:h-[90vh] overflow-y-auto">
+          <h3 className="text-2xl font-semibold text-center mb-4 md:mb-6">Services</h3>
+          <ul className="space-y-2 md:space-y-3">
+            {services.map((service, idx) => (
+              <li key={service.id}>
+                <button
+                  onClick={() => handleClick(service)}
+                  className={`w-full text-left p-2 md:p-3 rounded-lg transition-all   ${activeService?.id === service.id
+                    ? "bg-blue-50 border-l-4 border-blue-500 text-black font-bold text-xl"
+                    : "hover:bg-gray-50 text-gray-700"
                     }`}
-                  >
-                    {item.name}
-                  </span>
-                </li>
-              );
-            })}
+                >
+                  {idx + 1}. {service.service_name}
+                </button>
+              </li>
+            ))}
           </ul>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 ml-20 px-6 py-10">
-          <div
-            key={activeIndex}
-            className={`bg-white p-8 mt-20 min-h-[90vh] transition-all duration-500 ease-in-out ${
-              animate ? "translate-x-6 opacity-0" : "translate-x-0 opacity-100"
-            }`}
-          >
-            <h1 className="text-3xl md:text-4xl font-serif text-center font-bold mb-6 text-gray-900">
-              {serviceData?.name}
-            </h1>
-            <p className="text-gray-700 mb-4 leading-relaxed">{serviceData?.description}</p>
-            {serviceData?.additional && (
-              <p className="text-gray-700 leading-relaxed">{serviceData.additional}</p>
-            )}
+        <main className="flex-1 space-y-8 mt-20 md:space-y-8">
+          {services.map((service) => (
+            <section
+              key={service.id}
+              id={`service-${service.id}`}
+              className="bg-white p-4 md:p-6 rounded-xl  transition-all"
+            >
+              <h2 className="text-2xl md:text-3xl text-center font-bold text-gray-900 mb-4">
+                {service.service_name}
+              </h2>
+              <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center md:items-start">
+                {/* <div className="flex justify-center md:justify-end w-full md:w-1/2">
+                  <img
+                    src={service.service_image || "/default-IncomeTax2.jpg"}
+                    alt={service.service_name}
+                    className="rounded-2xl shadow-lg w-full max-w-md object-contain"
+                  />
+                
+
+                </div> */}
+                <div
+                  className="text-black  w-full "
+                  dangerouslySetInnerHTML={{ __html: service.service_description }}
+                ></div>
+              </div>
+            </section>
+          ))}
+
+          {/* QuickForm for mobile */}
+          <div className="block md:hidden mt-10">
+            <QuickForm />
           </div>
         </main>
 
-        {/* Right Form */}
-        <div className="hidden lg:block w-80 pr-6 mr-5">
+        {/* QuickForm for desktop */}
+        <div className="hidden lg:block w-60">
           <QuickForm />
         </div>
       </div>

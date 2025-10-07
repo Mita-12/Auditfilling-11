@@ -438,7 +438,7 @@
 
 import React, { useState, useEffect } from "react";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
 function Header() {
@@ -447,6 +447,8 @@ function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSubmenu, setMobileSubmenu] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
+
 
   // Fetch menus from API
   useEffect(() => {
@@ -472,9 +474,8 @@ function Header() {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full z-50 transition-shadow duration-300 ${
-        isScrolled ? "shadow-sm" : ""
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 transition-shadow duration-300 ${isScrolled ? "shadow-sm" : ""
+        }`}
     >
       {/* Topbar */}
       <div className="bg-white shadow-sm">
@@ -500,9 +501,8 @@ function Header() {
                   {menu.services?.length > 0 && (
                     <FaChevronDown
                       size={10}
-                      className={`mt-1 transition-transform duration-200 ${
-                        dropdownOpen === menu.id ? "rotate-180" : "rotate-0"
-                      }`}
+                      className={`mt-1 transition-transform duration-200 ${dropdownOpen === menu.id ? "rotate-180" : "rotate-0"
+                        }`}
                     />
                   )}
                 </button>
@@ -511,20 +511,19 @@ function Header() {
                 {menu.services?.length > 0 && (
                   <div
                     onMouseLeave={() => setDropdownOpen(null)}
-                    className={`absolute left-0 mt-4 w-[500px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[15px] font-semibold transform transition-all duration-300 ${
-                      dropdownOpen === menu.id
+                    className={`absolute left-0 mt-4 w-[500px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === menu.id
                         ? "opacity-100 scale-100 pointer-events-auto"
                         : "opacity-0 scale-95 pointer-events-none"
-                    }`}
+                      }`}
                   >
                     {menu.services.map((service) => (
-                      <Link
+                      <button
                         key={service.id}
-                        to={service.slug || "#"}
-                        className="block hover:text-blue-600"
+                        onClick={() => navigate(`/services/${service.slug}`)}
+                        className="block text-left hover:text-blue-600"
                       >
                         {service.service_name}
-                      </Link>
+                      </button>
                     ))}
                   </div>
                 )}
@@ -558,9 +557,8 @@ function Header() {
                     {menu.name}
                     {menu.services?.length > 0 && (
                       <FaChevronDown
-                        className={`transition-transform duration-200 ${
-                          mobileSubmenu === menu.id ? "rotate-180" : ""
-                        }`}
+                        className={`transition-transform duration-200 ${mobileSubmenu === menu.id ? "rotate-180" : ""
+                          }`}
                       />
                     )}
                   </button>

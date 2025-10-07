@@ -9,7 +9,7 @@ export default function Navbar() {
 
   return (
     <header className="top-0 w-full bg-blue-100 shadow-sm py-3 z-50 relative">
-      <div className="container mx-auto px-10 flex flex-col md:flex-row justify-between items-center">
+      <div className="container mx-auto px-2 flex flex-col md:flex-row justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2">
           <a href="/">
@@ -29,20 +29,20 @@ export default function Navbar() {
             } flex-col md:flex-row md:items-center gap-4 md:gap-6 w-full md:w-auto mt-4 md:mt-0`}
         >
           {/* Contact Email */}
-          <a
+          {/* <a
             href="mailto:info@auditfiling.com"
             className="flex items-center gap-1 font-serif hover:text-blue-600 text-sm md:text-base"
           >
             <TiMail className="text-lg" /> info@auditfiling.com
-          </a>
+          </a> */}
 
           {/* Phone */}
-          <a
+          {/* <a
             href="tel:+917428600607"
             className="flex items-center gap-1 hover:text-blue-600 text-sm md:text-base"
           >
             <MdAddIcCall className="text-lg" /> +91 7428600607
-          </a>
+          </a> */}
 
           {/* Social Icons */}
           <div className="flex flex-wrap items-center gap-2 mt-2 md:mt-0">

@@ -15,8 +15,9 @@ function Home() {
       <Herosection />
       <ServicesSection />
       <Testimonials />
+       <WhatsAppPopup />
       <Footer />
-      <WhatsAppPopup />
+     
     </>
   );
 }
