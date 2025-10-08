@@ -78,7 +78,7 @@ export default function TermsAndConditions() {
   const progress = Math.round((readSections.size / sections.length) * 100);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30">
+    <div className="min-h-screen ">
       {/* Header */}
 <Header/>
 
@@ -103,7 +103,7 @@ export default function TermsAndConditions() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Navigation */}
           <nav className="lg:w-80 lg:sticky lg:top-24 lg:self-start">
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200/60 p-6">
+            <div className="bg-white rounded-2xl  border border-gray-200/60 p-6">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="bg-blue-100 p-2 rounded-lg">
                   <FileText className="h-5 w-5 text-blue-600" />
@@ -123,7 +123,7 @@ export default function TermsAndConditions() {
                       onClick={() => handleSectionClick(sec.id)}
                       className={`w-full flex items-center space-x-3 py-3 px-4 rounded-xl transition-all duration-200 group ${
                         isActive 
-                          ? 'bg-blue-50 border border-blue-200 text-blue-700 shadow-sm' 
+                          ? 'bg-blue-50 border border-blue-200 text-blue-700 ' 
                           : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                       }`}
                     >
@@ -160,7 +160,7 @@ export default function TermsAndConditions() {
           {/* Main Content */}
           <div className="flex-1 space-y-8">
             {/* Introduction Card */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200/60 p-8 lg:p-10 relative overflow-hidden">
+            <div className="bg-white rounded-2xl  border border-gray-200/60 p-8 lg:p-10 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/5 to-indigo-600/5 rounded-full -translate-y-16 translate-x-16" />
               <div className="relative">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Welcome to Auditfiling.com</h2>
@@ -382,7 +382,7 @@ export default function TermsAndConditions() {
             </Section>
 
             {/* Acceptance Footer */}
-            <div className="bg-white rounded-2xl shadow-lg border-2 mb-15 border-blue-200 p-8 text-center">
+            <div className="bg-white rounded-2xl  border-2 mb-15 border-blue-200 p-8 text-center">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="h-8 w-8 text-blue-600" />
               </div>
@@ -417,7 +417,7 @@ const Section = React.forwardRef(({ id, title, icon, status, children }, ref) =>
     <section 
       ref={ref}
       id={id} 
-      className="bg-white rounded-2xl shadow-lg border border-gray-200/60 p-8 lg:p-10 relative overflow-hidden group hover:shadow-xl transition-all duration-300"
+      className="bg-white rounded-2xl  border border-gray-200/60 p-8 lg:p-10 relative overflow-hidden group  transition-all duration-300"
     >
       {/* Status Indicator */}
       {status === "read" && (

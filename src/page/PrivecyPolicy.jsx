@@ -62,8 +62,8 @@ export default function PrivacyPolicy() {
       {/* Hero Section */}
       <div className="relative  mt-20 py-20 lg:py-24">
         <div className="absolute inset-0 "></div>
-        <div className="relative max-w-6xl mx-auto px-6 text-center">
-          <h1 className="text-4xl text-black md:text-5xl font-serif  lg:text-6xl font-bold  mb-4 leading-tight">
+        <div className="relative font-serif max-w-6xl mx-auto px-6 text-center">
+          <h1 className="text-4xl text-black md:text-5xl   lg:text-6xl font-bold  mb-4 leading-tight">
             Privacy Policy
           </h1>
           <p className="text-xl md:text-2xl text-black max-w-3xl mx-auto leading-relaxed">

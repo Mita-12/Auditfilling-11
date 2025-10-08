@@ -454,7 +454,7 @@ function Header() {
   useEffect(() => {
     async function fetchMenus() {
       try {
-        const response = await fetch("https://auditfiling.com/api/v1/menus");
+        const response = await fetch("https://auditfiling.com/api/v1/web/menu");
         const data = await response.json();
         const menusData = Array.isArray(data) ? data : data.menus;
         setMenus(menusData);
@@ -519,7 +519,7 @@ function Header() {
                     {menu.services.map((service) => (
                       <button
                         key={service.id}
-                        onClick={() => navigate(`/services/${service.slug}`)}
+                        onClick={() => navigate(`/`)}
                         className="block text-left hover:text-blue-600"
                       >
                         {service.service_name}

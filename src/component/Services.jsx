@@ -5,6 +5,7 @@ import React from "react";
 import { FaBalanceScale, FaFileInvoiceDollar, FaRegBuilding, FaTrademark, FaUniversity, FaGavel, FaRocket } from "react-icons/fa";
 import { FaLock, FaMoneyBillWave, FaCheckCircle, FaUserGraduate, FaBuilding, FaReceipt, FaUserFriends, FaHome } from "react-icons/fa";
 import { motion } from "framer-motion";
+import WhyChoose  from "../page/Whychoose"
 
 function ServicesSection() {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -27,13 +28,13 @@ function ServicesSection() {
       title: "Startup Registrations",
       description: "Complete support for Startup India, DPIIT Startup Registration, MSME/Udyam, and related services.",
       icon: <FaRocket className="text-purple-600 text-4xl" />,
-      link: "/startup-registrations",
+      link: "/startup",
     },
     {
       title: "Company (MCA)",
       description: "Expert services in ESI return filing, PF & ESI registration, ITR filing, and company compliance in India.",
       icon: <FaRegBuilding className="text-indigo-600 text-4xl" />,
-      link: "/company-mca",
+      link: "/company",
     },
     {
       title: "Trademark",
@@ -45,7 +46,7 @@ function ServicesSection() {
       title: "Bank Valuation",
       description: "Reliable bank and business valuation services, wealth management, and financial advisory solutions.",
       icon: <FaUniversity className="text-red-600 text-4xl" />,
-      link: "/bank-valuation",
+      link: "/bankvaluation",
     },
     {
       title: "Legal",
@@ -90,6 +91,8 @@ function ServicesSection() {
           >
             {services.slice(0, services.length - 3).map((service, index) => (
               <motion.div
+                                onClick={() => navigate(service.link)}
+
                 key={index}
                 className="bg-white rounded-2xl p-6 shadow-sm cursor-pointer"
                 whileHover={{ scale: 1.05, y: -8, boxShadow: "0px 10px 25px rgba(0,0,0,0.1)" }}
@@ -147,6 +150,8 @@ function ServicesSection() {
           >
             {services.slice(-3).map((service, index) => (
               <motion.div
+                  onClick={() => navigate(service.link)}
+
                 key={index}
                 className="bg-white rounded-2xl p-6 shadow-sm cursor-pointer w-full sm:w-80"
                 whileHover={{ scale: 1.05, y: -8, boxShadow: "0px 10px 25px rgba(0,0,0,0.1)" }}
@@ -190,11 +195,7 @@ function ServicesSection() {
           </motion.div>
         </div>
       </section>
-
-
-
-
-
+      <WhyChoose />
     </div>
   );
 }

@@ -176,13 +176,13 @@ const testimonials = [
 
 export default function TestimonialGrid() {
   return (
-    <section className="bg-gray-50 py-16">
+    <section className=" py-16">
       <div className="container mx-auto px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12">
+        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-20">
           What <span className="text-blue-600">Our Users</span> Say About AuditFilling
         </h2>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 mb-12">
           {testimonials.map((t) => (
             <div
               key={t.id}

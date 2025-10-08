@@ -37,8 +37,9 @@ export default function QuickForm() {
   return (
     <aside className="w-full max-w-sm bg-white rounded-xl shadow-md p-6 h-auto lg:sticky top-28 flex flex-col justify-between space-y-6 mx-auto">
       <div>
-        <h3 className="text-xl font-semibold mb-4 text-center text-gray-800">
-          Get <span className="font-bold text-blue-500">Free</span> Consultancy
+        <h3 className="text-xl font-serif font-bold mb-4 text-center text-gray-800">
+          Get <span className="font-bold text-blue-500">Free</span>  Consultation
+
         </h3>
 
         <form className="space-y-4">
@@ -46,26 +47,26 @@ export default function QuickForm() {
           <input
             type="text"
             placeholder="Full Name"
-            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            className="w-full border border-gray-300 px-2 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
           />
 
           {/* Phone */}
           <input
             type="text"
             placeholder="Phone No."
-            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            className="w-full border border-gray-300 px-2 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
           />
 
           {/* Email */}
           <input
             type="email"
             placeholder="Email ID"
-            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            className="w-full border border-gray-300 px-2 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
           />
 
           {/* Services Dropdown */}
           <select
-            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none bg-white"
+            className="w-full border border-gray-300 px-2 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none bg-white"
             defaultValue=""
           >
             <option value="" disabled>
@@ -81,11 +82,11 @@ export default function QuickForm() {
           </select>
 
           {/* Message */}
-          <textarea
+          {/* <textarea
             placeholder="Your Message..."
             rows="3"
             className="w-full border border-gray-300 px-3 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none resize-none"
-          ></textarea>
+          ></textarea> */}
 
           {/* Submit */}
           <button

@@ -31,15 +31,13 @@ function App() {
         <Route path="/income-tax"
           element={
             <><IncomeTax />
-              <Footer />
             </>} />
 
-             <Route path="/gst"
+        <Route path="/gst"
           element={
             <><Gst />
-              <Footer />
             </>} />
-      
+
         <Route path="/startup" element={<StartUp />} />
         <Route path="/company" element={<Company />} />
         <Route path="/trademark" element={<Trademark />} />
