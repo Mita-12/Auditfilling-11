@@ -5,7 +5,6 @@ import React from "react";
 import { FaBalanceScale, FaFileInvoiceDollar, FaRegBuilding, FaTrademark, FaUniversity, FaGavel, FaRocket } from "react-icons/fa";
 import { FaLock, FaMoneyBillWave, FaCheckCircle, FaUserGraduate, FaBuilding, FaReceipt, FaUserFriends, FaHome } from "react-icons/fa";
 import { motion } from "framer-motion";
-import WhyChoose  from "../page/Whychoose"
 
 function ServicesSection() {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -195,7 +194,7 @@ function ServicesSection() {
           </motion.div>
         </div>
       </section>
-      <WhyChoose />
+    
     </div>
   );
 }

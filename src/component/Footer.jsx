@@ -23,8 +23,8 @@ function Footer() {
           {/* Brand Section */}
           <div>
             <h2 className="text-2xl font-bold font-serif mb-4">AuditFiling</h2>
-            <p className="text-gray-400 text-lg leading-relaxed font-serif">
-              Your trusted partner for tax, compliance, and business solutions.
+            <p className="text-gray-300 text-sm  leading-relaxed font-serif">
+              Your trusted partner for tax, compliance, and business solutions
             </p>
             <div className="flex gap-4 mt-6">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
@@ -45,7 +45,7 @@ function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-lg font-semibold font-serif mb-4">Quick Links</h3>
-            <ul className="space-y-3 text-gray-400 text-lg font-serif">
+            <ul className="space-y-1 text-gray-300 text-sm font-serif">
               <li>
                 <Link
                   to="/about"
@@ -54,7 +54,7 @@ function Footer() {
                   About Us
                 </Link>
               </li>
-                 <li>
+              <li>
                 <Link
                   to="/contact"
                   className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
@@ -62,7 +62,7 @@ function Footer() {
                   Contact Us
                 </Link>
               </li>
-              
+
               <li>
                 <Link
                   to="/blog"
@@ -87,7 +87,32 @@ function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              
+              <li>
+                <Link
+                  to="/reseller"
+                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
+                >
+                  Became a Reseller
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/service-provider"
+                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
+                >
+                  Became a  Service Provider      
+                  </Link>
+              </li>
+
+                <li>
+                <Link
+                  to="/privacy"
+                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
+                >
+                Admin Login   
+                  </Link>
+              </li>
+
             </ul>
           </div>
 
@@ -95,7 +120,7 @@ function Footer() {
           {/* Services */}
           <div>
             <h3 className="text-lg font-semibold font-serif mb-4">Cloudsat's Entities</h3>
-            <ul className="space-y-3 text-gray-400 text-lg font-serif">
+            <ul className="space-y-3 text-gray-300 text-sm  font-serif">
               <li>
                 <Link
                   to="/"
@@ -150,7 +175,7 @@ function Footer() {
 
           {/* Contact - Highlighted */}
           <div>
-            <h3 className="text-lg font-semibold font-serif mb-4 text-center">Contact</h3>
+            <h3 className="text-lg font-semibold font-serif mb-4 ">Contact</h3>
             <div className="space-y-4 font-serif ">
               {/* Email */}
               <div className="flex items-center gap-3  px-1 py-1 rounded-sm">
@@ -181,7 +206,7 @@ function Footer() {
                 <div>
                   <h4 className="text-white font-semibold mb-1">Head Office</h4>
                   <p className="text-gray-400 text-sm leading-relaxed">
-                    H No-511, Sarahah Tower, Subhash Nagar, Gurugram, India.
+                    H No-511, Sarahah Tower, Subhash Nagar, Gurugram, India
                   </p>
                 </div>
               </div>
@@ -193,7 +218,7 @@ function Footer() {
                   <h4 className="text-white font-semibold mb-1">Branch Office</h4>
                   <p className="text-gray-400 text-sm leading-relaxed">
                     Room No-12, 2nd Floor, BMC Panchadeep Market Complex,
-                    Bhoumya Nagar, Unit-4, Bhubaneswar, India.
+                    Bhoumya Nagar, Unit-4, Bhubaneswar, India
                   </p>
                 </div>
               </div>
@@ -203,8 +228,8 @@ function Footer() {
           {/* Newsletter */}
           <div>
             <h3 className="text-lg font-semibold font-serif mb-4">Newsletter</h3>
-            <p className="text-gray-400 text-sm mb-4 font-serif">
-              Subscribe to get updates on our latest services and offers.
+            <p className="text-gray-300 text-sm  mb-4 font-serif">
+              Subscribe to get updates on our latest services and offers
             </p>
             <form className="flex flex-col space-y-3">
               <input
@@ -225,7 +250,7 @@ function Footer() {
 
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-5 pt-6 text-center">
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-300 text-sm">
             © {new Date().getFullYear()} AuditFiling. All rights reserved.
           </p>
         </div>

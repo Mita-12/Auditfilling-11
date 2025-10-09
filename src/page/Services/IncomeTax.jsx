@@ -256,7 +256,6 @@
 //   );
 // }
 
-
 import React, { useEffect, useState } from "react";
 import Header from "../../component/Header";
 import QuickForm from "../../form/QuickForm";
@@ -270,6 +269,7 @@ export default function IncomeTax({ menuId }) {
   const [loading, setLoading] = useState(true);
   const [menus, setMenus] = useState([]);
   const [menuIds, setMenuIds] = useState([]);
+  const [faqs, setFaqs] = useState([]);
 
   // Scroll to top on page load
   useEffect(() => {
@@ -345,18 +345,35 @@ export default function IncomeTax({ menuId }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [services]);
 
+  // Scroll to section on service click
   const handleClick = (service) => {
     setActiveService(service);
     const el = document.getElementById(`service-${service.id}`);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  // Fetch FAQ dynamically
+// Fetch FAQ dynamically
+useEffect(() => {
+  const fetchFaqs = async () => {
+    try {
+      const res = await fetch("https://auditfiling.com/api/v1/faq/1");
+      const data = await res.json();
+      console.log("FAQ API response:", data); // optional for debugging
+      // ✅ API returns array directly
+      setFaqs(Array.isArray(data) ? data : data.faqs || []);
+    } catch (error) {
+      console.error("Error fetching FAQs:", error);
+    }
+  };
+  fetchFaqs();
+}, []);
+
+
   // ✅ Loading & error handling
   if (loading)
     return (
-      <div className="flex items-center justify-center h-screen">
-        Loading...
-      </div>
+      <div className="flex items-center justify-center h-screen">Loading...</div>
     );
   if (!menuData)
     return (
@@ -371,8 +388,8 @@ export default function IncomeTax({ menuId }) {
 
       <div className="mx-auto w-full px-4 md:px-8 py-10 flex flex-col md:flex-row gap-8">
         {/* Sidebar */}
-        <aside className="sticky top-30 ml-6 bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-y-auto">
-          <h1 className="text-3xl font-serif mt-10 text-left mb-5 text-gray-800">
+        <aside className="sticky top-24 ml-6 bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-y-auto">
+          <h1 className="text-3xl font-serif mt-10 pl-5  mb-5 text-gray-800">
             {menuData.name || "Income Tax"}
           </h1>
 
@@ -399,10 +416,10 @@ export default function IncomeTax({ menuId }) {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-12 mt-25">
+        <main className="flex-1 space-y-10 mt-20">
           {/* Menu Overview */}
           <section className="bg-white rounded-2xl p-6">
-            <h1 className="text-3xl md:text-4xl font-serif text-center mb-4 text-gray-900">
+            <h1 className="text-3xl md:text-4xl font-serif text-center mb-2 text-gray-900">
               {menuData.name || "Income Tax"}
             </h1>
 
@@ -424,13 +441,13 @@ export default function IncomeTax({ menuId }) {
               id={`service-${service.id || idx}`}
               className="bg-white rounded-2xl p-6"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
+              <h2 className="text-2xl md:text-3xl font-bold font-serif text-center mb-4 text-gray-900">
                 {service.service_name || service.name}
               </h2>
 
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 <div
-                  className="prose prose-blue w-full text-gray-700"
+                  className="prose prose-blue w-full font-sans text-gray-700"
                   dangerouslySetInnerHTML={{
                     __html:
                       service.service_description ||
@@ -442,6 +459,23 @@ export default function IncomeTax({ menuId }) {
             </section>
           ))}
 
+          {/* FAQ Section */}
+          <section className="bg-white rounded-2xl p-6">
+            <h2 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
+              Frequently Asked Questions
+            </h2>
+
+            {faqs.length > 0 ? (
+              <ul className="space-y-4">
+                {faqs.map((faq, idx) => (
+                  <FAQItem key={faq.menu_id || idx} question={faq.question} answer={faq.answer} />
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500 text-center">No FAQs available.</p>
+            )}
+          </section>
+
           {/* Mobile QuickForm */}
           <div className="block md:hidden mt-20">
             <QuickForm />
@@ -449,7 +483,7 @@ export default function IncomeTax({ menuId }) {
         </main>
 
         {/* Desktop QuickForm */}
-        <div className="w-64 mt-35">
+        <div className="w-64 mt-24">
           <QuickForm />
         </div>
       </div>
@@ -457,6 +491,32 @@ export default function IncomeTax({ menuId }) {
       <WhatsAppPopup />
       <Footer />
     </div>
+  );
+}
+
+// ✅ FAQ Accordion Item
+function FAQItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <li className=" border-gray-200 rounded-xl p-4 shadow-sm">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full text-left font-semibold text-lg text-gray-800 flex justify-between items-center"
+      >
+        <span
+          dangerouslySetInnerHTML={{ __html: question || "Untitled Question" }}
+        ></span>
+        <span>{open ? "−" : "+"}</span>
+      </button>
+
+      {open && (
+        <div
+          className="mt-2 text-gray-700"
+          dangerouslySetInnerHTML={{ __html: answer || "No answer available." }}
+        ></div>
+      )}
+    </li>
   );
 }
 

@@ -728,10 +728,10 @@ export default function LoginForm({ isOpen, onClose }) {
         {!user ? (
           <button
             onClick={() => {}}
-            className="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1 mt-4"
+            className=" text-white px-4 py-2 rounded flex items-center gap-1 mt-4"
           >
-            <FaUser className="md:hidden w-5 h-5" />
-            <span className="hidden md:inline">Login</span>
+            {/* <FaUser className="md:hidden w-5 h-5" /> */}
+            {/* <span className="hidden md:inline">Login</span> */}
           </button>
         ) : (
           <div className="flex items-center gap-2 mt-4">

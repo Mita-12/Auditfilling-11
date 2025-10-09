@@ -140,10 +140,12 @@ const testimonials = [
     id: 1,
     title: "Seamless & Efficient Audit Management",
     review:
-      "AuditFilling.com has completely transformed the way we handle our audits. The platform is user-friendly, automated, and ensures compliance with all regulations. It has significantly reduced our audit processing time and improved accuracy. Highly recommended!",
+"AuditFilling.com has completely transformed the way we handle our audits. The platform is user-friendly, automated, and ensures compliance with all regulations. It has significantly reduced our audit processing time and improved accuracy. Highly recommended!",
     name: "Akshay Jain",
     company: "Embedded Design Solution",
     rating: 5,
+    avatar: "AJ",
+    color: "bg-blue-500"
   },
   {
     id: 2,
@@ -153,6 +155,8 @@ const testimonials = [
     name: "Anurag Mishra",
     company: "M/S Daba India Generic Pharma",
     rating: 5,
+    avatar: "AM",
+    color: "bg-green-500"
   },
   {
     id: 3,
@@ -162,6 +166,8 @@ const testimonials = [
     name: "Pitabash Behera",
     company: "Star Services",
     rating: 4,
+    avatar: "PB",
+    color: "bg-purple-500"
   },
   {
     id: 4,
@@ -171,40 +177,123 @@ const testimonials = [
     name: "Partho Ghosh",
     company: "Satyam Shivam Enterprisers",
     rating: 5,
+    avatar: "PG",
+    color: "bg-orange-500"
   },
 ];
 
 export default function TestimonialGrid() {
   return (
-    <section className=" py-16">
-      <div className="container mx-auto px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-20">
-          What <span className="text-blue-600">Our Users</span> Say About AuditFilling
-        </h2>
+    <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50/30">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header Section */}
+        <div className="text-center mb-16">
+          {/* <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
+            Testimonials
+          </div> */}
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            What <span className="text-blue-600">Our Users</span> Say
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Discover why thousands of businesses trust AuditFiling for their compliance needs
+          </p>
+        </div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 mb-12">
-          {testimonials.map((t) => (
+        {/* Testimonials Grid */}
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 mb-16">
+          {testimonials.map((testimonial, index) => (
             <div
-              key={t.id}
-              className="bg-white p-6 md:p-8 rounded-xl shadow-lg transition transform hover:scale-105 hover:shadow-2xl"
+              key={testimonial.id}
+              className="group relative"
             >
-              <div className="flex justify-center text-yellow-400 mb-4">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <FaStar key={i} />
-                ))}
+              {/* Background Decoration */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white to-blue-50/50 rounded-2xl shadow-lg transform group-hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2 border border-blue-100/50" />
+              
+              {/* Main Card Content */}
+              <div className="relative p-6 md:p-8 h-full flex flex-col">
+                {/* Rating & Quote */}
+                <div className="mb-6">
+                  <div className="flex justify-center mb-4">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <FaStar 
+                        key={i} 
+                        className={`text-lg ${
+                          i < testimonial.rating 
+                            ? "text-yellow-400 fill-current" 
+                            : "text-gray-300"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  
+                  <div className="relative">
+                    <FaQuoteLeft className="absolute -top-2 -left-2 text-blue-200 text-xl" />
+                    <h3 className="font-semibold text-gray-900 text-lg mb-3 px-4">
+                      {testimonial.title}
+                    </h3>
+                    <FaQuoteRight className="absolute -bottom-2 -right-2 text-blue-200 text-xl" />
+                  </div>
+                </div>
+
+                {/* Review Text */}
+                <div className="flex-1 mb-6">
+                  <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+                    {testimonial.review}
+                  </p>
+                </div>
+
+                {/* User Info */}
+                <div className="flex items-center space-x-4 pt-4 border-t border-gray-100">
+                  <div className={`w-12 h-12 ${testimonial.color} rounded-full flex items-center justify-center text-white font-semibold`}>
+                    {testimonial.avatar}
+                  </div>
+                  <div className="flex-1 text-left">
+                    <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+                    <p className="text-gray-500 text-sm">{testimonial.company}</p>
+                  </div>
+                </div>
               </div>
 
-              <p className="text-gray-600 italic mb-4">
-                <FaQuoteLeft className="inline mr-2 text-blue-500" />
-                {t.review}
-                <FaQuoteRight className="inline ml-2 text-blue-500" />
-              </p>
-
-              <h3 className="font-semibold text-gray-800">{t.name}</h3>
-              <p className="text-gray-500 text-sm">{t.company}</p>
+              {/* Hover Effect Border */}
+              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-200 transition-all duration-300 pointer-events-none" />
             </div>
           ))}
         </div>
+
+        {/* Stats Section */}
+        {/* <div className="bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600 mb-2">4.9/5</div>
+              <div className="text-gray-600 text-sm">Average Rating</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
+              <div className="text-gray-600 text-sm">Happy Clients</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600 mb-2">99%</div>
+              <div className="text-gray-600 text-sm">Satisfaction Rate</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600 mb-2">24/7</div>
+              <div className="text-gray-600 text-sm">Support Available</div>
+            </div>
+          </div>
+        </div> */}
+
+        {/* CTA Section */}
+        {/* <div className="text-center mt-12">
+          <p className="text-gray-600 mb-6">Ready to join our satisfied customers?</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl">
+              Start Free Trial
+            </button>
+            <button className="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors duration-200">
+              View More Reviews
+            </button>
+          </div>
+        </div> */}
       </div>
     </section>
   );

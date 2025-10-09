@@ -21,6 +21,8 @@ import TermsAndConditions from "./page/TermCondition.jsx";
 import Testimonials from "./page/Testimonial.jsx";
 import LoginForm from "./form/LoginForm.jsx";
 import Footer from "./component/Footer.jsx";
+import ResellerRegistrationForm from "./reseller/Reseller.jsx";
+import ServiceProviderForm from "./page/ServiceProvider/ServiceProvider.jsx";
 
 function App() {
   return (
@@ -48,6 +50,9 @@ function App() {
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/reseller" element={<ResellerRegistrationForm />} />
+                <Route path="/service-provider" element={<ServiceProviderForm />} />
+
       </Routes>
     </Router>
   );
