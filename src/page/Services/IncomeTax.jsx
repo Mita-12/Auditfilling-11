@@ -353,21 +353,21 @@ export default function IncomeTax({ menuId }) {
   };
 
   // Fetch FAQ dynamically
-// Fetch FAQ dynamically
-useEffect(() => {
-  const fetchFaqs = async () => {
-    try {
-      const res = await fetch("https://auditfiling.com/api/v1/faq/1");
-      const data = await res.json();
-      console.log("FAQ API response:", data); // optional for debugging
-      // ✅ API returns array directly
-      setFaqs(Array.isArray(data) ? data : data.faqs || []);
-    } catch (error) {
-      console.error("Error fetching FAQs:", error);
-    }
-  };
-  fetchFaqs();
-}, []);
+  // Fetch FAQ dynamically
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const res = await fetch("https://auditfiling.com/api/v1/faq/1");
+        const data = await res.json();
+        console.log("FAQ API response:", data); // optional for debugging
+        // ✅ API returns array directly
+        setFaqs(Array.isArray(data) ? data : data.faqs || []);
+      } catch (error) {
+        console.error("Error fetching FAQs:", error);
+      }
+    };
+    fetchFaqs();
+  }, []);
 
 
   // ✅ Loading & error handling
@@ -399,11 +399,10 @@ useEffect(() => {
                 <li key={service.id || idx}>
                   <button
                     onClick={() => handleClick(service)}
-                    className={`w-full text-left px-2 py-2 text-lg font-serif rounded-lg transition-all ${
-                      activeService?.id === service.id
+                    className={`w-full text-left px-2 py-2 text-lg font-serif rounded-lg transition-all ${activeService?.id === service.id
                         ? "bg-blue-100 border-l-4 border-blue-600 text-blue-700 font-bold"
                         : "hover:bg-gray-100 text-gray-700"
-                    }`}
+                      }`}
                   >
                     {idx + 1}. {service.service_name || service.name}
                   </button>
@@ -416,7 +415,7 @@ useEffect(() => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-10 mt-20">
+        <main className="flex-1 space-y-10 ">
           {/* Menu Overview */}
           <section className="bg-white rounded-2xl p-6">
             <h1 className="text-3xl md:text-4xl font-serif text-center mb-2 text-gray-900">
@@ -466,7 +465,7 @@ useEffect(() => {
             </h2>
 
             {faqs.length > 0 ? (
-              <ul className="space-y-4">
+              <ul className="space-y-4 ">
                 {faqs.map((faq, idx) => (
                   <FAQItem key={faq.menu_id || idx} question={faq.question} answer={faq.answer} />
                 ))}

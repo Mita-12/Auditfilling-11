@@ -66,16 +66,16 @@ export default function WhyChooseUs() {
             </p>
             
             {/* Stats Section */}
-            <div className="grid grid-cols-2 gap-6 pt-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600">99%</div>
-                <div className="text-sm text-gray-500 mt-1">Client Satisfaction</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600">500+</div>
-                <div className="text-sm text-gray-500 mt-1">Businesses Served</div>
-              </div>
-            </div>
+           <div className="flex justify-center gap-3 pt-6 text-center">
+  <div>
+    <div className="text-3xl font-bold text-blue-600">99%</div>
+    <div className="text-sm text-gray-500 mt-1">Client Satisfaction</div>
+  </div>
+  <div>
+    <div className="text-3xl font-bold text-blue-600">500+</div>
+    <div className="text-sm text-gray-500 mt-1">Businesses Served</div>
+  </div>
+</div>
           </div>
 
           {/* Right Section - Staggered Layout */}
@@ -89,7 +89,7 @@ export default function WhyChooseUs() {
 
             {/* Second Row - 2 Cards (Offset) */}
             <div className="flex justify-center sm:justify-start">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md sm:max-w-full sm:ml-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md sm:max-w-full sm:ml-12 mr-10">
                 {cards.slice(3, 5).map((card, index) => (
                   <Card key={index + 3} card={card} colorMap={colorMap} />
                 ))}
@@ -98,7 +98,7 @@ export default function WhyChooseUs() {
 
             {/* Third Row - 1 Card (Centered) */}
             <div className="flex justify-center">
-              <div className="max-w-xs">
+              <div className="w-1/2">
                 {cards.slice(5, 6).map((card, index) => (
                   <Card key={index + 5} card={card} colorMap={colorMap} />
                 ))}
