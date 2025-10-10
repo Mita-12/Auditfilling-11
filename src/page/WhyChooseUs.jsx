@@ -7,37 +7,37 @@ export default function WhyChooseUs() {
       title: "Transparent Pricing", 
       desc: "No hidden fees or surprises. Clear, upfront pricing for all our services.", 
       icon: <FaMoneyCheckAlt className="text-blue-500" />,
-      color: "blue"
+      color: "blue",
     },
     { 
       title: "Accurate & Reliable", 
       desc: "We ensure precision in every process with guaranteed accuracy.", 
       icon: <FaShieldAlt className="text-green-500" />,
-      color: "green"
+       color: "green",
     },
     { 
       title: "Expert Support", 
       desc: "Our professionals are here to help you 24/7 with dedicated assistance.", 
       icon: <FaUserTie className="text-purple-500" />,
-      color: "purple"
+      color: "purple",
     },
     { 
       title: "100% Data Privacy", 
       desc: "Your information stays completely secure with enterprise-grade security.", 
       icon: <FaLock className="text-red-500" />,
-      color: "red"
+       color: "red",
     },
     { 
       title: "Max Tax Saving", 
       desc: "Smart strategies and expert guidance to help you save more on taxes.", 
       icon: <FaChartLine className="text-orange-500" />,
-      color: "orange"
+        color: "orange",
     },
     { 
       title: "Fast & Efficient", 
       desc: "Quick turnaround times without compromising on quality or accuracy.", 
       icon: <FaBolt className="text-yellow-500" />,
-      color: "yellow"
+       color: "yellow",
     },
   ];
 
@@ -51,9 +51,9 @@ export default function WhyChooseUs() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+    <section className="py-5 ">
+      <div className="max-w-7xl mx-auto ">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-12 items-center">
           {/* Left Section */}
           <div className="space-y-6">
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
@@ -81,8 +81,8 @@ export default function WhyChooseUs() {
           {/* Right Section - Staggered Layout */}
           <div className="space-y-6">
             {/* First Row - 3 Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {cards.slice(0, 3).map((card, index) => (
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+              {cards.slice(0, 4).map((card, index) => (
                 <Card key={index} card={card} colorMap={colorMap} />
               ))}
             </div>
@@ -96,14 +96,7 @@ export default function WhyChooseUs() {
               </div>
             </div>
 
-            {/* Third Row - 1 Card (Centered) */}
-            <div className="flex justify-center">
-              <div className="w-1/2">
-                {cards.slice(5, 6).map((card, index) => (
-                  <Card key={index + 5} card={card} colorMap={colorMap} />
-                ))}
-              </div>
-            </div>
+         
           </div>
         </div>
       </div>
@@ -112,10 +105,10 @@ export default function WhyChooseUs() {
 }
 
 // Reusable Card Component
-function Card({ card, colorMap }) {
+function Card({ card,colorMap }) {
   return (
     <div
-      className={`group p-5 rounded-2xl bg-gradient-to-br ${colorMap[card.color]} border-transparent hover:border-current transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1`}
+      className={`group p-5 rounded-xl shadow-sm   bg-gradient-to-br ${colorMap[card.color]} border-transparent hover:border-current transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1`}
     >
       <div className="flex flex-col items-center text-center space-y-3">
         <div className="flex-shrink-0 p-3 bg-white rounded-xl shadow-sm group-hover:shadow-md transition-shadow">
@@ -124,10 +117,10 @@ function Card({ card, colorMap }) {
           </div>
         </div>
         <div className="flex-1">
-          <h3 className="font-semibold text-gray-900 mb-2 text-sm">
+          <h3 className="font-semibold text-gray-900 mb-2 text-lg">
             {card.title}
           </h3>
-          <p className="text-gray-600 text-xs leading-relaxed">
+          <p className="text-gray-600 text-sm leading-relaxed">
             {card.desc}
           </p>
         </div>

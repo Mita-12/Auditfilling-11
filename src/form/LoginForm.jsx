@@ -1,13 +1,11 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TiMail } from "react-icons/ti";
 import { FiLock, FiKey } from "react-icons/fi";
-import { FaUser } from "react-icons/fa"; // Added missing import
+import { safeLocalStorage } from "../utils/LocalStorage"; // Adjust path as needed
 
 export default function LoginForm({ isOpen, onClose }) {
-  const [user, setUser] = useState(null);
-
   const [user_name, setuser_name] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
@@ -86,7 +84,7 @@ export default function LoginForm({ isOpen, onClose }) {
       if (data.status === "success") {
         setOtpError("");
         setOtpMsg(data.message || "OTP verified successfully");
-        handleLoginSuccess(data.user); // ✅ Use common success handler
+        handleLoginSuccess(data.user);
       } else {
         setOtpError(data.message || "Invalid OTP");
       }
@@ -124,7 +122,7 @@ export default function LoginForm({ isOpen, onClose }) {
       if (data.status === "success") {
         setPassError("");
         setPassMsg(data.message || "Login Successful");
-        handleLoginSuccess(data.user); // ✅ Use same success flow
+        handleLoginSuccess(data.user);
       } else {
         setPassError(data.message || "Invalid Credentials");
       }
@@ -144,21 +142,15 @@ export default function LoginForm({ isOpen, onClose }) {
     }
   };
 
-  // ✅ Load user from localStorage
-  useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) setUser(JSON.parse(savedUser));
-  }, []);
-
-  // ✅ Unified Login Success Handler
   // ✅ Unified Login Success Handler
   const handleLoginSuccess = (userData) => {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+    // Safe localStorage setting
+    safeLocalStorage.set("user", userData);
     setShowSuccessPopup(true);
 
     // Notify other components about the user update
     window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new Event('userUpdated'));
 
     setTimeout(() => {
       setShowSuccessPopup(false);
@@ -170,7 +162,7 @@ export default function LoginForm({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center  ">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl p-6 relative">
         <div className="flex justify-between items-center border-b border-gray-300 pb-4 mb-4">
           <h2 className="text-2xl font-bold font-serif text-gray-900">User Login</h2>
@@ -309,14 +301,6 @@ export default function LoginForm({ isOpen, onClose }) {
             </button>
           </div>
         </form>
-
-        {/* User Info */}
-        {/* {user ? (
-          <div className="mt-4 flex items-center gap-2 text-gray-700">
-            <FaUser className="w-5 h-5" />
-            <span>{user.name}</span>
-          </div>
-        ) : null} */}
 
         {/* Success Popup */}
         {showSuccessPopup && (

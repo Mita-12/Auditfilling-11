@@ -5,15 +5,16 @@ export default function Herosection() {
   return (
     <>
       {/* Hero Section */}
-     <section className="w-full min-h-[70vh] flex flex-col items-center justify-center   text-[#222222] text-center  px-6 md:px-12 py-16 ">
+     <section className="w-full min-h-[70vh] flex flex-col items-center justify-center    text-[#222222] text-center  px-6 md:px-12 py-16 ">
   {/* Hero Heading */}
-  <h1 className="text-4xl md:text-6xl font-bold font-serif font- mt-25 leading-tight " >
+  <h1 className="text-5xl  font-bold font-serif  mt-15 pt-15 leading-tight " >
     Trusted Legal Services <br />
-    for Your <span className="text-black">Business & Compliance</span>
+    <h1>for Your <span className="text-black pt-5">Business & Compliance</span></h1>
+    
   </h1>
 
   {/* Subheading */}
-  <p className="mt-6 text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
+  <p className="mt-6 text-lg md:text-xl text-gray-700 max-w-2xl pt-5 mx-auto leading-relaxed">
     From{" "}
     <span className="font-semibold text-blue-600">Company Registration</span>{" "}
     to{" "}

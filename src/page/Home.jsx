@@ -9,6 +9,7 @@ import Herosection from "../component/Herosection";
 import NotificationUpdates from "./Notification";
 import WhyChooseUs from "./WhyChooseUs"
 ;
+import Auditfile from "./Auditfile";
 
 function Home() {
   return (
@@ -16,6 +17,7 @@ function Home() {
       <Header />
       <Herosection />
       <ServicesSection />
+      <Auditfile/>
       <NotificationUpdates/>
       <WhyChooseUs/>
       <Testimonials />

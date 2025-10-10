@@ -211,47 +211,47 @@ import { TiMail } from "react-icons/ti";
 import { MdAddIcCall } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import LoginForm from "../form/LoginForm";
+import { safeLocalStorage } from "../utils/LocalStorage"; // Adjust path as needed
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState(null);
 
-  // Load user from localStorage on component mount
+  // Load user from localStorage on component mount - SAFE VERSION
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
+    const savedUser = safeLocalStorage.get("user");
+    setUser(savedUser);
   }, []);
 
   // Listen for login success
   useEffect(() => {
     const handleUserUpdate = () => {
-      const savedUser = localStorage.getItem("user");
-      if (savedUser) {
-        setUser(JSON.parse(savedUser));
-      } else {
-        setUser(null);
-      }
+      const savedUser = safeLocalStorage.get("user");
+      setUser(savedUser);
     };
 
-    // Listen for storage events (when login happens in another component)
     window.addEventListener('storage', handleUserUpdate);
-
-    // Also check periodically (optional, for same-tab updates)
-    const interval = setInterval(handleUserUpdate, 1000);
+    
+    // Custom event listener for same-tab updates
+    const handleCustomStorage = () => {
+      const savedUser = safeLocalStorage.get("user");
+      setUser(savedUser);
+    };
+    
+    window.addEventListener('userUpdated', handleCustomStorage);
 
     return () => {
       window.removeEventListener('storage', handleUserUpdate);
-      clearInterval(interval);
+      window.removeEventListener('userUpdated', handleCustomStorage);
     };
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    safeLocalStorage.remove("user");
     setUser(null);
-    window.dispatchEvent(new Event('storage')); // Notify other components
+    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new Event('userUpdated'));
   };
 
   return (
@@ -310,7 +310,7 @@ export default function Navbar() {
               className="p-2 rounded-full bg-gray-100 text-blue-700 hover:bg-blue-200 hover:scale-110 transition-transform"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M8.34 17V10.67H5.67V17H8.34M7 9.5A1.34 1.34 0 1 0 7 6.83 1.34 1.34 0 0 0 7 9.5M18.33 17V13.33C18.33 11.1 16.87 9.83 15 9.83C13.9 9.83 13.1 10.4 12.76 11H12.67V10.67H10V17H12.67V13.67C12.67 12.8 13.33 12.17 14.17 12.17C15 12.17 15.67 12.83 15.67 13.67V17H18.33Z" />
+                <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M8.34 17V10.67H5.67V17H8.34M7 9.5A1.34 1.34 0 1 0 7 6.83A1.34 1.34 0 0 0 7 9.5M18.33 17V13.33C18.33 11.1 16.87 9.83 15 9.83C13.9 9.83 13.1 10.4 12.76 11H12.67V10.67H10V17H12.67V13.67C12.67 12.8 13.33 12.17 14.17 12.17C15 12.17 15.67 12.83 15.67 13.67V17H18.33Z" />
               </svg>
             </a>
             {/* YouTube */}
@@ -351,9 +351,10 @@ export default function Navbar() {
               className="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1 hover:bg-blue-700 transition-colors"
             >
               <FaUser className="md:hidden w-5 h-5" />
-              <span className="hidden md:inline">Login</span>
+              <span className="hidden md:inline">SignIn</span>
             </button>
           )}
+
         </div>
       </div>
 
