@@ -232,13 +232,13 @@ export default function Navbar() {
     };
 
     window.addEventListener('storage', handleUserUpdate);
-    
+
     // Custom event listener for same-tab updates
     const handleCustomStorage = () => {
       const savedUser = safeLocalStorage.get("user");
       setUser(savedUser);
     };
-    
+
     window.addEventListener('userUpdated', handleCustomStorage);
 
     return () => {
@@ -332,14 +332,43 @@ export default function Navbar() {
             <div className="relative group">
               <button className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-green-700 transition-colors">
                 <FaUser className="w-4 h-4" />
-                <span className="hidden md:inline">
-                  {user.name || user.user_name || 'User'}
-                </span>
+                <span className="hidden md:inline">{user?.name || "User"}</span>
+                <svg
+                  className="w-4 h-4 ml-1 transition-transform group-hover:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
+
+              {/* Dropdown Menu */}
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <a href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  Profile
+                </a>
+                <a href="/company-details" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  Company Details
+                </a>
+                <a href="/my-request" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  My Request
+                </a>
+                <a href="/completed-service" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  Completed Service
+                </a>
+                <a href="/payment-history" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  Payment History
+                </a>
+                <a href="/bank-details" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  Bank Details
+                </a>
+                <a href="/feedback" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                  Feedback
+                </a>
                 <button
                   onClick={handleLogout}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
                 >
                   Logout
                 </button>
@@ -351,9 +380,10 @@ export default function Navbar() {
               className="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1 hover:bg-blue-700 transition-colors"
             >
               <FaUser className="md:hidden w-5 h-5" />
-              <span className="hidden md:inline">SignIn</span>
+              <span className="hidden md:inline">Sign In</span>
             </button>
           )}
+
 
         </div>
       </div>
@@ -363,8 +393,13 @@ export default function Navbar() {
         <LoginForm
           isOpen={showLogin}
           onClose={() => setShowLogin(false)}
+          onLoginSuccess={(userData) => {
+            setUser(userData);          // update navbar instantly
+            setShowLogin(false);        // close popup
+          }}
         />
       )}
+
     </header>
   );
 }

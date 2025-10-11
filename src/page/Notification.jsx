@@ -134,6 +134,8 @@ export default function NotificationUpdates() {
           </div>
           <h2 className="text-4xl font-bold text-gray-900 mb-4 font-serif">
             Notifications & Alerts
+                          <span className="block w-24 h-1 bg-blue-600 mx-auto mt-3 transition-all duration-500"></span>
+
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Stay updated with important compliance deadlines and regulatory changes

@@ -1,4 +1,6 @@
 import React from "react";
+import { motion } from "framer-motion";
+
 // import WhoWeAreImg from "../assets/images/who-we-are.jpg"; // Make sure the path is correct
 
 export default function Herosection() {
@@ -50,42 +52,62 @@ export default function Herosection() {
 </section>
 
 {/* Hero-style Section (ThemeForest Layout) with your content */}
-<section className="w-full ">
-  <div className="flex flex-col-reverse md:flex-row items-center gap-10 px-12 md:px-28 ">
+ <section className="w-full  ">
+      <div className="flex flex-col-reverse md:flex-row items-center gap-20 px-6 sm:px-12 md:px-20">
+  {/* Image */}
+        <motion.div
+          className="w-full md:w-1/2 flex justify-center md:justify-end mb-6 md:mb-0"
+          initial={{ opacity: 0, x: 80 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          <motion.img
+            src="/img/support.jpg"
+            alt="Who Are We"
+            loading="lazy"
+            className="w-full sm:w-3/4  rounded-sm "
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 200, damping: 10 }}
+          />
+        </motion.div>
 
-    {/* Text Content */}
-    <div className="w-full md:w-1/2 text-center md:text-left">
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 font-serif leading-tight">
-        Who Are We?
-      </h2>
-      <p className="text-base sm:text-lg text-gray-700 leading-relaxed mb-6">
-        With experienced attorneys, we can handle a broad range of compliance issues 
-        for businesses, government entities, organizations, professionals, and individuals 
-        at the local, regional, and national levels.
-        <br /><br />
-        Through more than 15 years of expertise, <span className="font-bold text-blue-600">AuditFiling</span> 
-        has become a trusted partner for startups, SMEs, and large corporations alike.
-      </p>
-      <a 
-        href="/contact" 
-        className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-      >
-        Get In Touch
-      </a>
-    </div>
 
-    {/* Image */}
-    <div className="w-full md:w-1/2 flex justify-center md:justify-end mb-6 md:mb-0">
-      <img
-        src="/img/support.jpg"
-        alt="Who Are We"
-         loading="lazy" 
-        className="w-full sm:w-4/5 md:w-full rounded-sm hover:scale-105 transition-transform duration-300"
-      />
-    </div>
+        {/* Text Content */}
+        <motion.div
+          className="w-full md:w-1/3 text-center md:text-left"
+          initial={{ opacity: 0, x: -60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 font-serif leading-tight">
+            Who Are We?
+          </h2>
+          <p className="text-base sm:text-lg text-gray-700 leading-relaxed mb-6">
+            With experienced attorneys, we can handle a broad range of compliance issues
+            for businesses, government entities, organizations, professionals, and individuals
+            at the local, regional, and national levels.
+            <br /><br />
+            Through more than 15 years of expertise,{" "}
+            <span className="font-bold text-blue-600">AuditFiling</span>{" "}
+            has become a trusted partner for startups, SMEs, and large corporations alike.
+          </p>
 
-  </div>
-</section>
+          <motion.a
+            href="/contact"
+            className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Get In Touch
+          </motion.a>
+        </motion.div>
+
+      
+
+      </div>
+    </section>
 
 
 

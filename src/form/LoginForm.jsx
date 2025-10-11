@@ -5,7 +5,8 @@ import { TiMail } from "react-icons/ti";
 import { FiLock, FiKey } from "react-icons/fi";
 import { safeLocalStorage } from "../utils/LocalStorage"; // Adjust path as needed
 
-export default function LoginForm({ isOpen, onClose }) {
+export default function LoginForm({ isOpen, onClose, onLoginSuccess }) {
+
   const [user_name, setuser_name] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
@@ -143,21 +144,27 @@ export default function LoginForm({ isOpen, onClose }) {
   };
 
   // ✅ Unified Login Success Handler
-  const handleLoginSuccess = (userData) => {
-    // Safe localStorage setting
-    safeLocalStorage.set("user", userData);
-    setShowSuccessPopup(true);
+const handleLoginSuccess = (userData) => {
+  safeLocalStorage.set("user", userData);
+  setShowSuccessPopup(true);
 
-    // Notify other components about the user update
-    window.dispatchEvent(new Event('storage'));
-    window.dispatchEvent(new Event('userUpdated'));
+  // 🔹 instantly update Navbar
+  if (onLoginSuccess) onLoginSuccess(userData);
 
-    setTimeout(() => {
-      setShowSuccessPopup(false);
-      onClose();
-      navigate("/");
-    }, 3000);
-  };
+  // 🔹 notify all tabs
+  setTimeout(() => {
+    window.dispatchEvent(new Event("userUpdated"));
+    window.dispatchEvent(new Event("storage"));
+  }, 100);
+
+  // 🔹 close login popup smoothly
+  setTimeout(() => {
+    setShowSuccessPopup(false);
+    onClose();
+  }, 1500);
+};
+
+
 
   if (!isOpen) return null;
 

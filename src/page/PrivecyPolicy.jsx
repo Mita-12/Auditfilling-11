@@ -65,6 +65,8 @@ export default function PrivacyPolicy() {
         <div className="relative font-serif max-w-6xl mx-auto px-6 text-center">
           <h1 className="text-4xl text-black md:text-5xl   lg:text-6xl font-bold  mb-4 leading-tight">
             Privacy Policy
+                          <span className="block w-24 h-1 bg-blue-600 mx-auto mt-3 transition-all duration-500"></span>
+
           </h1>
           <p className="text-xl md:text-2xl text-black max-w-3xl mx-auto leading-relaxed">
             How Auditfiling / Cloudsat Pvt. Ltd. collects, uses & protects your information
