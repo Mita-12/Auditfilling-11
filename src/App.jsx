@@ -51,7 +51,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/reseller" element={<ResellerRegistrationForm />} />
-                <Route path="/service-provider" element={<ServiceProviderForm />} />
+        <Route path="/service-provider" element={<ServiceProviderForm />} />
 
       </Routes>
     </Router>

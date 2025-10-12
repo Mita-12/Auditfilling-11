@@ -100,17 +100,17 @@ function Footer() {
                   to="/service-provider"
                   className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
                 >
-                  Became a  Service Provider      
-                  </Link>
+                  Became a  Service Provider
+                </Link>
               </li>
 
-                <li>
+              <li>
                 <Link
                   to="/privacy"
                   className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
                 >
-                Admin Login   
-                  </Link>
+                  Login
+                </Link>
               </li>
 
             </ul>

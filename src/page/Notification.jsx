@@ -54,57 +54,57 @@ export default function NotificationUpdates() {
 
   // Due Dates with priority
   const dueDates = [
-    { 
+    {
       id: 1,
-      text: "TDS Payment for March 2025", 
+      text: "TDS Payment for March 2025",
       date: "30-Apr-2025",
       category: "TDS"
     },
-    { 
+    {
       id: 2,
-      text: "Professional Tax (PT) on Salaries for April 2025", 
+      text: "Professional Tax (PT) on Salaries for April 2025",
       date: "10-May-2025",
       category: "PT"
     },
-    { 
+    {
       id: 3,
-      text: "GSTR 1 (Monthly) for April 2025", 
+      text: "GSTR 1 (Monthly) for April 2025",
       date: "11-May-2025",
       category: "GST"
     },
-    { 
+    {
       id: 4,
-      text: "GSTR 1 IFF (Optional) (Apr 2025) for QRMP", 
+      text: "GSTR 1 IFF (Optional) (Apr 2025) for QRMP",
       date: "13-May-2025",
       category: "GST"
     },
-    { 
+    {
       id: 5,
-      text: "Provident Fund (PF) & ESI Returns and Payment for April 2025", 
+      text: "Provident Fund (PF) & ESI Returns and Payment for April 2025",
       date: "15-May-2025",
       category: "PF/ESI"
     },
-    { 
+    {
       id: 6,
-      text: "GSTR 3B for April 2025 (Monthly)", 
+      text: "GSTR 3B for April 2025 (Monthly)",
       date: "20-May-2025",
       category: "GST"
     },
-    { 
+    {
       id: 7,
-      text: "TDS Return in Form 24Q, 26Q, and 27Q for Jan-Mar 2025", 
+      text: "TDS Return in Form 24Q, 26Q, and 27Q for Jan-Mar 2025",
       date: "31-May-2025",
       category: "TDS"
     },
-    { 
+    {
       id: 8,
-      text: "Advance tax Payment for April to June 2025 (1st Installment)", 
+      text: "Advance tax Payment for April to June 2025 (1st Installment)",
       date: "15-Jun-2025",
       category: "Income Tax"
     },
-    { 
+    {
       id: 9,
-      text: "Provident Fund (PF) & ESI Returns and Payment for May 2025", 
+      text: "Provident Fund (PF) & ESI Returns and Payment for May 2025",
       date: "15-Jun-2025",
       category: "PF/ESI"
     },
@@ -122,7 +122,7 @@ export default function NotificationUpdates() {
     return colors[category] || "bg-gray-100 text-gray-800 border-gray-200";
   };
 
- 
+
 
   return (
     <section className="py-16 bg-white">
@@ -134,6 +134,8 @@ export default function NotificationUpdates() {
           </div>
           <h2 className="text-4xl font-bold text-gray-900 mb-4 font-serif">
             Notifications & Alerts
+            <span className="block w-24 h-1 bg-blue-600 mx-auto mt-3 transition-all duration-500"></span>
+
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Stay updated with important compliance deadlines and regulatory changes
@@ -142,7 +144,7 @@ export default function NotificationUpdates() {
 
         {/* Content - Two Columns */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-          
+
           {/* Left Column - Updates */}
           <div className=" rounded-2xl shadow-lg overflow-hidden border border-gray-200">
             <div className=" p-6">
@@ -154,7 +156,7 @@ export default function NotificationUpdates() {
                 Recent regulatory changes and announcements
               </p>
             </div>
-            
+
             <div className="h-96 overflow-y-auto scroll-smooth p-6 space-y-4">
               {updates.map((update) => (
                 <div
@@ -190,18 +192,17 @@ export default function NotificationUpdates() {
                 Upcoming compliance deadlines and filings
               </p>
             </div>
-            
+
             <div className="h-96 overflow-y-auto scroll-smooth p-6 space-y-4">
               {dueDates.map((item) => (
                 <div
                   key={item.id}
-                  className={`bg-white rounded-xl p-3 shadow-sm border hover:shadow-md transition-all duration-200 ${
-                    item.priority === "high" 
-                      ? "border-red-200 hover:border-red-300" 
+                  className={`bg-white rounded-xl p-3 shadow-sm border hover:shadow-md transition-all duration-200 ${item.priority === "high"
+                      ? "border-red-200 hover:border-red-300"
                       : item.priority === "medium"
-                      ? "border-yellow-200 hover:border-yellow-300"
-                      : "border-gray-100 hover:border-gray-200"
-                  }`}
+                        ? "border-yellow-200 hover:border-yellow-300"
+                        : "border-gray-100 hover:border-gray-200"
+                    }`}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
@@ -210,14 +211,13 @@ export default function NotificationUpdates() {
                           {item.category}
                         </span>
                         <div className="flex items-center gap-1">
-                         
-                          <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-                            item.priority === "high" 
+
+                          <span className={`text-xs font-medium px-2 py-1 rounded-full ${item.priority === "high"
                               ? "bg-red-100 text-red-700 border border-red-200"
                               : item.priority === "medium"
-                              ? "bg-yellow-100 text-yellow-700 border border-yellow-200"
-                              : "bg-gray-100 text-gray-700 border border-gray-200"
-                          }`}>
+                                ? "bg-yellow-100 text-yellow-700 border border-yellow-200"
+                                : "bg-gray-100 text-gray-700 border border-gray-200"
+                            }`}>
                             {item.priority}
                           </span>
                         </div>
@@ -244,10 +244,10 @@ export default function NotificationUpdates() {
         {/* Footer Note */}
         <div className="text-center mt-8">
           <p className="text-gray-500 text-sm">
-            Last updated: {new Date().toLocaleDateString('en-IN', { 
-              day: 'numeric', 
-              month: 'long', 
-              year: 'numeric' 
+            Last updated: {new Date().toLocaleDateString('en-IN', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric'
             })}
           </p>
         </div>

@@ -5,7 +5,7 @@ import { TiMail } from "react-icons/ti";
 import { FiLock, FiKey } from "react-icons/fi";
 import { safeLocalStorage } from "../utils/LocalStorage"; // Adjust path as needed
 
-export default function LoginForm({ isOpen, onClose }) {
+export default function LoginForm({ isOpen, onClose, onLoginSuccess }) {
   const [user_name, setuser_name] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
@@ -122,7 +122,9 @@ export default function LoginForm({ isOpen, onClose }) {
       if (data.status === "success") {
         setPassError("");
         setPassMsg(data.message || "Login Successful");
-        handleLoginSuccess(data.user);
+        // console.log(data, "user data")
+        handleLoginSuccess(data);
+
       } else {
         setPassError(data.message || "Invalid Credentials");
       }
@@ -144,13 +146,14 @@ export default function LoginForm({ isOpen, onClose }) {
 
   // ✅ Unified Login Success Handler
   const handleLoginSuccess = (userData) => {
-    // Safe localStorage setting
+    console.log(userData, "user data")
     safeLocalStorage.set("user", userData);
     setShowSuccessPopup(true);
 
-    // Notify other components about the user update
-    window.dispatchEvent(new Event('storage'));
-    window.dispatchEvent(new Event('userUpdated'));
+    if (onLoginSuccess) onLoginSuccess(userData); // ✅ instant UI update
+
+    window.dispatchEvent(new Event("userUpdated"));
+    window.dispatchEvent(new Event("storage"));
 
     setTimeout(() => {
       setShowSuccessPopup(false);
@@ -158,6 +161,8 @@ export default function LoginForm({ isOpen, onClose }) {
       navigate("/");
     }, 3000);
   };
+
+
 
   if (!isOpen) return null;
 

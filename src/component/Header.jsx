@@ -440,6 +440,8 @@ import React, { useState, useEffect } from "react";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import { h2 } from "framer-motion/client";
+import { h1 } from "framer-motion/m";
 
 function Header() {
   const [menus, setMenus] = useState([]);
@@ -471,6 +473,16 @@ function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const redirectTo = (key) => {
+    switch (key) {
+      case "Income Tax":
+        return ("/income-tax");
+
+
+      default:
+        break;
+    }
+  }
 
   return (
     <div
@@ -487,48 +499,60 @@ function Header() {
         <div className="container flex ml-70 items-center px-10 py-4">
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-8 text-lg z-50">
-            {menus.map((menu) => (
-              <div key={menu.id} className="relative">
-                {/* Header Button */}
-                <button
-                  onMouseEnter={() => setDropdownOpen(menu.id)}
-                  onClick={() =>
-                    setDropdownOpen(dropdownOpen === menu.id ? null : menu.id)
-                  }
-                  className="font-serif tracking-wide text-lg flex items-center gap-1 cursor-pointer"
-                >
-                  <Link to={menu.slug || "#"}>{menu.name}</Link>
-                  {menu.services?.length > 0 && (
-                    <FaChevronDown
-                      size={10}
-                      className={`mt-1 transition-transform duration-200 ${dropdownOpen === menu.id ? "rotate-180" : "rotate-0"
-                        }`}
-                    />
-                  )}
-                </button>
+            {menus.map((menu) => {
+              console.log(menu.name, "this is menu part");
+              return (
 
-                {/* Dropdown */}
-                {menu.services?.length > 0 && (
-                  <div
-                    onMouseLeave={() => setDropdownOpen(null)}
-                    className={`absolute left-0 mt-4 w-[500px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === menu.id
+                <div key={menu.id} className="relative">
+                  {/* Header Button */}
+                  <button
+                    onMouseEnter={() => setDropdownOpen(menu.id)}
+                    onClick={() =>
+                      setDropdownOpen(dropdownOpen === menu.id ? null : menu.id)
+                    }
+                    className="font-serif tracking-wide text-lg flex items-center gap-1 cursor-pointer"
+                  >
+                    <Link to={redirectTo(menu.name || "#")}>{menu.name}</Link>
+                    {menu.services?.length > 0 && (
+                      <FaChevronDown
+                        size={10}
+                        className={`mt-1 transition-transform duration-200 ${dropdownOpen === menu.id ? "rotate-180" : "rotate-0"
+                          }`}
+                      />
+                    )}
+                  </button>
+
+                  {/* Dropdown */}
+                  {menu.services?.length > 0 && (
+                    <div
+                      onMouseLeave={() => setDropdownOpen(null)}
+                      className={`absolute left-0 mt-4 w-[500px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === menu.id
                         ? "opacity-100 scale-100 pointer-events-auto"
                         : "opacity-0 scale-95 pointer-events-none"
-                      }`}
-                  >
-                    {menu.services.map((service) => (
-                      <button
-                        key={service.id}
-                        onClick={() => navigate(`/`)}
-                        className="block text-left hover:text-blue-600"
-                      >
-                        {service.service_name}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                        }`}
+                    >
+                      {menu.services.map((service) => {
+                        console.log("service", service);
+                        return (
+                          <button
+                            key={service.id}
+                            // onClick={() => navigate(`/${service}`)}
+                            className="block text-left hover:text-blue-600"
+                          >
+                            <Link to={redirectTo(menu.name || "#")}>{service.service_name}</Link>
+                            {/* {service.service_name} */}
+                          </button>
+                        )
+                      }
+
+                      )}
+                    </div>
+                  )}
+                </div>
+              )
+            }
+
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
