@@ -1,148 +1,4 @@
-// import React, { useEffect, useState } from "react";
-// import Header from "../../component/Header";
-// import WhatsAppPopup from "../../form/WhatsAppPopup";
-// import { FaUserTie, FaBriefcase, FaUserEdit, FaUsers } from "react-icons/fa";
-// import QuickForm from "../../form/QuickForm";
 
-// export default function Legal() {
-//   const [serviceData, setServiceData] = useState(null);
-//   const [activeIndex, setActiveIndex] = useState(0);
-//   const [animate, setAnimate] = useState(false);
-// const services = [
-//   {
-//     title: "Online Legal Advice",
-//     description:
-//       "Tax services and filing assistance for salaried individuals, ensuring compliance and maximized refunds. Professionals in India—including doctors, lawyers, consultants, freelancers, and anyone earning income from their own practice—are taxed as individuals under the same income tax slabs as salaried persons. You have the flexibility to choose between the new tax regime (which is now the default) and the old tax regime (optional), depending on which suits your financial situation better.",
-//     additional:
-//       "We provide step-by-step guidance, document verification, and e-filing support for hassle-free tax filing.",
-//     image: "/img/Blog 6.png",
-//   },
-//   {
-//     title: "Legal Notice",
-//     description:
-//       "Tax services and filing assistance for salaried individuals, ensuring compliance and maximized refunds.",
-//     additional:
-//       "We provide step-by-step guidance, document verification, and e-filing support for hassle-free tax filing.",
-//     image: "/img/Blog 6.png",
-//   },
-//   {
-//     title: "Labour and Employment Law",
-//     description:
-//       "Professional tax services tailored for consultants, freelancers, and small business owners.",
-//     additional:
-//       "Our experts handle complex cases, deductions, and compliance requirements to keep you worry-free.",
-//     image: "/img/professional.png",
-//   },
-//   {
-//     title: "Banking and Financial Law",
-//     description:
-//       "Comprehensive services for self-employed individuals, including GST, income tax, and business filing.",
-//     additional:
-//       "We simplify tax filing for self-employed professionals with personalized advice and timely support.",
-//     image: "/img/self-employed.png",
-//   },
-//   {
-//     title: "Land Document Verification",
-//     description:
-//       "Specialized tax filing and advisory services for HUFs with complex income structures.",
-//     additional:
-//       "Ensure accurate HUF filings, compliance, and optimized tax strategies with our expert guidance.",
-//     image: "/img/huf.png",
-//   },
-//   {
-//     title: "Property Registration",
-//     description:
-//       "Specialized tax filing and advisory services for HUFs with complex income structures.",
-//     additional:
-//       "Ensure accurate HUF filings, compliance, and optimized tax strategies with our expert guidance.",
-//     image: "/img/huf.png",
-//   },
-// ];
-
-
-
-//   useEffect(() => {
-//     setServiceData(services[0]);
-//   }, []);
-
-//   const handleServiceClick = (index) => {
-//     setAnimate(true);
-//     setTimeout(() => {
-//       setActiveIndex(index);
-//       setServiceData(services[index]);
-//       setAnimate(false);
-//     }, 300);
-//   };
-
-//   return (
-//      <div className="min-h-screen ">
-//       {/* Header */}
-//       <Header />
-
-//       <div className="flex">
-//         {/* Sidebar */}
-//         <aside className="w-70 rounded-lg p-4 h-[90vh] bg-white  fixed top-28 left-18 overflow-y-auto">
-//           <ul className="space-y-4">
-//             {services.map((item, index) => {
-//               const isActive = activeIndex === index;
-//               return (
-//                 <li
-//                   key={index}
-//                   onClick={() => handleServiceClick(index)}
-//                   className={`flex items-center gap-4 p-4 mt-5 rounded-lg cursor-pointer transition-all duration-300 ${
-//                     isActive
-//                       ? "bg-grey-50 shadow-inner scale-105"
-//                       : "bg-white hover:bg-blue-50 hover:scale-105"
-//                   }`}
-//                 >
-//                   {item.icon}
-//                   <span
-//                     className={`font-serif ${
-//                       isActive ? "text-2xl text-blue-950 font-semibold " : "text-xl"
-//                     }`}
-//                   >
-//                     {item.title}
-//                   </span>
-//                 </li>
-//               );
-//             })}
-//           </ul>
-//         </aside>
-
-//         {/* Main Content */}
-//         <main className="flex-1 ml-82 px-6  py-10  ">
-//           <div
-//             key={activeIndex}
-//             className={`bg-white p-8  mt-20  min-h-[90vh] transition-all duration-500 ease-in-out ${
-//               animate
-//                 ? "translate-x-6 opacity-0"
-//                 : "translate-x-0 opacity-100"
-//             }`}
-//           >
-//             <h1 className="text-3xl md:text-4xl font-serif text-center font-bold mb-6 text-gray-900">
-//               {serviceData?.title}
-//             </h1>
-//             <p className="text-gray-700 mb-4 leading-relaxed">
-//               {serviceData?.description}
-//             </p>
-//             {serviceData?.additional && (
-//               <p className="text-gray-700 leading-relaxed">
-//                 {serviceData.additional}
-//               </p>
-//             )}
-//           </div>
-//         </main>
-
-//         {/* Right Form */}
-//         <div className="hidden lg:block w-80 pr-6 mr-5">
-//           <QuickForm />
-//         </div>
-//       </div>
-
-//       <WhatsAppPopup />
-//     </div>
-//   );
-// }
 import React, { useEffect, useState } from "react";
 import Header from "../../component/Header";
 import QuickForm from "../../form/QuickForm";
@@ -155,6 +11,8 @@ export default function Legal() {
   const [activeService, setActiveService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [menus, setMenus] = useState([]);
+      const [faqs, setFaqs] = useState([]);
+  
 
   // 1️⃣ Fetch all menus and find Legal menu
   useEffect(() => {
@@ -249,7 +107,27 @@ export default function Legal() {
     const el = document.getElementById(`service-${service.id}`);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+    // ✅ Smooth scroll to FAQ section
+  const handleFaqClick = () => {
+    const el = document.getElementById("faq-section");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
+  // Fetch FAQ dynamically
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+          const res = await fetch("https://auditfiling.com/api/v1/faq/6");
+          const data = await res.json();
+          console.log("FAQ API response:", data); // optional for debugging
+          // ✅ API returns array directly
+          setFaqs(Array.isArray(data) ? data : data.faqs || []);
+        } catch (error) {
+          console.error("Error fetching FAQs:", error);
+        }
+      };
+      fetchFaqs();
+    }, []);
   // 4️⃣ Loading & error handling
   if (loading)
     return (
@@ -268,11 +146,11 @@ export default function Legal() {
   // 5️⃣ Render UI
   return (
     <div className="min-h-screen">
-      <Header />
-      <div className="mx-auto w-full px-4 md:px-8 py-10 flex flex-col md:flex-row gap-8">
+    
+      <div className="mx-auto w-full px-4 mt-25 md:px-8 py-10 flex flex-col md:flex-row gap-8">
         {/* Sidebar */}
-        <aside className="sticky top-30 ml-6 bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-y-auto">
-          <h1 className="text-3xl font-serif mt-10 text-left mb-5 text-gray-800">
+        <aside className="sticky top-30 ml-6 bg-white rounded-2xl  p-5 h-auto md:h-[90vh] overflow-y-auto">
+          <h1 className="text-3xl font-serif  text-left mb-5 text-gray-800">
             {menuData.name || menuData.menu_name || "Legal"}
           </h1>
 
@@ -282,7 +160,7 @@ export default function Legal() {
                 <li key={service.id || idx}>
                   <button
                     onClick={() => handleClick(service)}
-                    className={`w-full text-left px-2 py-2 text-lg font-serif rounded-lg transition-all ${
+                    className={`w-full text-left px-2 py-1 text-[15px]rounded-lg transition-all ${
                       activeService?.id === service.id
                         ? "bg-blue-100 border-l-4 border-blue-600 text-blue-700 font-bold"
                         : "hover:bg-gray-100 text-gray-700"
@@ -295,12 +173,21 @@ export default function Legal() {
             ) : (
               <li className="text-gray-500 text-center">No services found</li>
             )}
+             {/* FAQ link */}
+            <li>
+              <button
+                onClick={handleFaqClick}
+                className="w-full text-left px-2 py-2 text-[15px] rounded-lg transition-all hover:bg-gray-100 text-gray-700"
+              >
+                📘 Frequently Asked Questions
+              </button>
+            </li>
           </ul>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-12 mt-20">
-          <section className="bg-white rounded-2xl p-6">
+        <main className="flex-1 space-y-12 ">
+          <section className="bg-white rounded-2xl shadow-sm p-6">
             <h1 className="text-3xl md:text-4xl font-serif text-center mb-4 text-gray-900">
               {menuData.name || "Legal"}
             </h1>
@@ -319,7 +206,7 @@ export default function Legal() {
             <section
               key={service.id || idx}
               id={`service-${service.id || idx}`}
-              className="bg-white rounded-2xl p-6"
+              className="bg-white rounded-2xl shadow-sm p-6"
             >
               <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
                 {service.service_name || service.name}
@@ -335,6 +222,27 @@ export default function Legal() {
               ></div>
             </section>
           ))}
+              
+          {/* FAQ Section */}
+          <section id="faq-section" className="bg-white rounded-2xl p-6">
+            <h2 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
+              Frequently Asked Questions
+            </h2>
+
+            {faqs.length > 0 ? (
+              <ul className="space-y-4">
+                {faqs.map((faq, idx) => (
+                  <FAQItem
+                    key={faq.menu_id || idx}
+                    question={faq.question}
+                    answer={faq.answer}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500 text-center">No FAQs available.</p>
+            )}
+          </section>
 
           <div className="block md:hidden mt-10">
             <QuickForm />
@@ -347,7 +255,34 @@ export default function Legal() {
       </div>
 
       <WhatsAppPopup />
-      <Footer />
+ 
     </div>
+  );
+}
+// ✅ FAQ Accordion Item
+function FAQItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <li className="border-gray-200 rounded-xl p-2 shadow-sm">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full text-left font-bold text-[16px] text-blue-800 flex justify-between items-center"
+      >
+        <span
+          dangerouslySetInnerHTML={{ __html: question || "Untitled Question" }}
+        ></span>
+        <span>{open ? "−" : "+"}</span>
+      </button>
+
+      {open && (
+        <div
+          className="mt-2 text-gray-700"
+          dangerouslySetInnerHTML={{
+            __html: answer || "No answer available.",
+          }}
+        ></div>
+      )}
+    </li>
   );
 }

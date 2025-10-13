@@ -23,6 +23,10 @@ import LoginForm from "./form/LoginForm.jsx";
 import Footer from "./component/Footer.jsx";
 import ResellerRegistrationForm from "./reseller/Reseller.jsx";
 import ServiceProviderForm from "./page/ServiceProvider/ServiceProvider.jsx";
+import UserProfile from "./UserProfile/UserProfile.jsx";
+import { User } from "lucide-react";
+import CompanyDetail from "./UserProfile/CompanyDatail.jsx";
+import CompanyDetailForm from "./UserProfile/ComanyDetailForm.jsx";
 
 function App() {
   return (
@@ -32,27 +36,107 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/income-tax"
           element={
-            <><IncomeTax />
-            </>} />
+            <>
+              <Header />
+              <IncomeTax />
+              <Footer />
+            </>
+          } />
 
         <Route path="/gst"
           element={
-            <><Gst />
+            <>
+              <Header />
+              <Gst />
+              <Footer />
             </>} />
 
-        <Route path="/startup" element={<StartUp />} />
-        <Route path="/company" element={<Company />} />
-        <Route path="/trademark" element={<Trademark />} />
-        <Route path="/bankvaluation" element={<Bankvaluation />} />
-        <Route path="/legal" element={<Legal />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/about" element={<AboutUsPage />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/startup" element={
+          <>   <Header />
+            <StartUp />
+            <Footer />
+          </>
+        } />
+
+        <Route path="/company" element={
+          <>   <Header />
+          <Company />
+          <Footer />
+          </>
+        } />
+        <Route path="/trademark" element={
+          <>   <Header />
+          <Trademark />
+          <Footer />
+          </>
+        } />
+        <Route path="/bankvaluation" element={
+          <>   
+          <Header />
+          <Bankvaluation />
+          <Footer />
+          </>
+        } />
+        <Route path="/legal" element={
+          <>
+            <Header />
+            <Legal />
+            <Footer />
+          </>
+        } />
+        <Route path="/blog" element={
+          <>
+            <Header />
+            <BlogPage />
+            <Footer />
+          </>
+        } />
+        <Route path="/contact" element={
+          <>
+            <Header />
+            <Contact />
+            <Footer />
+          </>
+        } />
+        <Route path="/about" element={
+          <>
+            <Header />
+            <AboutUsPage />
+            <Footer />
+          </>
+        } />
+        <Route path="/privacy" element={
+          <>
+            <Header />
+            <PrivacyPolicy />
+            <Footer />
+          </>
+        } />
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/reseller" element={<ResellerRegistrationForm />} />
-                <Route path="/service-provider" element={<ServiceProviderForm />} />
-
+        <Route path="/service-provider" element={<ServiceProviderForm />} />
+        {/* <Route path="/profile" element={<UserProfile />} /> */}
+        <Route path="/profile"
+          element={
+            <>
+              <Header />
+              <UserProfile />
+              <Footer />
+            </>} />
+        <Route path="/company-details"
+          element={
+            <>
+              <Header />
+              <CompanyDetail />
+              <Footer />
+            </>} />
+        <Route path="/company-detailform"
+          element={
+            <>
+              <Header />
+              <CompanyDetailForm />
+              <Footer />
+            </>} />
       </Routes>
     </Router>
   );

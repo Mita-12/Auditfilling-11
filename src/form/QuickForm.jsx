@@ -35,38 +35,38 @@ import React from "react";
 
 export default function QuickForm() {
   return (
-    <aside className="w-full max-w-sm bg-white rounded-xl shadow-md p-6 h-auto lg:sticky top-28 flex flex-col justify-between space-y-6 mx-auto">
+    <aside className="w-full max-w-sm bg-white rounded-xl shadow-md p-2 h-auto lg:sticky top-28 flex flex-col justify-between space-y-4 mx-auto">
       <div>
-        <h3 className="text-xl font-serif font-bold mb-4 text-center text-gray-800">
+        <h3 className="text-xl font-serif font-bold mb-2 text-center text-gray-800">
           Get <span className="font-bold text-blue-500">Free</span>  Consultation
 
         </h3>
 
-        <form className="space-y-4">
+        <form className="space-y-3">
           {/* Name */}
           <input
             type="text"
-            placeholder="Full Name"
-            className="w-full border border-gray-300 px-2 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            placeholder="full name"
+            className="w-full border border-gray-300 px-1 py-1 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
           />
 
           {/* Phone */}
           <input
             type="text"
-            placeholder="Phone No."
-            className="w-full border border-gray-300 px-2 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            placeholder="phone no"
+            className="w-full border border-gray-300 px-1 py-1 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
           />
 
           {/* Email */}
           <input
             type="email"
-            placeholder="Email ID"
-            className="w-full border border-gray-300 px-2 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
+            placeholder="email id"
+            className="w-full border border-gray-300 px-1 py-1 rounded-md focus:ring-2 focus:ring-blue-400 outline-none"
           />
 
           {/* Services Dropdown */}
           <select
-            className="w-full border border-gray-300 px-2 py-2 rounded-md focus:ring-2 focus:ring-blue-400 outline-none bg-white"
+            className="w-full border border-gray-300 px-1 py-1 rounded-md focus:ring-2 focus:ring-blue-400 outline-none bg-white"
             defaultValue=""
           >
             <option value="" disabled>
@@ -91,7 +91,7 @@ export default function QuickForm() {
           {/* Submit */}
           <button
             type="submit"
-            className="mt-2 w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 transition-all"
+            className="mt-1 w-full bg-blue-600 text-white py-1 rounded-md font-medium hover:bg-blue-700 transition-all"
           >
             Submit
           </button>

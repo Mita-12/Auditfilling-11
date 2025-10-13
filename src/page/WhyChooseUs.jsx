@@ -3,41 +3,41 @@ import { FaMoneyCheckAlt, FaShieldAlt, FaUserTie, FaLock, FaChartLine, FaBolt } 
 
 export default function WhyChooseUs() {
   const cards = [
-    { 
-      title: "Transparent Pricing", 
-      desc: "No hidden fees or surprises. Clear, upfront pricing for all our services.", 
+    {
+      title: "Transparent Pricing",
+      desc: "No hidden fees or surprises. Clear, upfront pricing for all our services.",
       icon: <FaMoneyCheckAlt className="text-blue-500" />,
       color: "blue",
     },
-    { 
-      title: "Accurate & Reliable", 
-      desc: "We ensure precision in every process with guaranteed accuracy.", 
+    {
+      title: "Accurate & Reliable",
+      desc: "We ensure precision in every process with guaranteed accuracy.",
       icon: <FaShieldAlt className="text-green-500" />,
-       color: "green",
+      color: "green",
     },
-    { 
-      title: "Expert Support", 
-      desc: "Our professionals are here to help you 24/7 with dedicated assistance.", 
+    {
+      title: "Expert Support",
+      desc: "Our professionals are here to help you 24/7 with dedicated assistance.",
       icon: <FaUserTie className="text-purple-500" />,
       color: "purple",
     },
-    { 
-      title: "100% Data Privacy", 
-      desc: "Your information stays completely secure with enterprise-grade security.", 
+    {
+      title: "100% Data Privacy",
+      desc: "Your information stays completely secure with enterprise-grade security.",
       icon: <FaLock className="text-red-500" />,
-       color: "red",
+      color: "red",
     },
-    { 
-      title: "Max Tax Saving", 
-      desc: "Smart strategies and expert guidance to help you save more on taxes.", 
+    {
+      title: "Max Tax Saving",
+      desc: "Smart strategies and expert guidance to help you save more on taxes.",
       icon: <FaChartLine className="text-orange-500" />,
-        color: "orange",
+      color: "orange",
     },
-    { 
-      title: "Fast & Efficient", 
-      desc: "Quick turnaround times without compromising on quality or accuracy.", 
+    {
+      title: "Fast & Efficient",
+      desc: "Quick turnaround times without compromising on quality or accuracy.",
       icon: <FaBolt className="text-yellow-500" />,
-       color: "yellow",
+      color: "yellow",
     },
   ];
 
@@ -56,48 +56,51 @@ export default function WhyChooseUs() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-12 items-center">
           {/* Left Section */}
           <div className="space-y-6">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
               Why Choose <span className="text-blue-600">AuditFiling</span>
-            </h2>
+            </h1>
             <p className="text-lg text-gray-600 leading-relaxed">
-              Experience the difference with our professional approach and comprehensive legal solutions. 
-              Our expertise covers end-to-end solutions to simplify your business and legal processes 
+              Experience the difference with our professional approach and comprehensive legal solutions.
+              Our expertise covers end-to-end solutions to simplify your business and legal processes
               with unmatched precision and care.
             </p>
-            
+
             {/* Stats Section */}
-           <div className="flex justify-center gap-3 pt-6 text-center">
-  <div>
-    <div className="text-3xl font-bold text-blue-600">99%</div>
-    <div className="text-sm text-gray-500 mt-1">Client Satisfaction</div>
-  </div>
-  <div>
-    <div className="text-3xl font-bold text-blue-600">500+</div>
-    <div className="text-sm text-gray-500 mt-1">Businesses Served</div>
-  </div>
-</div>
+            <div className="flex justify-center gap-3 pt-6 text-center">
+              <div>
+                <div className="text-3xl font-bold text-blue-600">99%</div>
+                <div className="text-sm text-gray-500 mt-1">Client Satisfaction</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-blue-600">500+</div>
+                <div className="text-sm text-gray-500 mt-1">Businesses Served</div>
+              </div>
+            </div>
           </div>
 
           {/* Right Section - Staggered Layout */}
-          <div className="space-y-6">
-            {/* First Row - 3 Cards */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
-              {cards.slice(0, 4).map((card, index) => (
-                <Card key={index} card={card} colorMap={colorMap} />
-              ))}
-            </div>
-
-            {/* Second Row - 2 Cards (Offset) */}
-            <div className="flex justify-center sm:justify-start">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md sm:max-w-full sm:ml-12 mr-10">
-                {cards.slice(3, 5).map((card, index) => (
-                  <Card key={index + 3} card={card} colorMap={colorMap} />
-                ))}
-              </div>
-            </div>
-
-         
+        <div className="space-y-4">
+          {/* Row 1 - 1 Card */}
+          <div className="grid grid-cols-1 max-w-sm mx-auto px-10 ">
+            {cards.slice(0, 1).map((card, index) => (
+              <Card key={index} card={card} colorMap={colorMap} />
+            ))}
           </div>
+
+          {/* Row 2 - 2 Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-sm mx-auto h-min[50px]">
+            {cards.slice(1, 3).map((card, index) => (
+              <Card key={index} card={card} colorMap={colorMap} />
+            ))}
+          </div>
+
+          {/* Row 3 - 3 Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cards.slice(3, 6).map((card, index) => (
+              <Card key={index} card={card} colorMap={colorMap} />
+            ))}
+          </div>
+        </div>
         </div>
       </div>
     </section>
@@ -105,7 +108,7 @@ export default function WhyChooseUs() {
 }
 
 // Reusable Card Component
-function Card({ card,colorMap }) {
+function Card({ card, colorMap }) {
   return (
     <div
       className={`group p-5 rounded-xl shadow-sm   bg-gradient-to-br ${colorMap[card.color]} border-transparent hover:border-current transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1`}
@@ -117,7 +120,7 @@ function Card({ card,colorMap }) {
           </div>
         </div>
         <div className="flex-1">
-          <h3 className="font-semibold text-gray-900 mb-2 text-lg">
+          <h3 className=" text-gray-900 mb-2 ">
             {card.title}
           </h3>
           <p className="text-gray-600 text-sm leading-relaxed">

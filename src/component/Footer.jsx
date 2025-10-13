@@ -109,7 +109,7 @@ function Footer() {
                   to="/privacy"
                   className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
                 >
-                Admin Login   
+                Login   
                   </Link>
               </li>
 

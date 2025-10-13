@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function AddCompanyForm() {
+export default function ComanyDetailForm() {
   return (
-    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-6 mt-6">
+    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-6 mt-30 mb-10">
       <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
         Add Company
       </h2>

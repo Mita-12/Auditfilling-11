@@ -205,24 +205,35 @@
 //   );
 // }
 
-
 import React, { useState, useEffect } from "react";
 import { TiMail } from "react-icons/ti";
 import { MdAddIcCall } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import LoginForm from "../form/LoginForm";
 import { safeLocalStorage } from "../utils/LocalStorage"; // Adjust path as needed
+import { useNavigate } from "react-router-dom";
+
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const DropdownItem = ({ label, onClick }) => (
+    <button
+      onClick={onClick}
+      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+    >
+      {label}
+    </button>
+  );
 
   // Load user from localStorage on component mount - SAFE VERSION
   useEffect(() => {
     const savedUser = safeLocalStorage.get("user");
     setUser(savedUser);
   }, []);
+
 
   // Listen for login success
   useEffect(() => {
@@ -231,15 +242,20 @@ export default function Navbar() {
       setUser(savedUser);
     };
 
+
     window.addEventListener('storage', handleUserUpdate);
+
 
     // Custom event listener for same-tab updates
     const handleCustomStorage = () => {
       const savedUser = safeLocalStorage.get("user");
+      console.log('user log', savedUser);
       setUser(savedUser);
     };
 
+
     window.addEventListener('userUpdated', handleCustomStorage);
+
 
     return () => {
       window.removeEventListener('storage', handleUserUpdate);
@@ -247,13 +263,14 @@ export default function Navbar() {
     };
   }, []);
 
+
   const handleLogout = () => {
     safeLocalStorage.remove("user");
     setUser(null);
     window.dispatchEvent(new Event('storage'));
     window.dispatchEvent(new Event('userUpdated'));
   };
-
+  console.log('user', user);
   return (
     <header className="top-0 w-full bg-blue-100 shadow-sm py-3 z-50 relative">
       <div className="container mx-auto px-2 flex flex-col md:flex-row justify-between items-center">
@@ -269,6 +286,7 @@ export default function Navbar() {
             AuditFiling
           </a>
         </div>
+
 
         {/* Menu + Contact */}
         <div
@@ -327,79 +345,72 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* User Profile Dropdown or Login Button */}
-          {user ? (
-            <div className="relative group">
-              <button className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-green-700 transition-colors">
-                <FaUser className="w-4 h-4" />
-                <span className="hidden md:inline">{user?.name || "User"}</span>
-                <svg
-                  className="w-4 h-4 ml-1 transition-transform group-hover:rotate-180"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
 
-              {/* Dropdown Menu */}
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <a href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
-                  Profile
-                </a>
-                <a href="/company-details" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
-                  Company Details
-                </a>
-                <a href="/my-request" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
-                  My Request
-                </a>
-                <a href="/completed-service" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
-                  Completed Service
-                </a>
-                <a href="/payment-history" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
-                  Payment History
-                </a>
-                <a href="/bank-details" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
-                  Bank Details
-                </a>
-                <a href="/feedback" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
-                  Feedback
-                </a>
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  Logout
-                </button>
-              </div>
-            </div>
-          ) : (
-            <button
-              onClick={() => setShowLogin(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1 hover:bg-blue-700 transition-colors"
-            >
-              <FaUser className="md:hidden w-5 h-5" />
-              <span className="hidden md:inline">Sign In</span>
-            </button>
-          )}
+          {/* User Profile Dropdown or Login Button */}
+         {user ? (
+  <div className="relative group">
+    <button className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-green-700 transition-colors">
+      <FaUser className="w-4 h-4" />
+      <span className="hidden md:inline">
+        {user.name || user.user_name || 'User'}
+      </span>
+      <svg
+        className="w-4 h-4 ml-1 text-white"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    {/* Dropdown Menu */}
+    <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-100">
+      <DropdownItem label="👤 Profile" onClick={() => navigate("/profile")} />
+      <DropdownItem label="🏢 Company Details" onClick={() => navigate("/company-details")} />
+      <DropdownItem label="📋 My Request" onClick={() => navigate("/my-requests")} />
+      <DropdownItem label="✅ Completed Service" onClick={() => navigate("/completed-services")} />
+      <DropdownItem label="💳 Payment History" onClick={() => navigate("/payment-history")} />
+      <DropdownItem label="🏦 Bank Details" onClick={() => navigate("/bank-details")} />
+      <DropdownItem label="💬 Feedback" onClick={() => navigate("/feedback")} />
+
+      <div className="border-t border-gray-200 my-1"></div>
+
+      <button
+        onClick={handleLogout}
+        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"
+      >
+        🚪 Logout
+      </button>
+    </div>
+  </div>
+) : (
+  <button
+    onClick={() => setShowLogin(true)}
+    className="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1 hover:bg-blue-700 transition-colors"
+  >
+    <FaUser className="md:hidden w-5 h-5" />
+    <span className="hidden md:inline">Sign In</span>
+  </button>
+)}
 
 
         </div>
       </div>
+
 
       {/* Login Popup */}
       {showLogin && (
         <LoginForm
           isOpen={showLogin}
           onClose={() => setShowLogin(false)}
-          onLoginSuccess={(userData) => {
-            setUser(userData);          // update navbar instantly
-            setShowLogin(false);        // close popup
-          }}
+          onLoginSuccess={(userData) => setUser(userData)} // new line
         />
-      )}
 
+
+      )}
     </header>
   );
 }
+

@@ -132,11 +132,11 @@ export default function NotificationUpdates() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
             <FaBell className="text-2xl text-blue-600" />
           </div>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 font-serif">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4 font-serif">
             Notifications & Alerts
                           <span className="block w-24 h-1 bg-blue-600 mx-auto mt-3 transition-all duration-500"></span>
 
-          </h2>
+          </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Stay updated with important compliance deadlines and regulatory changes
           </p>

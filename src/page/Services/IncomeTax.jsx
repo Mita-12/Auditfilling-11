@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import Header from "../../component/Header";
 import QuickForm from "../../form/QuickForm";
@@ -96,7 +94,12 @@ export default function IncomeTax({ menuId }) {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  // Fetch FAQ dynamically
+  // ✅ Smooth scroll to FAQ section
+  const handleFaqClick = () => {
+    const el = document.getElementById("faq-section");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   // Fetch FAQ dynamically
   useEffect(() => {
     const fetchFaqs = async () => {
@@ -113,7 +116,6 @@ export default function IncomeTax({ menuId }) {
     fetchFaqs();
   }, []);
 
-
   // ✅ Loading & error handling
   if (loading)
     return (
@@ -128,12 +130,12 @@ export default function IncomeTax({ menuId }) {
 
   return (
     <div className="min-h-screen">
-      <Header />
+      {/* <Header /> */}
 
       <div className="mx-auto w-full px-4 md:px-8 mt-25 py-10 flex flex-col md:flex-row gap-8">
         {/* Sidebar */}
-        <aside className="sticky top-24 ml-6 bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-y-auto">
-          <h1 className="text-3xl font-serif mt-10 pl-5  mb-5 text-gray-800">
+        <aside className="sticky top-24 ml-6 bg-white rounded-2xl p-5  h-auto md:h-[90vh] overflow-y-auto">
+          <h1 className="text-3xl font-serif  pl-5 mb-5 text-gray-800">
             {menuData.name || "Income Tax"}
           </h1>
 
@@ -143,10 +145,11 @@ export default function IncomeTax({ menuId }) {
                 <li key={service.id || idx}>
                   <button
                     onClick={() => handleClick(service)}
-                    className={`w-full text-left px-2 py-2 text-lg font-serif rounded-lg transition-all ${activeService?.id === service.id
+                    className={`w-full text-left px-2 py-1 text-[15px] rounded-lg transition-all ${
+                      activeService?.id === service.id
                         ? "bg-blue-100 border-l-4 border-blue-600 text-blue-700 font-bold"
                         : "hover:bg-gray-100 text-gray-700"
-                      }`}
+                    }`}
                   >
                     {idx + 1}. {service.service_name || service.name}
                   </button>
@@ -155,19 +158,29 @@ export default function IncomeTax({ menuId }) {
             ) : (
               <li className="text-gray-500 text-center">No services found</li>
             )}
+
+            {/* FAQ link */}
+            <li>
+              <button
+                onClick={handleFaqClick}
+                className="w-full text-left px-2 py-2 text-[15px] rounded-lg transition-all hover:bg-gray-100 text-gray-700"
+              >
+                📘 Frequently Asked Questions
+              </button>
+            </li>
           </ul>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-10 ">
+        <main className="flex-1 space-y-10">
           {/* Menu Overview */}
-          <section className="bg-white rounded-2xl p-6">
+          <section className="bg-white rounded-2xl shadow-sm p-6">
             <h1 className="text-3xl md:text-4xl font-serif text-center mb-2 text-gray-900">
               {menuData.name || "Income Tax"}
             </h1>
 
             <div
-              className="prose prose-blue  w-full text-gray-700"
+              className="prose prose-blue w-full text-gray-700"
               dangerouslySetInnerHTML={{
                 __html:
                   menuData.menu_description ||
@@ -182,13 +195,13 @@ export default function IncomeTax({ menuId }) {
             <section
               key={service.id || idx}
               id={`service-${service.id || idx}`}
-              className="bg-white rounded-2xl p-6"
+              className="bg-white rounded-2xl p-6 shadow-sm"
             >
-              <h2 className="text-2xl md:text-3xl font-bold font-serif text-center mb-4 text-gray-900">
+              <h1 className="text-2xl md:text-3xl font-bold font-serif text-center mb-4 text-gray-900">
                 {service.service_name || service.name}
-              </h2>
+              </h1>
 
-              <div className="flex flex-col md:flex-row gap-6 items-start">
+              <div className="flex flex-col md:flex-row items-start">
                 <div
                   className="prose prose-blue w-full font-sans text-gray-700"
                   dangerouslySetInnerHTML={{
@@ -203,15 +216,19 @@ export default function IncomeTax({ menuId }) {
           ))}
 
           {/* FAQ Section */}
-          <section className="bg-white rounded-2xl p-6">
+          <section id="faq-section" className="bg-white rounded-2xl p-6">
             <h2 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
               Frequently Asked Questions
             </h2>
 
             {faqs.length > 0 ? (
-              <ul className="space-y-4 ">
+              <ul className="space-y-4">
                 {faqs.map((faq, idx) => (
-                  <FAQItem key={faq.menu_id || idx} question={faq.question} answer={faq.answer} />
+                  <FAQItem
+                    key={faq.menu_id || idx}
+                    question={faq.question}
+                    answer={faq.answer}
+                  />
                 ))}
               </ul>
             ) : (
@@ -220,19 +237,19 @@ export default function IncomeTax({ menuId }) {
           </section>
 
           {/* Mobile QuickForm */}
-          <div className="block md:hidden mt-20">
+          <div className="block md:hidden ">
             <QuickForm />
           </div>
         </main>
 
         {/* Desktop QuickForm */}
-        <div className="w-64 mt-24">
+        <div className="w-64 ">
           <QuickForm />
         </div>
       </div>
 
       <WhatsAppPopup />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
@@ -242,10 +259,10 @@ function FAQItem({ question, answer }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <li className=" border-gray-200 rounded-xl p-4 shadow-sm">
+    <li className="border-gray-200 rounded-xl p-2 shadow-sm">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full text-left font-semibold text-lg text-gray-800 flex justify-between items-center"
+        className="w-full text-left font-bold text-[16px] text-blue-800 flex justify-between items-center"
       >
         <span
           dangerouslySetInnerHTML={{ __html: question || "Untitled Question" }}
@@ -256,12 +273,11 @@ function FAQItem({ question, answer }) {
       {open && (
         <div
           className="mt-2 text-gray-700"
-          dangerouslySetInnerHTML={{ __html: answer || "No answer available." }}
+          dangerouslySetInnerHTML={{
+            __html: answer || "No answer available.",
+          }}
         ></div>
       )}
     </li>
   );
 }
-
-
-

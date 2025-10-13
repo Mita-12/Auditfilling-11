@@ -123,7 +123,9 @@ export default function LoginForm({ isOpen, onClose, onLoginSuccess }) {
       if (data.status === "success") {
         setPassError("");
         setPassMsg(data.message || "Login Successful");
-        handleLoginSuccess(data.user);
+        // handleLoginSuccess(data.user);
+                handleLoginSuccess(data);
+
       } else {
         setPassError(data.message || "Invalid Credentials");
       }
@@ -167,6 +169,7 @@ const handleLoginSuccess = (userData) => {
 
 
   if (!isOpen) return null;
+  
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">

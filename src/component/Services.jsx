@@ -65,10 +65,10 @@ function ServicesSection() {
         <div className="container mx-auto px-12">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold font-serif text-gray-900 mb-4 relative inline-block">
+            <h1 className="text-5xl font-bold font-serif text-gray-900 mb-4 relative inline-block">
               Services We Provide
               <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span>
-            </h2>
+            </h1>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
               Comprehensive legal and financial services to meet all your
               business needs

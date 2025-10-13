@@ -53,7 +53,7 @@ export default function Herosection() {
 
 {/* Hero-style Section (ThemeForest Layout) with your content */}
  <section className="w-full  ">
-      <div className="flex flex-col-reverse md:flex-row items-center gap-20 px-6 sm:px-12 md:px-20">
+      <div className="flex flex-col-reverse md:flex-row items-center gap-20 px-6 sm:px-12 md:px-10">
   {/* Image */}
         <motion.div
           className="w-full md:w-1/2 flex justify-center md:justify-end mb-6 md:mb-0"
@@ -81,9 +81,9 @@ export default function Herosection() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 font-serif leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 font-serif leading-tight">
             Who Are We?
-          </h2>
+          </h1>
           <p className="text-base sm:text-lg text-gray-700 leading-relaxed mb-6">
             With experienced attorneys, we can handle a broad range of compliance issues
             for businesses, government entities, organizations, professionals, and individuals
