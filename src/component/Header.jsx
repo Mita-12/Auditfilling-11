@@ -80,18 +80,14 @@ const redirectTo = (key) => {
       <div className="bg-white shadow-sm">
         <Navbar />
       </div>
-
-
       {/* Main Header */}
       <header className="bg-white shadow-md transition-all duration-300">
-        <div className="container flex ml-70 items-center px-10 py-4">
+        <div className="container flex ml-60 items-center px-10 py-4">
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-8 text-lg z-50">
             {menus.map((menu) => {
-              console.log(menu.name, "this is menu part");
+              // console.log(menu.name, "this is menu part");
               return (
-
-
                 <div key={menu.id} className="relative">
                   {/* Header Button */}
                   <button
@@ -110,19 +106,17 @@ const redirectTo = (key) => {
                       />
                     )}
                   </button>
-
-
                   {/* Dropdown */}
                   {menu.services?.length > 0 && (
                     <div
                       onMouseLeave={() => setDropdownOpen(null)}
-                      className={`absolute left-0 mt-4 w-[500px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === menu.id
+                      className={`absolute left-0 mt-4 w-[375px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === menu.id
                         ? "opacity-100 scale-100 pointer-events-auto"
                         : "opacity-0 scale-95 pointer-events-none"
                         }`}
                     >
                       {menu.services.map((service) => {
-                        console.log("service", service);
+                        // console.log("service", service);
                         return (
                           <button
                             key={service.id}

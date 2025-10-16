@@ -80,17 +80,17 @@ export default function CompanyDetail() {
     alert("Add new company functionality would open here");
   };
 
-  const getStatusBadge = (status) => {
-    const baseClasses = "px-2 py-1 rounded-full text-xs font-medium";
-    switch (status) {
-      case "Active":
-        return `${baseClasses} bg-green-100 text-green-800`;
-      case "Inactive":
-        return `${baseClasses} bg-red-100 text-red-800`;
-      default:
-        return `${baseClasses} bg-gray-100 text-gray-800`;
-    }
-  };
+  // const getStatusBadge = (status) => {
+  //   const baseClasses = "px-2 py-1 rounded-full text-xs font-medium";
+  //   switch (status) {
+  //     case "Active":
+  //       return `${baseClasses} bg-green-100 text-green-800`;
+  //     case "Inactive":
+  //       return `${baseClasses} bg-red-100 text-red-800`;
+  //     default:
+  //       return `${baseClasses} bg-gray-100 text-gray-800`;
+  //   }
+  // };
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-IN', {
@@ -127,61 +127,6 @@ export default function CompanyDetail() {
           </p>
         </div>
 
-        {/* Stats Cards */}
-        {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-2 bg-blue-100 rounded-lg mr-3">
-                <Building className="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-800">{companies.length}</p>
-                <p className="text-sm text-gray-600">Total Companies</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-2 bg-green-100 rounded-lg mr-3">
-                <div className="w-5 h-5 bg-green-500 rounded-full"></div>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-800">
-                  {companies.filter(c => c.status === "Active").length}
-                </p>
-                <p className="text-sm text-gray-600">Active</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-2 bg-purple-100 rounded-lg mr-3">
-                <Hash className="w-5 h-5 text-purple-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-800">{companies.filter(c => c.type === "Private Limited").length}</p>
-                <p className="text-sm text-gray-600">Private Ltd.</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-2 bg-orange-100 rounded-lg mr-3">
-                <Calendar className="w-5 h-5 text-orange-600" />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-800">
-                  {new Date().getFullYear()}
-                </p>
-                <p className="text-sm text-gray-600">This Year</p>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
         {/* Controls Section */}
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-6">
           <div className="flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center">
@@ -194,12 +139,12 @@ export default function CompanyDetail() {
                   placeholder="Search companies..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full sm:w-64"
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-100 w-full sm:w-64"
                 />
               </div>
 
               {/* Status Filter */}
-              <select
+              {/* <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -207,13 +152,13 @@ export default function CompanyDetail() {
                 <option value="All">All Status</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
-              </select>
+              </select> */}
 
               {/* Type Filter */}
               <select
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-100"
               >
                 <option value="All">All Types</option>
                 <option value="Private Limited">Private Limited</option>
@@ -252,9 +197,9 @@ export default function CompanyDetail() {
                   <th className="px-6 py-4 text-left font-semibold text-sm uppercase tracking-wider">
                     Established
                   </th>
-                  <th className="px-6 py-4 text-left font-semibold text-sm uppercase tracking-wider">
+                  {/* <th className="px-6 py-4 text-left font-semibold text-sm uppercase tracking-wider">
                     Status
-                  </th>
+                  </th> */}
                   <th className="px-6 py-4 text-right font-semibold text-sm uppercase tracking-wider">
                     Actions
                   </th>
@@ -293,11 +238,11 @@ export default function CompanyDetail() {
                           {formatDate(company.estDate)}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      {/* <td className="px-6 py-4">
                         <span className={getStatusBadge(company.status)}>
                           {company.status}
                         </span>
-                      </td>
+                      </td> */}
                       <td className="px-6 py-4">
                         <div className="flex justify-end space-x-2">
                           <button

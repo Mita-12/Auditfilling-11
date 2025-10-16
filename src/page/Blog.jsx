@@ -442,8 +442,7 @@ function BlogPage() {
         </div>
       </div>
 
-      {/* Footer */}
-      <Footer />
+
 
       {/* WhatsApp Button */}
       <WhatsAppPopup />

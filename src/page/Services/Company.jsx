@@ -125,10 +125,10 @@ export default function Company() {
   return (
     <div className="min-h-screen">
       
-      <div className="mx-auto w-full px-4 md:px-8 py-10 flex flex-col md:flex-row gap-8">
+      <div className="mx-auto w-full mt-25 px-4 md:px-8 py-10 flex flex-col md:flex-row gap-8">
         {/* Sidebar */}
         <aside className="sticky top-30 ml-6 bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-y-auto">
-          <h1 className="text-3xl font-serif mt-10 text-left mb-5 text-gray-800">
+          <h1 className="text-3xl font-serif  text-left mb-5 text-gray-800">
             {menuData.name || menuData.menu_name || "Company (MCA)"}
           </h1>
 
@@ -138,7 +138,7 @@ export default function Company() {
                 <li key={service.id || idx}>
                   <button
                     onClick={() => handleClick(service)}
-                    className={`w-full text-left px-2 py-2 text-[15px] font-serif rounded-lg transition-all ${
+                    className={`w-full text-left px-2 py-2 text-[15px] rounded-lg transition-all ${
                       activeService?.id === service.id
                         ? "bg-blue-100 border-l-4 border-blue-600 text-blue-700 font-bold"
                         : "hover:bg-gray-100 text-gray-700"
@@ -155,7 +155,7 @@ export default function Company() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-12 mt-20">
+        <main className="flex-1 space-y-12 ">
           <section className="bg-white rounded-2xl p-6">
             <h1 className="text-3xl md:text-4xl font-serif text-center mb-4 text-gray-900">
               {menuData.name || "Company (MCA)"}
@@ -192,7 +192,7 @@ export default function Company() {
             </section>
           ))}
 
-          <div className="block md:hidden mt-10">
+          <div className="block md:hidden ">
             <QuickForm />
           </div>
         </main>

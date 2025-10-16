@@ -25,10 +25,10 @@ export default function Trademark() {
             ? data
             : data.menus || data.data || data.menu || [];
 
-        console.log("✅ All Menus:", menusData.map(m => ({
-          id: m.id,
-          name: m.name || m.menu_name
-        })));
+        // console.log("✅ All Menus:", menusData.map(m => ({
+        //   id: m.id,
+        //   name: m.name || m.menu_name
+        // })));
 
         // Find Trademark-related menu
         const tradeMarkMenu = menusData.find((menu) => {
@@ -41,7 +41,7 @@ export default function Trademark() {
         });
 
         if (tradeMarkMenu) {
-          console.log("✅ Found Trademark Menu:", tradeMarkMenu);
+          // console.log("✅ Found Trademark Menu:", tradeMarkMenu);
           fetchMenuDetail(tradeMarkMenu.id);
         } else {
           console.warn("⚠️ No Trademark menu found!");
@@ -63,7 +63,7 @@ export default function Trademark() {
       const res = await fetch(`https://auditfiling.com/api/v1/menu/${id}`);
       const data = await res.json();
 
-      console.log("✅ Trademark Menu Data:", data);
+      // console.log("✅ Trademark Menu Data:", data);
 
       const menu = data.menu || data.data || data.menu_data || data || null;
       if (menu) {
@@ -115,9 +115,9 @@ export default function Trademark() {
     useEffect(() => {
       const fetchFaqs = async () => {
         try {
-            const res = await fetch("https://auditfiling.com/api/v1/faq/6");
+            const res = await fetch("https://auditfiling.com/api/v1/faq/8");
             const data = await res.json();
-            console.log("FAQ API response:", data); // optional for debugging
+            // console.log("FAQ API response:", data); // optional for debugging
             // ✅ API returns array directly
             setFaqs(Array.isArray(data) ? data : data.faqs || []);
           } catch (error) {

@@ -3,6 +3,8 @@ import Header from "../../component/Header";
 import QuickForm from "../../form/QuickForm";
 import WhatsAppPopup from "../../form/WhatsAppPopup";
 import Footer from "../../component/Footer";
+import {Link} from "react-router-dom";
+import ProceedToPay from "./document/ProceedToPay";
 
 export default function IncomeTax({ menuId }) {
   const [menuData, setMenuData] = useState(null);
@@ -106,7 +108,7 @@ export default function IncomeTax({ menuId }) {
       try {
         const res = await fetch("https://auditfiling.com/api/v1/faq/1");
         const data = await res.json();
-        console.log("FAQ API response:", data); // optional for debugging
+        // console.log("FAQ API response:", data); // optional for debugging
         // ✅ API returns array directly
         setFaqs(Array.isArray(data) ? data : data.faqs || []);
       } catch (error) {
@@ -134,7 +136,7 @@ export default function IncomeTax({ menuId }) {
 
       <div className="mx-auto w-full px-4 md:px-8 mt-25 py-10 flex flex-col md:flex-row gap-8">
         {/* Sidebar */}
-        <aside className="sticky top-24 ml-6 bg-white rounded-2xl p-5  h-auto md:h-[90vh] overflow-y-auto">
+        <aside className="sticky top-24 ml-6 bg-white rounded-2xl p-5  h-auto md:h-[90vh] overflow-x-auto">
           <h1 className="text-3xl font-serif  pl-5 mb-5 text-gray-800">
             {menuData.name || "Income Tax"}
           </h1>
@@ -145,11 +147,10 @@ export default function IncomeTax({ menuId }) {
                 <li key={service.id || idx}>
                   <button
                     onClick={() => handleClick(service)}
-                    className={`w-full text-left px-2 py-1 text-[15px] rounded-lg transition-all ${
-                      activeService?.id === service.id
-                        ? "bg-blue-100 border-l-4 border-blue-600 text-blue-700 font-bold"
-                        : "hover:bg-gray-100 text-gray-700"
-                    }`}
+                    className={`w-full text-left px-2 py-1 text-[15px] rounded-lg transition-all ${activeService?.id === service.id
+                      ? "bg-blue-100 border-l-4 border-blue-600 text-blue-700 font-bold"
+                      : "hover:bg-gray-100 text-gray-700"
+                      }`}
                   >
                     {idx + 1}. {service.service_name || service.name}
                   </button>
@@ -175,7 +176,7 @@ export default function IncomeTax({ menuId }) {
         <main className="flex-1 space-y-10">
           {/* Menu Overview */}
           <section className="bg-white rounded-2xl shadow-sm p-6">
-            <h1 className="text-3xl md:text-4xl font-serif text-center mb-2 text-gray-900">
+            <h1 className="text-3xl md:text-4xl font-serif text-center  text-gray-900">
               {menuData.name || "Income Tax"}
             </h1>
 
@@ -197,7 +198,7 @@ export default function IncomeTax({ menuId }) {
               id={`service-${service.id || idx}`}
               className="bg-white rounded-2xl p-6 shadow-sm"
             >
-              <h1 className="text-2xl md:text-3xl font-bold font-serif text-center mb-4 text-gray-900">
+              <h1 className="text-2xl md:text-3xl mt-30 font-bold font-serif text-center mb-4 text-gray-900">
                 {service.service_name || service.name}
               </h1>
 
@@ -217,9 +218,9 @@ export default function IncomeTax({ menuId }) {
 
           {/* FAQ Section */}
           <section id="faq-section" className="bg-white rounded-2xl p-6">
-            <h2 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
+            <h1 className="text-2xl md:text-3xl  font-bold mt-20 font-serif text-center mb-6 text-gray-900">
               Frequently Asked Questions
-            </h2>
+            </h1>
 
             {faqs.length > 0 ? (
               <ul className="space-y-4">
@@ -239,13 +240,19 @@ export default function IncomeTax({ menuId }) {
           {/* Mobile QuickForm */}
           <div className="block md:hidden ">
             <QuickForm />
+                      <Link to="/proceed-to-pay">Proceed to Pay</Link>
+
           </div>
         </main>
 
         {/* Desktop QuickForm */}
         <div className="w-64 ">
           <QuickForm />
+          {/* Proceed to Pay Component */}
+          {/* <Link to="/proceed-to-pay">Proceed to Pay</Link> */}
+          <ProceedToPay />
         </div>
+
       </div>
 
       <WhatsAppPopup />

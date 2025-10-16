@@ -1,100 +1,175 @@
 
-import React from 'react';
-import { ShieldCheckIcon, ScaleIcon } from '@heroicons/react/24/outline';
-import { div } from 'motion/react-client';
-import Header from '../component/Header';
-import Footer from '../component/Footer';
-import WhatsAppButton from '../form/WhatsAppPopup';
-
-// Custom Gavel / Hammer SVG to mimic the icon in your image
-const HammerIcon = ({ className = '' }) => (
-    <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-    >
-        <path d="M14.7 9.3l.707-.707a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414l-.707.707-2.293-2.293z" />
-        <path d="M5 19l9-9" />
-        <path d="M15 5l4 4" />
-        <path d="M6 18h8v2H6z" />
-    </svg>
-);
+import React from "react";
+import Header from "../component/Header";
+import Footer from "../component/Footer";
+import WhatsAppButton from "../form/WhatsAppPopup";
+import {
+  ClockIcon,
+  PhoneIcon,
+  UserGroupIcon,
+  GlobeAltIcon,
+} from "@heroicons/react/24/outline";
 
 const values = [
-    {
-        // title: 'Trusted Commitment',
-        title: 'VISION & MISSION',
-        description:
-            'AUDITFILING is already a known name, and with its close alignment with auditfiling.com and auditfilling.com, we are equipped to offer better value to start-up India.We are working round the clock to give unmatched quality and efficient service to the business of all type and size. We wish to be known for our quality.',
+  {
+    title: "Our Mission",
+    description:
+      "To simplify legal, tax, and compliance processes through technology, expertise, and transparency. We aim to deliver reliable, affordable, and efficient services that help businesses, startups, and individuals meet their statutory obligations with ease.",
+  },
+  {
+    title: "Our Future Focus",
+    description:
+      "To revolutionize India’s compliance landscape through innovation, technology, and trust—making legal and financial processes truly simple, smart, and accessible to everyone. Auditfiling aims to bridge every city and corner of the nation with seamless digital solutions, empowering businesses to stay compliant and confident in the new era of growth.",
+  },
+];
 
-    },
-    {
-        title: 'Future Trust',
-        description:
-            'We are a team of qualified Chartered Accountants, Company Secretaries, Advocates & professionals coming together to offer all professional services under one roof.With 1000+ staffs we are better positioned in comparison to traditional accounting firms to provide unmatched and quality transactional advisory.',
-    },
-    {
-        title: 'Legal Assurance',
-        description:
-            'We started 2006 as ABC3 Consultant, and in the year 2012 founded the website auditfiling.com to provide a contact point for all services offered by us.We are India s most preferred start-up platform to offer company registration, licensing, accounting & taxation and legal services.Our most trusted services gives our clients hassle free No objection certificate immediately to change the auditors and advisers as and when require.',
-
-    },
+const weKnowFor = [
+  {
+    title: "Easy to Access",
+    desc: "Access our services anytime, anywhere in India — online, in-person, or over a call.",
+  },
+  {
+    title: "Experienced Team",
+    desc: "A dedicated team with deep experience, guiding you through every filing and compliance task.",
+  },
+  {
+    title: "Timely Alerts",
+    desc: "We alert you on time and follow up, so you’re always up to date and never miss a deadline.",
+  },
+  {
+    title: "Quick Issue Resolution",
+    desc: "Fast, efficient support to resolve issues quickly — keeping your compliance stress-free.",
+  },
 ];
 
 export default function AboutUsPage() {
-    return (
-        <div>
-            <Header />
-            <section className=" text-black  py-16 px-4 mt-20">
-                <div className="max-w-6xl mx-auto text-center">
-                    <div className=" max-w-3xl mx-auto  mb-5">
-                        <p className="text-black italic text-5xl mb-5">Our Value</p>
-                        <h2 className="text-4xl font-bold font-serif mb-9">
-                            Our Guiding Principles for Trusted AUDITFILING Services
-                        </h2>
-                        <p className="text-gray-700 text-center text-lg leading-relaxed">
-                            AUDITFILING offices in New Delhi, Mumbai, Bengaluru, Bhubaneswar, Chennai & Kolkata. We are going to open our offices in Ahmedabad, Hyderabad, and Pune in the first quarter of the FY 2019-20. However, we are serving all over India with a host of products useful for aspiring entrepreneurs and Start-up India.
-                        </p>
-                    </div>
+  return (
+    <div>
 
 
+      {/* WHO ARE WE SECTION (Two-Column Layout) */}
+      <section className="text-black py-5 px-4 mt-30">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* LEFT SIDE */}
+          <div className="text-left ">
+            <h1 className="text-black font-bold font-serif text-8xl mb-4 ">
+              Who 
+            </h1>
+            <h1 className=" text-black font-bold font-serif text-8xl">Are We? </h1>
+            
+          </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mt-10">
-                        {values.map((value, idx) => (
-                            <div
-                                key={idx}
-                                className={`
-                relative overflow-hidden rounded-lg shadow-lg
-                px-10 py-8 transition-transform duration-300
-                ${value.highlight
-                                        ? ' text-black'
-                                        : 'bg-white text-gray-800'}
-                
-              `}
-                            >
-                                <div className="flex justify-center mb-5">
-                                    {value.icon}
-                                </div>
-                                <h3 className="text-2xl font-semibold mb-3 text-center  font-serif">
-                                    {value.title}
-                                </h3>
-                                <p className={`text-lg text-gray-700 text-center   leading-relaxed ${value.highlight ? 'text-gray-800' : 'text-gray-600'}`}>
-                                    {value.description}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-            <Footer />
-            <WhatsAppButton/>
+          {/* RIGHT SIDE */}
+          <div className="text-gray-800 text-xl p-3 leading-relaxed">
+            <p className="mb-2">
+              At <span className="font-bold text-blue-600 text-lg">Auditfiling</span>, we believe
+              legal and tax compliance shouldn’t be complicated or stressful.
+              We’re here to make it simple, reliable, and accessible for
+              everyone from small startups to growing enterprises.
+            </p>
+         
+            <p className="mb-2">
+              As a proud part of{" "}
+              <span className="font-bold text-blue-600 text-lg ">Cloudsat Pvt. Ltd.</span>,
+              headquartered in Gurugram, Auditfiling has been helping businesses
+              across India for over 7 years. Our expert team blends technology,
+              experience, and personal guidance to make services like GST
+              registration, ITR filing, company incorporation, and compliance
+              management smoother than ever.
+            </p>
+ 
+            <p className="mb-2">
+              With offices in New Delhi, Bhubaneswar, and Kolkata and upcoming
+              locations in Ahmedabad, Hyderabad, Pune, Bengaluru, and Mumbai
+              we’re expanding our reach to serve every corner of India.
+            </p>
+
+            <p className="mb-2">
+              At Auditfiling, we don’t just file your documents  we help your
+              business stay compliant, grow confidently, and focus on what
+              matters most: <span className="font-semibold">success</span>.
+            </p>
+          </div>
         </div>
-    );
+      </section>
+
+      {/* VALUES SECTION */}
+     <section className="py-10 px-4 bg-white">
+  <div className="max-w-6xl mx-auto text-center">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-15 mt-10">
+      {values.map((value, idx) => (
+        <div
+          key={idx}
+          className="bg-white shadow-md rounded-2xl p-12 min-h-[400px] border border-gray-100 
+                     hover:shadow-lg transition-all duration-300 flex flex-col justify-center"
+        >
+          <h1 className="text-2xl font-semibold mb-4 font-serif text-blue-600 tracking-wide">
+            {value.title}
+          </h1>
+          <p className="text-gray-700 leading-loose tracking-wide text-lg">
+            {value.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+      {/* WE KNOW FOR SECTION */}
+<section className="py-16 px-4">
+  <div className="max-w-6xl mx-auto">
+    <div className="text-center mb-16">
+      <h1 className="text-xl font-bold font-serif text-gray-900 mb-4">
+        Why Businesses Choose Us
+      </h1>
+    </div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
+      {weKnowFor.map((item, index) => (
+        <div
+          key={index}
+          className="group bg-white rounded-2xl shadow-lg border border-gray-100  p-4
+                     hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 
+                     relative overflow-hidden cursor-pointer min-h-[180px] flex items-center justify-center"
+        >
+          {/* Background remains white on hover */}
+          <div className="absolute inset-0 bg-white opacity-100" />
+          
+          <div className="relative z-10 w-full text-center">
+            {/* Title - Hidden on Hover */}
+            <div className="transition-all duration-500 opacity-100 group-hover:opacity-0 group-hover:scale-95">
+              <h1 className="text-2xl font-bold text-blue-600">
+                {item.title}
+              </h1>
+            </div>
+
+            {/* Description - Shows on Hover */}
+            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center p-4 transition-all duration-500 opacity-0 group-hover:opacity-100">
+              <p className="text-gray-600 text-xl leading-relaxed text-center">
+                {item.desc}
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom Border */}
+          <div 
+            className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 
+                       transition-all duration-500 group-hover:w-full"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+      <WhatsAppButton />
+    
+    </div>
+  );
 }
+
+
 
 // import React from 'react';
 // import { ShieldCheckIcon, ScaleIcon, LightBulbIcon, BuildingOfficeIcon, MapPinIcon, StarIcon } from '@heroicons/react/24/outline';
