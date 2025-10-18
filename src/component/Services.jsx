@@ -107,7 +107,7 @@ function ServicesSection() {
                     {service.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                <p className="text-gray-600 text-sm leading-loose tracking-wide  mb-4">
                   {service.description}
                 </p>
                 <motion.button
@@ -166,7 +166,7 @@ function ServicesSection() {
                     {service.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                <p className="text-gray-600 text-sm leading-loose tracking-wide  mb-4">
                   {service.description}
                 </p>
                 <motion.button
@@ -194,61 +194,7 @@ function ServicesSection() {
           </motion.div>
         </div>
       </section>
-      <section className="w-full bg-white 
-       ">
-        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-14 md:gap-30 max-w-7xl mx-auto px-6 sm:px-10 md:px-12">
-
-          {/* Image */}
-          <motion.div
-            className="w-full md:w-1/2 flex justify-center md:justify-end"
-            initial={{ opacity: 0, x: 80 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <motion.img
-              src="/img/support.jpg"
-              alt="Who Are We"
-              loading="lazy"
-              className="w-full sm:w-4/5 md:w-full rounded-2xl  object-cover"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 200, damping: 12 }}
-            />
-          </motion.div>
-
-          {/* Text Content */}
-          <motion.div
-            className="w-full md:w-1/2 text-center md:text-left"
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
-          >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 font-serif leading-tight text-gray-900">
-              Who Are We?
-            </h1>
-
-            <p className="text-base sm:text-lg text-gray-700 leading-relaxed mb-6">
-              With experienced attorneys, we handle a broad range of compliance issues
-              for businesses, government entities, organizations, professionals, and individuals
-              at the local, regional, and national levels.
-              <br /><br />
-              Through more than 15 years of expertise,{" "}
-              <span className="font-bold text-blue-600">AuditFiling</span> has become a trusted
-              partner for startups, SMEs, and large corporations alike.
-            </p>
-
-            <motion.a
-              href="/contact"
-              className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 shadow-md transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Get In Touch
-            </motion.a>
-          </motion.div>
-        </div>
-      </section>
+    
 
     </div>
   );

@@ -53,7 +53,7 @@ export default function Footer() {
               {[
                 { path: "/about", label: "About Us" },
                 { path: "/contact", label: "Contact Us" },
-                { path: "/blog", label: "Blog" },
+                { path: "/blogs", label: "Blog" },
                 { path: "/terms", label: "Terms & Conditions" },
                 { path: "/privacy", label: "Privacy Policy" },
                 { path: "/reseller", label: "Become a Reseller" },

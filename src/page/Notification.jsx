@@ -171,7 +171,7 @@ export default function NotificationUpdates() {
                         </span>
                         <span className="text-xs text-gray-500">{update.timestamp}</span>
                       </div>
-                      <p className="text-gray-800 leading-relaxed text-sm">
+                      <p className="text-gray-800  font-medium  leading-loose tracking-wide text-sm">
                         {update.text}
                       </p>
                     </div>
@@ -212,19 +212,9 @@ export default function NotificationUpdates() {
                           {item.category}
                         </span>
                         <div className="flex items-center gap-1">
-                         
-                          <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-                            item.priority === "high" 
-                              ? "bg-red-100 text-red-700 border border-red-200"
-                              : item.priority === "medium"
-                              ? "bg-yellow-100 text-yellow-700 border border-yellow-200"
-                              : "bg-gray-100 text-gray-700 border border-gray-200"
-                          }`}>
-                            {item.priority}
-                          </span>
                         </div>
                       </div>
-                      <p className="text-gray-800 font-medium mb-2 text-sm">
+                      <p className="text-gray-800 font-medium mb-2 leading-loose tracking-wide  text-sm">
                         {item.text}
                       </p>
                     </div>

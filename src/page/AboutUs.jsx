@@ -146,7 +146,7 @@ export default function AboutUsPage() {
 
             {/* Description - Shows on Hover */}
             <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center p-4 transition-all duration-500 opacity-0 group-hover:opacity-100">
-              <p className="text-gray-600 text-xl leading-relaxed text-center">
+              <p className="text-gray-600 text-xl leading-loose tracking-wide  text-center ">
                 {item.desc}
               </p>
             </div>

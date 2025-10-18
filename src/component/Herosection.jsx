@@ -11,7 +11,7 @@ export default function Herosection() {
   {/* Hero Heading */}
   <h1 className="text-5xl  font-bold font-serif  mt-15 pt-15 leading-tight " >
     Trusted Legal Services <br />
-    <h1>for Your <span className="text-black pt-5">Business & Compliance</span></h1>
+for Your <span className="text-black pt-5">Business & Compliance</span>
     
   </h1>
 
@@ -50,9 +50,60 @@ export default function Herosection() {
     </p>
   </div>
 </section>
+  <section className="w-full bg-white 
+       ">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-14 md:gap-30 max-w-7xl mx-auto px-6 sm:px-10 md:px-12">
+
+          {/* Image */}
+          <motion.div
+            className="w-full md:w-1/2 flex justify-center md:justify-end"
+            initial={{ opacity: 0, x: 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <motion.img
+              src="/img/support.jpg"
+              alt="Who Are We"
+              loading="lazy"
+              className="w-full sm:w-4/5 md:w-full rounded-2xl  object-cover"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 200, damping: 12 }}
+            />
+          </motion.div>
+
+          {/* Text Content */}
+          <motion.div
+            className="w-full md:w-1/2 text-center md:text-left"
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 font-serif leading-tight text-gray-900">
+              Who Are We?
+            </h1>
+
+            <p className="text-base sm:text-lg text-gray-700 leading-loose tracking-wide mb-6">
+              At Auditfiling, we believe legal and tax compliance shouldn’t be complicated or stressful. We’re here to make it simple, reliable, and accessible for everyone from small startups to growing enterprises.
+              <br /><br />
+           As a proud part of,{" "}
+              <span className="font-bold text-blue-600"> Cloudsat Pvt. Ltd.</span>  headquartered in Gurugram, Auditfiling has been helping businesses across India for over 7 years
+            </p>
+
+            <motion.a
+              href="/contact"
+              className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 shadow-md transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Get In Touch
+            </motion.a>
+          </motion.div>
+        </div>
+      </section>
 
 {/* Hero-style Section (ThemeForest Layout) with your content */}
-
 
 
 

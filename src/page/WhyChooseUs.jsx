@@ -53,7 +53,7 @@ export default function WhyChooseUs() {
             <h1 className="text-4xl lg:text-5xl font-bold font-serif text-gray-900 leading-tight">
               Why Choose <span className="text-blue-600">AuditFiling</span>
             </h1>
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <p className="text-lg text-gray-600 leading-loose tracking-wide ">
               Experience the difference with our professional approach and comprehensive legal solutions.
               Our expertise covers end-to-end solutions to simplify your business and legal processes
               with unmatched precision and care.
@@ -105,19 +105,14 @@ export default function WhyChooseUs() {
 function Card({ card, colorMap }) {
   return (
     <div
-      className={`group p-1 rounded-xl shadow-sm   bg-gradient-to-br ${colorMap[card.color]} border-transparent hover:border-current transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1`}
+      className={`group p-3 rounded-lg shadow-sm bg-gradient-to-br ${colorMap[card.color]} border-transparent hover:border-current transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5`}
     >
-      <div className="flex flex-col items-center text-center space-y-3">
-        {/* <div className="flex-shrink-0 p-3 bg-white rounded-xl shadow-sm group-hover:shadow-md transition-shadow">
-          <div className="text-xl">
-            {card.icon}
-          </div>
-        </div> */}
+      <div className="flex flex-col items-center text-center space-y-2">
         <div className="flex-1">
-          <h3 className=" text-gray-900 mb-2 ">
+          <h3 className="text-gray-900 text-base font-semibold mb-1">
             {card.title}
           </h3>
-          <p className="text-gray-600 text-sm leading-relaxed">
+          <p className="text-gray-600 text-xs leading-snug">
             {card.desc}
           </p>
         </div>

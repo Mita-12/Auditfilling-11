@@ -204,7 +204,6 @@ import Trademark from "./page/Services/TradeMark.jsx";
 import Bankvaluation from "./page/Services/BankValuation.jsx";
 import Legal from "./page/Services/Legal.jsx";
 
-import BlogPage from "./page/Blog.jsx";
 import Contact from "./page/ContactPage.jsx";
 import PrivacyPolicy from "./page/PrivecyPolicy.jsx";
 
@@ -222,6 +221,9 @@ import MyRequests from "./UserProfile/MyRequest.jsx";
 import CompletedService from "./UserProfile/CompleteService.jsx";
 import PaymentHistory from "./UserProfile/PaymentHistory.jsx";
 import BankDetails from "./UserProfile/BankDetails.jsx";
+import Feedback from "./UserProfile/Feedback.jsx";
+import BlogDetailPage from "./page/Blog/BlogDetails.jsx";
+import BlogPage from "./page/Blog/Blog.jsx";
   
 
 function App() {
@@ -239,7 +241,7 @@ function App() {
           <Route path="/trademark" element={<Trademark />} />
           <Route path="/bankvaluation" element={<Bankvaluation />} />
           <Route path="/legal" element={<Legal />} />
-          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blogs" element={<BlogPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsAndConditions />} />
@@ -255,6 +257,10 @@ function App() {
           <Route path="/completed-services" element={<CompletedService />} />
           <Route path="/payment-history" element={<PaymentHistory />} />
           <Route path="/bank-details" element={<BankDetails />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/blog-detail" element={<BlogDetailPage />} />
+
+
 
         </Route>
       </Routes>
