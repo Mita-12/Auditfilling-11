@@ -65,10 +65,10 @@ function ServicesSection() {
         <div className="container mx-auto px-12">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold font-serif text-gray-900 mb-4 relative inline-block">
+            <h1 className="text-5xl font-bold font-serif text-gray-900 mb-4 relative inline-block">
               Services We Provide
               <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full"></span>
-            </h2>
+            </h1>
             <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
               Comprehensive legal and financial services to meet all your
               business needs
@@ -90,7 +90,7 @@ function ServicesSection() {
           >
             {services.slice(0, services.length - 3).map((service, index) => (
               <motion.div
-                                onClick={() => navigate(service.link)}
+                onClick={() => navigate(service.link)}
 
                 key={index}
                 className="bg-white rounded-2xl p-6 shadow-sm cursor-pointer"
@@ -107,7 +107,7 @@ function ServicesSection() {
                     {service.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                <p className="text-gray-600 text-sm text-justifyleading-loose tracking-wide  mb-4">
                   {service.description}
                 </p>
                 <motion.button
@@ -149,7 +149,7 @@ function ServicesSection() {
           >
             {services.slice(-3).map((service, index) => (
               <motion.div
-                  onClick={() => navigate(service.link)}
+                onClick={() => navigate(service.link)}
 
                 key={index}
                 className="bg-white rounded-2xl p-6 shadow-sm cursor-pointer w-full sm:w-80"
@@ -166,7 +166,7 @@ function ServicesSection() {
                     {service.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                <p className="text-gray-600 text-sm leading-loose tracking-wide  mb-4">
                   {service.description}
                 </p>
                 <motion.button
@@ -195,6 +195,7 @@ function ServicesSection() {
         </div>
       </section>
     
+
     </div>
   );
 }

@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
+import{ useNavigate} from "react-router-dom";  
 
 export default function ResellerRegistrationForm() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    contact: "",
-    image: null,
+    name: "",
+    mailid: "",
+    mobile: "",
+    image: "",
     password: "",
-    confirmPassword: "",
+    password_confirmation: "",
   });
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-  
-  // OTP States
+
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [otpCountdown, setOtpCountdown] = useState(0);
+  const navigate = useNavigate();
 
-  // Countdown timer for OTP resend
+  // OTP countdown timer
   useEffect(() => {
     if (otpCountdown > 0) {
       const timer = setTimeout(() => setOtpCountdown(otpCountdown - 1), 1000);
@@ -31,153 +31,166 @@ export default function ResellerRegistrationForm() {
     }
   }, [otpCountdown]);
 
+  // Form validation
   const validateForm = () => {
     const newErrors = {};
 
-    // Name validation
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = "First name is required";
-    }
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = "Last name is required";
-    }
+    if (!formData.name.trim()) newErrors.name = "Full name is required";
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email) {
-      newErrors.email = "Email is required";
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-    }
+    const mailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.mailid) newErrors.mailid = "Email is required";
+    else if (!mailRegex.test(formData.mailid)) newErrors.mailid = "Please enter a valid email";
 
-    // Contact validation
     const phoneRegex = /^[+]?[1-9][\d]{0,15}$/;
-    if (!formData.contact) {
-      newErrors.contact = "Contact number is required";
-    } else if (!phoneRegex.test(formData.contact.replace(/[\s\-)]/g, ""))) {
-      newErrors.contact = "Please enter a valid contact number";
-    } else if (!isOtpVerified) {
-      newErrors.contact = "Please verify your contact number with OTP";
-    }
+    if (!formData.mobile) newErrors.mobile = "Mobile number is required";
+    else if (!phoneRegex.test(formData.mobile.replace(/[\s\-)]/g, ""))) newErrors.mobile = "Please enter a valid mobile number";
+    else if (!isOtpVerified) newErrors.mobile = "Please verify your mobile number with OTP";
 
-    // Password validation
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
+    if (!formData.password) newErrors.password = "Password is required";
+    else if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
 
-    // Confirm password validation
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Please confirm your password";
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
+    if (!formData.password_confirmation) newErrors.password_confirmation = "Please confirm your password";
+    else if (formData.password !== formData.password_confirmation) newErrors.password_confirmation = "Passwords do not match";
 
-    // Image validation
     if (formData.image) {
       const validTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
-      if (!validTypes.includes(formData.image.type)) {
-        newErrors.image = "Please select a valid image (JPEG, PNG, GIF)";
-      }
-      if (formData.image.size > 5 * 1024 * 1024) {
-        newErrors.image = "Image size must be less than 5MB";
-      }
+      if (!validTypes.includes(formData.image.type)) newErrors.image = "Please select a valid image (JPEG, PNG, GIF)";
+      if (formData.image.size > 5 * 1024 * 1024) newErrors.image = "Image size must be less than 5MB";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // Send OTP function
+  // Send OTP API
   const sendOtp = async () => {
     const phoneRegex = /^[+]?[1-9][\d]{0,15}$/;
-    if (!formData.contact || !phoneRegex.test(formData.contact.replace(/[\s\-)]/g, ""))) {
-      setErrors({ ...errors, contact: "Please enter a valid contact number first" });
+    if (!formData.mobile || !phoneRegex.test(formData.mobile.replace(/[\s\-)]/g, ""))) {
+      setErrors({ ...errors, mobile: "Please enter a valid mobile number first" });
       return;
     }
 
-    setIsOtpSent(true);
-    setOtpCountdown(60); // 60 seconds countdown
-    
-    // Simulate OTP sending
-    console.log(`OTP sent to ${formData.contact}`);
-    // In real implementation, you would call your backend API here
-    // await api.sendOtp(formData.contact);
+    try {
+      const response = await fetch("https://auditfiling.com/api/v1/reseller/custom_otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mobile: formData.mobile }),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsOtpSent(true);
+        setOtpCountdown(60);
+        alert(data.message || "OTP sent successfully");
+      } else {
+        alert(data.message || "Failed to send OTP");
+      }
+    } catch (error) {
+      console.error("Send OTP error:", error);
+      alert("Failed to send OTP. Please try again.");
+    }
   };
 
-  // Verify OTP function
-  const verifyOtp = () => {
-    // Simulate OTP verification (in real app, verify with backend)
-    if (otp.length === 6) {
-      setIsOtpVerified(true);
-      setErrors({ ...errors, contact: "" });
-    } else {
+  // Verify OTP API
+  const verifyOtp = async () => {
+    if (otp.length !== 6) {
       setErrors({ ...errors, otp: "Please enter a valid 6-digit OTP" });
+      return;
+    }
+
+    try {
+      const response = await fetch("https://auditfiling.com/api/v1/reseller/custom_otp/store", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mobile: formData.mobile, custom_otp: otp }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+
+      if (response.ok) {
+        setIsOtpVerified(true);
+        setErrors({ ...errors, otp: "", mobile: "" });
+        alert(data.message || "OTP verified successfully");
+      } else {
+        setIsOtpVerified(false);
+        setOtp("");
+        setErrors({ ...errors, otp: data.message || "OTP verification failed" });
+        alert(data.message || "OTP verification failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Verify OTP error:", error);
+      setIsOtpVerified(false);
+      setOtp("");
+      alert("OTP verification failed. Please try again.");
     }
   };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    
     if (name === "image") {
       const file = files[0];
       if (file) {
         setFormData({ ...formData, image: file });
-        
-        // Create image preview
         const reader = new FileReader();
-        reader.onloadend = () => {
-          setImagePreview(reader.result);
-        };
+        reader.onloadend = () => setImagePreview(reader.result);
         reader.readAsDataURL(file);
       }
     } else {
       setFormData({ ...formData, [name]: value });
-      
-      // Clear error when user starts typing
-      if (errors[name]) {
-        setErrors({ ...errors, [name]: "" });
-      }
+      if (errors[name]) setErrors({ ...errors, [name]: "" });
     }
   };
 
+  // Registration API
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
+    navigate("/");
+
+    if (!validateForm()) return;
 
     setIsSubmitting(true);
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      console.log("Form Data Submitted:", formData);
-      
-      // Show success message
-      alert("Registration successful! Welcome to our reseller program.");
-      
-      // Reset form
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        contact: "",
-        image: null,
-        password: "",
-        confirmPassword: "",
+      const submissionData = new FormData();
+      Object.keys(formData).forEach((key) => {
+        if (key === "image" && formData.image) submissionData.append(key, formData.image);
+        else submissionData.append(key, formData[key]);
       });
-      setImagePreview(null);
-      setErrors({});
-      setIsOtpSent(false);
-      setIsOtpVerified(false);
-      setOtp("");
-      
+        console.log(submissionData);
+       console.log(formData);
+       
+      const response = await fetch("https://auditfiling.com/api/v1/reseller/registration", {
+        method: "POST",
+        body: submissionData,
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if (response.ok) {
+        alert(data.message || "Registration successful!");
+        // Reset form
+        setFormData({
+          name: "",
+          mailid: "",
+          mobile: "",
+          image: null,
+          password: "",
+          password_confirmation: "",
+        });
+        setImagePreview(null);
+        setErrors({});
+        setIsOtpSent(false);
+        setIsOtpVerified(false);
+        setOtp("");
+        
+        
+      } else {
+        alert(data.message || "Registration failed. Please try again.");
+      }
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error("Registration error:", error);
       alert("Registration failed. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -192,7 +205,7 @@ export default function ResellerRegistrationForm() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <Header />
-      
+
       <div className="flex justify-center items-center py-12 px-4">
         <form
           onSubmit={handleSubmit}
@@ -215,90 +228,88 @@ export default function ResellerRegistrationForm() {
                 </label>
                 <input
                   type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
+                  name="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
                   required
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
-                    errors.firstName 
-                      ? "border-red-500 focus:ring-red-200" 
-                      : "border-gray-300 focus:ring-blue-200 focus:border-blue-500"
-                  }`}
-                  placeholder="Enter first name"
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${errors.name
+                    ? "border-red-500 focus:ring-red-200"
+                    : "border-gray-300 focus:ring-blue-200 focus:border-blue-500"
+                    }`}
+                  placeholder="Enter full name"
+
                 />
-                {errors.firstName && (
+                {errors.name && (
                   <p className="mt-2 text-sm text-red-600 flex items-center">
-                    <span className="mr-1">⚠</span> {errors.firstName}
+                    <span className="mr-1">⚠</span> {errors.name}
                   </p>
                 )}
               </div>
 
-              {/* Email Field */}
+              {/* mailid Field */}
               <div>
                 <label className="block text-gray-700 text-sm font-medium mb-2">
                   Email Address *
                 </label>
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  name="mailid"
+                  value={formData.mailid}
+                  onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
                   required
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
-                    errors.email 
-                      ? "border-red-500 focus:ring-red-200" 
-                      : "border-gray-300 focus:ring-blue-200 focus:border-blue-500"
-                  }`}
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${errors.mailid
+                    ? "border-red-500 focus:ring-red-200"
+                    : "border-gray-300 focus:ring-blue-200 focus:border-blue-500"
+                    }`}
                   placeholder="your@email.com"
+
                 />
-                {errors.email && (
+                {errors.mailid && (
                   <p className="mt-2 text-sm text-red-600 flex items-center">
-                    <span className="mr-1">⚠</span> {errors.email}
+                    <span className="mr-1">⚠</span> {errors.mailid}
                   </p>
                 )}
               </div>
 
-              {/* Contact Field with OTP */}
+              {/* mobile Field with OTP */}
               <div className="md:col-span-2">
                 <label className="block text-gray-700 text-sm font-medium mb-2">
-                  Contact Number *
+                  mobile Number *
                 </label>
                 <div className="flex gap-3">
                   <input
                     type="tel"
-                    name="contact"
-                    value={formData.contact}
-                    onChange={handleChange}
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
                     required
                     disabled={isOtpVerified}
-                    className={`flex-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
-                      errors.contact 
-                        ? "border-red-500 focus:ring-red-200" 
-                        : "border-gray-300 focus:ring-blue-200 focus:border-blue-500"
-                    } ${isOtpVerified ? 'bg-green-50 border-green-500' : ''}`}
-                    placeholder="+1 (555) 123-4567"
+                    className={`flex-1 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${errors.mobile
+                      ? "border-red-500 focus:ring-red-200"
+                      : "border-gray-300 focus:ring-blue-200 focus:border-blue-500"
+                      } ${isOtpVerified ? 'bg-green-50 border-green-500' : ''}`}
+                    placeholder="+91 123-456-7890"
                   />
                   {!isOtpVerified && (
                     <button
                       type="button"
                       onClick={sendOtp}
                       disabled={otpCountdown > 0}
-                      className={`px-4 py-3 rounded-lg font-medium transition-colors ${
-                        otpCountdown > 0
-                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                          : "bg-blue-600 text-white hover:bg-blue-700"
-                      }`}
+                      className={`px-4 py-3 rounded-lg font-medium transition-colors ${otpCountdown > 0
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : "bg-blue-600 text-white hover:bg-blue-700"
+                        }`}
                     >
                       {otpCountdown > 0 ? `${otpCountdown}s` : "Send OTP"}
                     </button>
                   )}
                 </div>
-                {errors.contact && (
+                {errors.mobile && (
                   <p className="mt-2 text-sm text-red-600 flex items-center">
-                    <span className="mr-1">⚠</span> {errors.contact}
+                    <span className="mr-1">⚠</span> {errors.mobile}
                   </p>
                 )}
-                
+
                 {/* OTP Input Section */}
                 {isOtpSent && !isOtpVerified && (
                   <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
@@ -307,8 +318,9 @@ export default function ResellerRegistrationForm() {
                     </label>
                     <div className="flex gap-3">
                       <input
-                        type="text"
-                        value={otp}
+                        type="number"
+                        name="custom_otp"
+                        value={formData.otp}
                         onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
                         placeholder="Enter 6-digit OTP"
                         className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
@@ -328,7 +340,7 @@ export default function ResellerRegistrationForm() {
                       </p>
                     )}
                     <p className="text-xs text-gray-600 mt-2">
-                      OTP sent to {formData.contact}. Didn't receive?{" "}
+                      OTP sent to {formData.mobile}. Didn't receive?{" "}
                       {otpCountdown === 0 ? (
                         <button
                           type="button"
@@ -343,14 +355,14 @@ export default function ResellerRegistrationForm() {
                     </p>
                   </div>
                 )}
-                
+
                 {/* OTP Verified Success */}
                 {isOtpVerified && (
                   <div className="mt-2 flex items-center text-green-600">
                     <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-sm font-medium">Contact number verified successfully</span>
+                    <span className="text-sm font-medium">mobile number verified successfully</span>
                   </div>
                 )}
               </div>
@@ -382,7 +394,7 @@ export default function ResellerRegistrationForm() {
                   </div>
                 </div>
               ) : null}
-              
+
               <div className={`border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors ${imagePreview ? 'hidden' : 'block'}`}>
                 <input
                   type="file"
@@ -416,22 +428,21 @@ export default function ResellerRegistrationForm() {
           {/* Security Section */}
           <div className="mb-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Password Field */}
+              {/*password Field */}
               <div>
                 <label className="block text-gray-700 text-sm font-medium mb-2">
-                  Password *
+                  password *
                 </label>
                 <input
                   type="password"
                   name="password"
                   value={formData.password}
-                  onChange={handleChange}
+                  onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
                   required
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
-                    errors.password 
-                      ? "border-red-500 focus:ring-red-200" 
-                      : "border-gray-300 focus:ring-blue-200 focus:border-blue-500"
-                  }`}
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${errors.password
+                    ? "border-red-500 focus:ring-red-200"
+                    : "border-gray-300 focus:ring-blue-200 focus:border-blue-500"
+                    }`}
                   placeholder="At least 6 characters"
                 />
                 {errors.password && (
@@ -441,27 +452,26 @@ export default function ResellerRegistrationForm() {
                 )}
               </div>
 
-              {/* Confirm Password Field */}
+              {/*password_confirmation Field */}
               <div>
                 <label className="block text-gray-700 text-sm font-medium mb-2">
-                  Confirm Password *
+                  password_confirmation *
                 </label>
                 <input
                   type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
+                  name="password_confirmation"
+                  value={formData.password_confirmation}
+                  onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
                   required
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
-                    errors.confirmPassword 
-                      ? "border-red-500 focus:ring-red-200" 
-                      : "border-gray-300 focus:ring-blue-200 focus:border-blue-500"
-                  }`}
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${errors.password_confirmation
+                    ? "border-red-500 focus:ring-red-200"
+                    : "border-gray-300 focus:ring-blue-200 focus:border-blue-500"
+                    }`}
                   placeholder="Re-enter your password"
                 />
-                {errors.confirmPassword && (
+                {errors.password_confirmation && (
                   <p className="mt-2 text-sm text-red-600 flex items-center">
-                    <span className="mr-1">⚠</span> {errors.confirmPassword}
+                    <span className="mr-1">⚠</span> {errors.password_confirmation}
                   </p>
                 )}
               </div>
@@ -472,11 +482,11 @@ export default function ResellerRegistrationForm() {
           <button
             type="submit"
             disabled={isSubmitting || !isOtpVerified}
-            className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-colors ${
-              isSubmitting || !isOtpVerified
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl"
-            }`}
+            onClick={handleSubmit}
+            className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-colors ${isSubmitting || !isOtpVerified
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl"
+              }`}
           >
             {isSubmitting ? (
               <div className="flex items-center justify-center">
@@ -487,7 +497,7 @@ export default function ResellerRegistrationForm() {
                 Processing...
               </div>
             ) : !isOtpVerified ? (
-              "Verify Contact to Continue"
+              "Verify mobile to Continue"
             ) : (
               "Create Reseller Account"
             )}
@@ -506,7 +516,7 @@ export default function ResellerRegistrationForm() {
           </p>
         </form>
       </div>
-      
+
       <Footer />
     </div>
   );

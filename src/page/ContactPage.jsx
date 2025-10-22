@@ -1,20 +1,17 @@
 import React from "react";
-import Header from "../component/Header";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
-import Footer from "../component/Footer";
 import WhatsAppButton from "../form/WhatsAppPopup";
 
 const Contact = () => {
   return (
     <>
-      <Header />
       <section className="py-16 px-6 md:px-12 ">
         <div className="max-w-screen-xl mt-25 mx-auto">
           {/* Header Section */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-800 mb-4">
+            <h1 className="text-3xl md:text-4xl font-serif font-bold text-gray-800 mb-4">
               Connect With Auditifiling For Fast Legal Assistance
-            </h2>
+            </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               You can easily reach us through phone or email for any  legal inquiries.
               Our dedicated team is always ready to provide quick and reliable assistance whenever you need it.
@@ -76,7 +73,7 @@ const Contact = () => {
         </div>
       </section>
       <WhatsAppButton/>
-      <Footer />
+      
     </>
   );
 };

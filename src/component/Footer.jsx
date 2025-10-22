@@ -1,29 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import {
-  FaFacebook,
-  FaYoutube,
-  FaInstagram,
-  FaLinkedin,
-} from "react-icons/fa";
+import { FaFacebook, FaYoutube, FaInstagram, FaLinkedin } from "react-icons/fa";
 import {
   HiOutlineMail,
   HiOutlinePhone,
+  HiOutlineOfficeBuilding, // ✅ replaced
   HiOutlineLocationMarker,
 } from "react-icons/hi";
-import { HiOutlineBuildingOffice } from "react-icons/hi2";
 
+import { Link } from "react-router-dom";
 
-function Footer() {
+export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-6 py-12">
         {/* Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+
           {/* Brand Section */}
           <div>
-            <h2 className="text-2xl font-bold font-serif mb-4">AuditFiling</h2>
-            <p className="text-gray-300 text-sm  leading-relaxed font-serif">
+            <div className="relative inline-block group mb-6">
+              <h2 className="text-2xl font-bold font-serif">AuditFiling</h2>
+              <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
+            </div>
+
+            <p className="text-gray-300 text-sm leading-relaxed ">
               Your trusted partner for tax, compliance, and business solutions
             </p>
             <div className="flex gap-4 mt-6">
@@ -109,100 +109,73 @@ function Footer() {
                   to="/privacy"
                   className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
                 >
-                  Login
+                  Admin Login
                 </Link>
               </li>
 
             </ul>
           </div>
-
 
           {/* Services */}
           <div>
-            <h3 className="text-lg font-semibold font-serif mb-4">Cloudsat's Entities</h3>
-            <ul className="space-y-3 text-gray-300 text-sm  font-serif">
-              <li>
-                <Link
-                  to="/"
-                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
-                >
-                  Audifiling
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/http://localhost:5173/income-tax"
-                  className="block hover:text-white  px-2 py-2 rounded-md transition-colors"
-                >
-                  Tracolab
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/https://coddor.com/"
-                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
-                >
-                  Coddor
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/https://sociomint.com/"
-                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
-                >
-                  Sociomint
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/https://www.xpbiz.com/"
-                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
-                >
-                  XpBIz
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/https://csaap.com/"
-                  className="block hover:text-white px-2 py-2 rounded-md transition-colors"
-                >
-                  CSAAP
-                </Link>
-              </li>
+            <div className="relative inline-block group mb-6">
+              <h3 className="text-lg font-semibold font-serif">Cloudsat's Entities</h3>
+              <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
+            </div>
+
+            <ul className="space-y-3 text-gray-300 text-sm ">
+              {[
+                { path: "/", label: "AuditFiling" },
+                { path: "http://localhost:5173/income-tax", label: "Tracolab" },
+                { path: "https://coddor.com/", label: "Coddor" },
+                { path: "https://sociomint.com/", label: "Sociomint" },
+                { path: "https://www.xpbiz.com/", label: "XpBiz" },
+                { path: "https://csaap.com/", label: "CSAAP" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block hover:text-white px-2 py-2 rounded-md transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-
-          {/* Contact - Highlighted */}
+          {/* Contact Section */}
           <div>
-            <h3 className="text-lg font-semibold font-serif mb-4 ">Contact</h3>
-            <div className="space-y-4 font-serif ">
-              {/* Email */}
-              <div className="flex items-center gap-3  px-1 py-1 rounded-sm">
+            <div className="relative inline-block group mb-6">
+              <h3 className="text-lg font-semibold font-serif">Contact</h3>
+              <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
+            </div>
+
+            <div className="space-y-4 ">
+              <div className="flex items-center gap-3 px-1 py-1 rounded-sm">
                 <HiOutlineMail className="text-yellow-400 text-2xl" />
                 <a
                   href="mailto:info@auditfiling.com"
-                  className="text-white font-medium hover:text-lg"
+                  className="text-white font-medium hover:text-lg transition-all"
                 >
                   info@auditfiling.com
                 </a>
               </div>
 
-              {/* Phone */}
-              <div className="flex items-center gap-3  px-1 py-1 rounded-sm">
+              <div className="flex items-center gap-3 px-1 py-1 rounded-sm">
                 <HiOutlinePhone className="text-green-400 text-2xl" />
                 <a
                   href="tel:+917428600607"
-                  className="text-white font-medium hover:text-lg"
+                  className="text-white font-medium hover:text-lg transition-all"
                 >
                   +91 7428600607
                 </a>
               </div>
 
-
-              {/* Head Office */}
-              <div className="flex items-start gap-3  px-1 py-1 rounded-sm">
-                <HiOutlineBuildingOffice className="text-red-400 text-6xl mt-1" />
+              <div className="flex items-start gap-3 px-1 py-1 rounded-sm">
+                <HiOutlineOfficeBuilding className="text-red-400 text-4xl mt-1" />
                 <div>
                   <h4 className="text-white font-semibold mb-1">Head Office</h4>
                   <p className="text-gray-400 text-sm leading-relaxed">
@@ -211,9 +184,8 @@ function Footer() {
                 </div>
               </div>
 
-              {/* Branch Office */}
-              <div className="flex items-start gap-3  px-1 py-1 rounded-sm">
-                <HiOutlineLocationMarker className="text-red-400 text-8xl mt-1" />
+              <div className="flex items-start gap-3 px-1 py-1 rounded-sm">
+                <HiOutlineLocationMarker className="text-red-400 text-6xl mt-1" />
                 <div>
                   <h4 className="text-white font-semibold mb-1">Branch Office</h4>
                   <p className="text-gray-400 text-sm leading-relaxed">
@@ -227,8 +199,12 @@ function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold font-serif mb-4">Newsletter</h3>
-            <p className="text-gray-300 text-sm  mb-4 font-serif">
+            <div className="relative inline-block group mb-6">
+              <h3 className="text-lg font-semibold font-serif">Newsletter</h3>
+              <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
+            </div>
+
+            <p className="text-gray-300 text-sm mb-4 ">
               Subscribe to get updates on our latest services and offers
             </p>
             <form className="flex flex-col space-y-3">
@@ -258,5 +234,3 @@ function Footer() {
     </footer>
   );
 }
-
-export default Footer;

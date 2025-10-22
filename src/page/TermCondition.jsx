@@ -1,55 +1,40 @@
-import React, { useEffect, useState, useRef } from "react";
-import { 
-  CheckCircle, 
-  AlertCircle, 
-  Shield, 
-  Lock, 
-  FileText, 
-  Mail, 
-  Calendar,
-  ArrowUp,
-  UserCheck,
-  RefreshCw,
-  Scale
-} from 'lucide-react';
-import Header from "../component/Header";
+import React, { useEffect, useState } from "react";
 import Footer from "../component/Footer";
+import Header from "../component/Header";
 
 const sections = [
-  { id: "accepting-terms", title: "Accepting the Terms", icon: UserCheck },
-  { id: "provision-services", title: "Provision of Services", icon: RefreshCw },
-  { id: "use-services", title: "Use of Services", icon: FileText },
-  { id: "account-security", title: "Account Security", icon: Lock },
-  { id: "privacy", title: "Privacy", icon: Shield },
-  { id: "accuracy-tax-returns", title: "Accuracy of Tax Returns", icon: Scale },
-  { id: "disclaimer-warranties", title: "Disclaimer of Warranties", icon: AlertCircle },
-  { id: "limitation-liability", title: "Limitation of Liability", icon: AlertCircle },
-  { id: "refunds-cancellations", title: "Refunds & Cancellations", icon: CheckCircle },
+  { id: "accepting-terms", title: "Accepting the Terms" },
+  { id: "provision-services", title: "Provision of Services" },
+  { id: "use-services", title: "Use of Services" },
+  { id: "account-security", title: "Account Security" },
+  { id: "privacy", title: "Privacy" },
+  { id: "accuracy-tax", title: "Accuracy of Tax Returns" },
+  { id: "disclaimer-warranties", title: "Disclaimer of Warranties" },
+  { id: "limitation-liability", title: "Limitation of Liability" },
+  { id: "refunds-cancellations", title: "Refunds & Cancellations" },
 ];
 
 export default function TermsAndConditions() {
   const [activeSection, setActiveSection] = useState("");
-  const [showScrollTop, setShowScrollTop] = useState(false);
-  const [readSections, setReadSections] = useState(new Set());
-  const sectionRefs = useRef({});
 
-  // Scroll and section tracking
+  // Handle scroll behavior and active section highlighting
   useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const el = document.getElementById(hash.substring(1));
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    };
+
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
-      setShowScrollTop(window.scrollY > 400);
-
-      // Track read sections
-      sections.forEach(sec => {
-        const section = sectionRefs.current[sec.id];
-        if (section && section.offsetTop <= scrollPosition + 200) {
-          setReadSections(prev => new Set(prev).add(sec.id));
-        }
-      });
-
-      // Active section detection
+      
+      // Find which section is currently in view
       for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sectionRefs.current[sections[i].id];
+        const section = document.getElementById(sections[i].id);
         if (section && section.offsetTop <= scrollPosition) {
           setActiveSection(sections[i].id);
           break;
@@ -57,438 +42,350 @@ export default function TermsAndConditions() {
       }
     };
 
+    handleHash();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
     
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const handleSectionClick = (id) => {
-    const element = sectionRefs.current[id];
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      window.history.replaceState(null, null, `#${id}`);
-    }
+    setActiveSection(id);
+    window.history.pushState(null, null, `#${id}`);
   };
-
-  const progress = Math.round((readSections.size / sections.length) * 100);
 
   return (
-    <div className="min-h-screen ">
-      {/* Header */}
-<Header/>
-
+    <section className="min-h-screen text-gray-800">
+      <Header/>
       {/* Hero Section */}
-      <div className="relative  py-20 lg:py-30">
-        <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]" />
-        <div className="relative max-w-7xl mx-auto font-serif px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 mb-6">
-            <Calendar className="h-4 w-4 text-black" />
-            <span className="text-black text-sm">Last Updated: {new Date().toLocaleDateString('en-IN')}</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-boldtext-black mb-4 leading-tight">
-            Terms & Conditions
+      <div className="relative mt-20 py-20 lg:py-24">
+        <div className="absolute inset-0"></div>
+        <div className="relative font-serif max-w-6xl mx-auto px-6 text-center">
+          <h1 className="text-4xl text-black md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+            Terms and Conditions
+            <span className="block w-24 h-1 bg-blue-600 mx-auto mt-3 transition-all duration-500"></span>
           </h1>
-          <p className="text-xl text-black max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-black max-w-3xl mx-auto leading-relaxed">
             Please read these terms carefully before using Auditfiling.com services
           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar Navigation */}
-          <nav className="lg:w-80 lg:sticky lg:top-24 lg:self-start">
-            <div className="bg-white rounded-2xl  border border-gray-200/60 p-6">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="bg-blue-100 p-2 rounded-lg">
-                  <FileText className="h-5 w-5 text-blue-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 text-lg">Table of Contents</h3>
-              </div>
-              
-              <div className="space-y-2">
-                {sections.map((sec, index) => {
-                  const Icon = sec.icon;
-                  const isRead = readSections.has(sec.id);
-                  const isActive = activeSection === sec.id;
-                  
-                  return (
-                    <button
-                      key={sec.id}
-                      onClick={() => handleSectionClick(sec.id)}
-                      className={`w-full flex items-center space-x-3 py-3 px-4 rounded-xl transition-all duration-200 group ${
-                        isActive 
-                          ? 'bg-blue-50 border border-blue-200 text-blue-700 ' 
-                          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                      }`}
-                    >
-                      <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${
-                        isActive ? 'bg-blue-100' : 'bg-gray-100 group-hover:bg-gray-200'
-                      }`}>
-                        <Icon className={`h-4 w-4 ${isActive ? 'text-blue-600' : 'text-gray-500'}`} />
-                      </div>
-                      <div className="flex-1 text-left">
-                        <div className="flex items-center justify-between">
-                          <span className={`font-medium text-sm ${isActive ? 'text-blue-900' : 'text-gray-900'}`}>
-                            {sec.title}
-                          </span>
-                          {isRead && (
-                            <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
-                          )}
-                        </div>
-                        <div className="flex items-center space-x-2 mt-1">
-                          <span className="text-xs text-gray-400">Section {index + 1}</span>
-                          {isActive && (
-                            <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-                          )}
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+      {/* Introduction Card */}
+      <div className="max-w-6xl mx-auto px-6 -mt-8 lg:-mt-12 relative z-10">
+        <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-10 border border-orange-100">
+          <p className="text-lg lg:text-xl leading-relaxed text-gray-700 text-center">
+            <span className="font-semibold text-black">Auditfiling.com</span> is a product of{" "}
+            <span className="font-semibold text-black">Cloudsat Pvt. Ltd.</span>. 
+            By creating an account and using our services, you agree to be bound by these Terms and Conditions.
+          </p>
+        </div>
+      </div>
 
-           
-            </div>
-          </nav>
+      <div className="max-w-6xl mx-auto px-6 py-4 lg:py-4 flex flex-col lg:flex-row gap-8">
+        {/* Sidebar Navigation */}
+        <nav className="lg:w-75 lg:sticky lg:top-24 lg:self-start bg-white rounded-xl p-6">
+          <h3 className="font-semibold text-center text-gray-900 mb-4 text-3xl">Contents</h3>
+          <ul className="space-y-3">
+            {sections.map((sec, index) => (
+              <li key={sec.id}>
+                <a
+                  href={`#${sec.id}`}
+                  onClick={() => handleSectionClick(sec.id)}
+                  className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
+                    activeSection === sec.id
+                      ? "bg-orange-50 text-red-600 border-l-4 border-red-600 font-medium"
+                      : "text-gray-600 hover:text-red-600 hover:bg-gray-50"
+                  }`}
+                >
+                  <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
+                    {index + 1}.
+                  </span>
+                  <span className="text-xl lg:text-xl leading-tight">{sec.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-          {/* Main Content */}
-          <div className="flex-1 space-y-8">
-            {/* Introduction Card */}
-            <div className="bg-white rounded-2xl  border border-gray-200/60 p-8 lg:p-10 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/5 to-indigo-600/5 rounded-full -translate-y-16 translate-x-16" />
-              <div className="relative">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Welcome to Auditfiling.com</h2>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  Welcome to <strong className="text-blue-600">Auditfiling.com</strong>, a product of{' '}
-                  <strong className="text-blue-600">Cloudsat Pvt. Ltd.</strong> These Terms and Conditions 
-                  govern your use of our services. By accessing or using our platform, you agree to be bound by these terms.
-                </p>
-                <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-                  <div className="flex items-start space-x-3">
-                    <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
-                    <p className="text-amber-800 text-sm">
-                      <strong>Important:</strong> These terms contain important information about your rights and obligations. 
-                      Please read them carefully.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Terms Sections */}
-            <Section 
-              ref={el => sectionRefs.current["accepting-terms"] = el}
-              id="accepting-terms" 
-              title="1. Accepting the Terms" 
-              icon={UserCheck}
-              status={readSections.has("accepting-terms") ? "read" : "unread"}
-            >
-              <p>
-                Auditfiling.com is a product of Cloudsat Pvt. Ltd. (referred to as "Auditfiling.com" from here onwards). 
-                By creating an account and using any Auditfiling.com services, you agree to these terms. 
-              </p>
-              <ImportantNote icon={UserCheck}>
+        {/* Main Content */}
+        <div className="flex-1 space-y-2">
+          <Section id="accepting-terms" title="1. Accepting the Terms">
+            <ul className="space-y-1">
+              <ListItem>
+                <strong>Auditfiling.com</strong> is a product of <strong>Cloudsat Pvt. Ltd.</strong> (called Auditfiling.com from here onwards).
+              </ListItem>
+              <ListItem>
+                By creating an account and using any Auditfiling.com services, you agree to these terms.
+              </ListItem>
+              <ListItem>
                 You must be of legal age and a resident of India to use the services.
-              </ImportantNote>
-            </Section>
+              </ListItem>
+              <ListItem>
+                If you are using our services on behalf of an organization, you represent that you have the authority to bind that organization.
+              </ListItem>
+            </ul>
+          </Section>
 
-            <Section 
-              ref={el => sectionRefs.current["provision-services"] = el}
-              id="provision-services" 
-              title="2. Provision of Services" 
-              icon={RefreshCw}
-              status={readSections.has("provision-services") ? "read" : "unread"}
-            >
-              <ul className="space-y-3">
-                <ListItem>
-                  Auditfiling.com may change or stop services at any time without notice.
-                </ListItem>
-                <ListItem>
-                  By using the service, you agree to be added as a client on Income Tax Department web services.
-                </ListItem>
-                <ListItem>
-                  Limits may be imposed on transmissions or storage space at our discretion.
-                </ListItem>
-              </ul>
-            </Section>
+          <Section id="provision-services" title="2. Provision of Services">
+            <ul className="space-y-1">
+              <ListItem>
+                Auditfiling.com may change or stop services at any time without notice.
+              </ListItem>
+              <ListItem>
+                By using the service, you agree to be added as a client on Income Tax Department web services.
+              </ListItem>
+              <ListItem>
+                Limits may be imposed on transmissions or storage space at our discretion.
+              </ListItem>
+              <ListItem>
+                We reserve the right to modify, suspend, or discontinue any service with or without notice.
+              </ListItem>
+            </ul>
+          </Section>
 
-            <Section 
-              ref={el => sectionRefs.current["use-services"] = el}
-              id="use-services" 
-              title="3. Use of Services" 
-              icon={FileText}
-              status={readSections.has("use-services") ? "read" : "unread"}
-            >
-              <p className="mb-4">When using our services, you agree to:</p>
-              <ul className="space-y-3">
-                <ListItem>Provide accurate and current tax information</ListItem>
-                <ListItem>Use the services only for legal purposes</ListItem>
-                <ListItem>Not engage in unauthorized access, automation, reproduction, or interference with services</ListItem>
-              </ul>
-              <ImportantNote icon={AlertCircle}>
-                If filing for another person, you must have their explicit consent and authorization.
-              </ImportantNote>
-            </Section>
+          <Section id="use-services" title="3. Use of Services">
+            <ul className="space-y-1">
+              <ListItem>
+                You must provide accurate and current tax information and only use the services legally.
+              </ListItem>
+              <ListItem>
+                Unauthorized access, automation, reproduction, or interference with services is strictly prohibited.
+              </ListItem>
+              <ListItem>
+                If filing for another person, you must have their explicit consent and authority.
+              </ListItem>
+              <ListItem>
+                You agree not to use the service for any unlawful purpose or to violate any laws.
+              </ListItem>
+              <ListItem>
+                Any attempt to compromise the security or functionality of our services may result in termination of your account.
+              </ListItem>
+            </ul>
+          </Section>
 
-            <Section 
-              ref={el => sectionRefs.current["account-security"] = el}
-              id="account-security" 
-              title="4. Account Security" 
-              icon={Lock}
-              status={readSections.has("account-security") ? "read" : "unread"}
-            >
-              <p className="mb-4">You are responsible for:</p>
-              <ul className="space-y-3">
-                <ListItem>Maintaining the security of your account credentials</ListItem>
-                <ListItem>All activities that occur under your account</ListItem>
-                <ListItem>Keeping your passwords confidential and secure</ListItem>
-              </ul>
-              <WarningNote icon={Lock}>
+          <Section id="account-security" title="4. Account Security">
+            <ul className="space-y-1">
+              <ListItem>
+                You are solely responsible for maintaining the confidentiality of your account and passwords.
+              </ListItem>
+              <ListItem>
                 Notify Auditfiling.com immediately if you suspect any unauthorized access to your account.
-              </WarningNote>
-            </Section>
+              </ListItem>
+              <ListItem>
+                You are responsible for all activities that occur under your account.
+              </ListItem>
+              <ListItem>
+                We reserve the right to disable your account if we believe there has been any security breach.
+              </ListItem>
+            </ul>
+          </Section>
 
-            <Section 
-              ref={el => sectionRefs.current["privacy"] = el}
-              id="privacy" 
-              title="5. Privacy" 
-              icon={Shield}
-              status={readSections.has("privacy") ? "read" : "unread"}
-            >
-              <p>
-                Your privacy is important to us. Please refer to our Privacy Policy to understand 
-                how we collect, use, and protect your personal information.
-              </p>
-              <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <div className="flex items-start space-x-3">
-                  <Shield className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <p className="text-blue-800">
-                    <strong>Important:</strong> Use of our service implies your consent to our privacy policy 
-                    and data handling practices as described therein.
-                  </p>
-                </div>
-              </div>
-            </Section>
+          <Section id="privacy" title="5. Privacy">
+            <ul className="space-y-1">
+              <ListItem>
+                Refer to our Privacy Policy to understand how your data is handled.
+              </ListItem>
+              <ListItem>
+                Use of the service implies consent to our privacy policy.
+              </ListItem>
+              <ListItem>
+                We collect and process personal information in accordance with our Privacy Policy and applicable laws.
+              </ListItem>
+              <ListItem>
+                You acknowledge that we may use your contact information to send service-related communications.
+              </ListItem>
+            </ul>
+          </Section>
 
-            <Section 
-              ref={el => sectionRefs.current["accuracy-tax-returns"] = el}
-              id="accuracy-tax-returns" 
-              title="6. Accuracy of Tax Returns" 
-              icon={Scale}
-              status={readSections.has("accuracy-tax-returns") ? "read" : "unread"}
-            >
-              <p>
-                While Auditfiling.com strives for accuracy in tax preparation and filing services, 
-                the ultimate responsibility for verifying your tax return lies with you.
-              </p>
-              <WarningNote icon={Scale}>
-                We provide no warranties regarding the correctness, completeness, or timeliness of 
-                tax returns prepared through our service. You are responsible for reviewing and 
-                approving all information before submission.
-              </WarningNote>
-            </Section>
+          <Section id="accuracy-tax" title="6. Accuracy of Tax Returns">
+            <ul className="space-y-1">
+              <ListItem>
+                Auditfiling.com strives for accuracy in tax preparation and filing services.
+              </ListItem>
+              <ListItem>
+                However, the ultimate responsibility lies with you to verify your return before submission.
+              </ListItem>
+              <ListItem>
+                We provide no warranties regarding the correctness or completeness of the tax returns.
+              </ListItem>
+              <ListItem>
+                You are responsible for reviewing all information and ensuring its accuracy before filing.
+              </ListItem>
+              <ListItem>
+                We recommend consulting with a qualified tax professional for complex tax situations.
+              </ListItem>
+            </ul>
+          </Section>
 
-            <Section 
-              ref={el => sectionRefs.current["disclaimer-warranties"] = el}
-              id="disclaimer-warranties" 
-              title="7. Disclaimer of Warranties" 
-              icon={AlertCircle}
-              status={readSections.has("disclaimer-warranties") ? "read" : "unread"}
-            >
-              <p className="mb-4">Services are provided on an "as is" basis:</p>
-              <ul className="space-y-3">
-                <ListItem>We do not guarantee uninterrupted service</ListItem>
-                <ListItem>We do not guarantee error-free operation</ListItem>
-                <ListItem>No oral or written information will create any warranty not stated in these terms</ListItem>
+          <Section id="disclaimer-warranties" title="7. Disclaimer of Warranties">
+            <ul className="space-y-1">
+              <ListItem>
+                Services are provided "as is" without any warranties, express or implied.
+              </ListItem>
+              <ListItem>
+                We do not guarantee uninterrupted or error-free service.
+              </ListItem>
+              <ListItem>
+                No oral or written information will create any warranty not stated in these terms.
+              </ListItem>
+              <ListItem>
+                We disclaim all warranties including merchantability, fitness for a particular purpose, and non-infringement.
+              </ListItem>
+              <ListItem>
+                We do not warrant that the services will meet your requirements or be available on an uninterrupted basis.
+              </ListItem>
+            </ul>
+          </Section>
+
+          <Section id="limitation-liability" title="8. Limitation of Liability">
+            <ul className="space-y-1">
+              <ListItem>
+                Auditfiling.com is not liable for any indirect, incidental, special, or consequential damages.
+              </ListItem>
+              <ListItem>
+                This includes but is not limited to loss of profits, data, reputation, or business opportunities.
+              </ListItem>
+              <ListItem>
+                The limitations apply even if we have been advised of potential losses.
+              </ListItem>
+              <ListItem>
+                Our total liability to you for any claims shall not exceed the amount you paid for the services.
+              </ListItem>
+              <ListItem>
+                We are not liable for any delays or failures in performance due to circumstances beyond our reasonable control.
+              </ListItem>
+            </ul>
+            <ImportantNote>
+              These limitations of liability are fundamental elements of the basis of the bargain between you and Auditfiling.com.
+            </ImportantNote>
+          </Section>
+
+          <Section id="refunds-cancellations" title="9. Refunds & Cancellations">
+            <SubSection title="Refund Policy:">
+              <ul className="space-y-2">
+                <ListItem>
+                  <strong>For self e-Filing plans:</strong> Refunds are only available before the service has been used.
+                </ListItem>
+                <ListItem>
+                  <strong>For assisted plans:</strong> Refunds are possible before an expert starts working on your file.
+                </ListItem>
+                <ListItem>
+                  Once an expert has begun work on your assisted filing, refunds cannot be processed.
+                </ListItem>
               </ul>
-            </Section>
+            </SubSection>
 
-            <Section 
-              ref={el => sectionRefs.current["limitation-liability"] = el}
-              id="limitation-liability" 
-              title="8. Limitation of Liability" 
-              icon={AlertCircle}
-              status={readSections.has("limitation-liability") ? "read" : "unread"}
-            >
-              <p className="mb-4">
-                Auditfiling.com is not liable for any indirect, incidental, special, or consequential damages, including but not limited to:
-              </p>
-              <ul className="space-y-3">
-                <ListItem>Loss of profits or revenue</ListItem>
-                <ListItem>Loss of data or information</ListItem>
-                <ListItem>Damage to reputation or business</ListItem>
-                <ListItem>Any other commercial damages or losses</ListItem>
+            <SubSection title="Cancellation Policy:">
+              <ul className="space-y-2">
+                <ListItem>
+                  You may cancel your account at any time by contacting our support team.
+                </ListItem>
+                <ListItem>
+                  Cancellation of service does not automatically entitle you to a refund.
+                </ListItem>
+                <ListItem>
+                  We reserve the right to suspend or terminate your account for violation of these terms.
+                </ListItem>
               </ul>
-              <WarningNote icon={AlertCircle}>
-                These limitations apply even if we have been advised of the potential for such losses.
-              </WarningNote>
-            </Section>
+            </SubSection>
 
-            <Section 
-              ref={el => sectionRefs.current["refunds-cancellations"] = el}
-              id="refunds-cancellations" 
-              title="9. Refunds & Cancellations" 
-              icon={CheckCircle}
-              status={readSections.has("refunds-cancellations") ? "read" : "unread"}
-            >
-              <div className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-green-50 border border-green-200 rounded-xl p-6">
-                    <h4 className="font-semibold text-green-900 mb-3 flex items-center space-x-2">
-                      <CheckCircle className="h-5 w-5" />
-                      <span>Self e-Filing Plans</span>
-                    </h4>
-                    <p className="text-green-800">
-                      Refunds are only available before the service has been used.
-                    </p>
-                  </div>
-
-                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-                    <h4 className="font-semibold text-blue-900 mb-3 flex items-center space-x-2">
-                      <CheckCircle className="h-5 w-5" />
-                      <span>Assisted Plans</span>
-                    </h4>
-                    <p className="text-blue-800">
-                      Refunds are possible before an expert starts working on your case.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
-                  <h4 className="font-semibold text-blue-900 mb-3 flex items-center space-x-2">
-                    <Mail className="h-5 w-5" />
-                    <span>Contact for Refund Inquiries</span>
-                  </h4>
-                  <ContactInfo 
-                    label="Email:" 
-                    value="payments@auditfiling.com" 
-                    href="mailto:payments@auditfiling.com" 
-                  />
-                </div>
-
-                <div className="p-6 bg-gray-50 border border-gray-200 rounded-xl">
-                  <p className="text-gray-700 text-center font-medium">
-                    By using Auditfiling.com, you acknowledge that you have read, understood, 
-                    and agree to be bound by these Terms and Conditions.
-                  </p>
-                </div>
-              </div>
-            </Section>
-
-            {/* Acceptance Footer */}
-            <div className="bg-white rounded-2xl  border-2 mb-15 border-blue-200 p-8 text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="h-8 w-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Acceptance of Terms</h3>
-              <p className="text-gray-700 mb-4 max-w-2xl mx-auto">
-                Your continued use of Auditfiling.com services constitutes acceptance of these Terms and Conditions.
-              </p>
-              <div className="bg-blue-50 px-4 py-2 rounded-lg inline-block">
-                <p className="text-blue-800 font-semibold">
-                  Effective Date: {new Date().toLocaleDateString('en-IN', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                  })}
+            <SubSection title="Contact for Refunds:">
+              <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <p className="text-lg font-semibold mb-2">Refund Inquiries:</p>
+                <ContactInfo 
+                  label="Email:" 
+                  value="payments@auditfiling.com" 
+                  href="mailto:payments@auditfiling.com" 
+                />
+                <p className="text-sm text-gray-600 mt-2">
+                  Please include your account details and reason for refund request.
                 </p>
               </div>
-            </div>
+            </SubSection>
+
+            <ImportantNote>
+              By using Auditfiling.com, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
+            </ImportantNote>
+          </Section>
+
+          {/* Last Updated Section */}
+          <div className="bg-white p-6 rounded-lg border border-gray-200 mt-8">
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Last Updated</h3>
+            <p className="text-gray-700">
+              These Terms and Conditions were last updated on {new Date().toLocaleDateString('en-IN', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}.
+            </p>
+            <p className="text-gray-600 text-sm mt-2">
+              We recommend reviewing these terms periodically for any changes.
+            </p>
           </div>
         </div>
       </div>
-       <Footer/>
-    </div>
-   
+      <Footer/>
+    </section>
   );
 }
 
-// Enhanced Reusable Components
-const Section = React.forwardRef(({ id, title, icon, status, children }, ref) => {
-  const Icon = icon;
-  
+// Reusable Components (same as Privacy Policy)
+function Section({ id, title, children }) {
   return (
-    <section 
-      ref={ref}
+    <div 
       id={id} 
-      className="bg-white rounded-2xl  border border-gray-200/60 p-8 lg:p-10 relative overflow-hidden group  transition-all duration-300"
+      className="bg-white p-4 transition-all duration-300"
     >
-      {/* Status Indicator */}
-      {status === "read" && (
-        <div className="absolute top-4 right-4 flex items-center space-x-1">
-          <CheckCircle className="h-5 w-5 text-green-500" />
-          <span className="text-xs text-green-600 font-medium">Read</span>
-        </div>
-      )}
-      
-      <div className="flex items-center space-x-4 mb-6">
-        <div className="bg-blue-100 p-3 rounded-xl">
-          <Icon className="h-6 w-6 text-blue-600" />
-        </div>
-        <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">{title}</h2>
-      </div>
-      
-      <div className="text-gray-700 leading-relaxed space-y-4">
+      <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-200 pb-2">
+        {title}
+      </h2>
+      <div className="text-gray-700 leading-relaxed text-lg space-y-6">
         {children}
       </div>
-    </section>
+    </div>
   );
-});
+}
+
+function SubSection({ title, children }) {
+  return (
+    <div className="mb-1">
+      <h3 className="font-semibold text-gray-900 mb-1 text-lg">{title}</h3>
+      <div className="ml-4">{children}</div>
+    </div>
+  );
+}
 
 function ListItem({ children }) {
   return (
     <li className="flex items-start">
-      <span className="text-blue-500 mr-3 mt-1.5 flex-shrink-0">•</span>
+      <span className="text-red-600 mr-3 mt-1">•</span>
       <span>{children}</span>
     </li>
   );
 }
 
-function ImportantNote({ icon, children }) {
-  const Icon = icon;
+function ImportantNote({ children }) {
   return (
-    <div className="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg">
-      <div className="flex items-start space-x-3">
-        <Icon className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-        <p className="text-blue-800 font-medium">{children}</p>
-      </div>
-    </div>
-  );
-}
-
-function WarningNote({ icon, children }) {
-  const Icon = icon;
-  return (
-    <div className="mt-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg">
-      <div className="flex items-start space-x-3">
-        <Icon className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
-        <p className="text-red-800 font-medium">{children}</p>
-      </div>
+    <div className="p-2 bg-orange-50 border-l-2 border-red-600 rounded-r-sm">
+      <p className="text-gray-800 font-medium text-lg">{children}</p>
     </div>
   );
 }
 
 function ContactInfo({ label, value, href }) {
   return (
-    <div className="flex items-center space-x-3">
-      <span className="font-medium text-gray-600">{label}</span>
+    <p className="flex flex-col sm:flex-row sm:items-center">
+      <span className="font-medium text-gray-600 sm:w-24 sm:flex-shrink-0">{label}</span>
       {href ? (
         <a 
           href={href} 
-          className="text-blue-600 hover:text-blue-700 hover:underline font-medium transition-colors flex items-center space-x-1"
+          className="text-red-600 hover:text-red-700 hover:underline font-medium transition-colors"
         >
-          <Mail className="h-4 w-4" />
-          <span>{value}</span>
+          {value}
         </a>
       ) : (
         <span className="font-medium">{value}</span>
       )}
-    </div>
+    </p>
   );
 }

@@ -132,11 +132,11 @@ export default function NotificationUpdates() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
             <FaBell className="text-2xl text-blue-600" />
           </div>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 font-serif">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4 font-serif">
             Notifications & Alerts
             <span className="block w-24 h-1 bg-blue-600 mx-auto mt-3 transition-all duration-500"></span>
 
-          </h2>
+          </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Stay updated with important compliance deadlines and regulatory changes
           </p>
@@ -171,7 +171,7 @@ export default function NotificationUpdates() {
                         </span>
                         <span className="text-xs text-gray-500">{update.timestamp}</span>
                       </div>
-                      <p className="text-gray-800 leading-relaxed text-sm">
+                      <p className="text-gray-800  font-medium  leading-loose tracking-wide text-sm">
                         {update.text}
                       </p>
                     </div>
@@ -198,10 +198,10 @@ export default function NotificationUpdates() {
                 <div
                   key={item.id}
                   className={`bg-white rounded-xl p-3 shadow-sm border hover:shadow-md transition-all duration-200 ${item.priority === "high"
-                      ? "border-red-200 hover:border-red-300"
-                      : item.priority === "medium"
-                        ? "border-yellow-200 hover:border-yellow-300"
-                        : "border-gray-100 hover:border-gray-200"
+                    ? "border-red-200 hover:border-red-300"
+                    : item.priority === "medium"
+                      ? "border-yellow-200 hover:border-yellow-300"
+                      : "border-gray-100 hover:border-gray-200"
                     }`}
                 >
                   <div className="flex items-start justify-between gap-4">
@@ -211,18 +211,9 @@ export default function NotificationUpdates() {
                           {item.category}
                         </span>
                         <div className="flex items-center gap-1">
-
-                          <span className={`text-xs font-medium px-2 py-1 rounded-full ${item.priority === "high"
-                              ? "bg-red-100 text-red-700 border border-red-200"
-                              : item.priority === "medium"
-                                ? "bg-yellow-100 text-yellow-700 border border-yellow-200"
-                                : "bg-gray-100 text-gray-700 border border-gray-200"
-                            }`}>
-                            {item.priority}
-                          </span>
                         </div>
                       </div>
-                      <p className="text-gray-800 font-medium mb-2 text-sm">
+                      <p className="text-gray-800 font-medium mb-2 leading-loose tracking-wide  text-sm">
                         {item.text}
                       </p>
                     </div>
