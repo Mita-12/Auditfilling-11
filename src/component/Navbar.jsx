@@ -310,7 +310,7 @@
 //   const handleLogin = (userData) => {
 //     // Update state first
 //     setUser(userData);
-    
+
 //     // Then dispatch events
 //     window.dispatchEvent(new Event("storage"));
 //     window.dispatchEvent(new Event("userUpdated"));
@@ -502,20 +502,20 @@ export default function Navbar() {
   );
 
   // ---------------- Load user safely ----------------
-useEffect(() => {
-  const loadUser = () => {
-    const savedUser = localStorage.getItem("user_name");
-    console.log("Loaded user from storage:", savedUser);
+  useEffect(() => {
+    const loadUser = () => {
+      const savedUser = localStorage.getItem("user_name");
+      // console.log("Loaded user from storage:", savedUser);
 
-    if (savedUser) {
-      const isJSON = savedUser.startsWith("{") || savedUser.startsWith("[");
-      const userData = isJSON ? JSON.parse(savedUser) : { user_name: savedUser };
-      setUser(userData);
-    }
-  };
+      if (savedUser) {
+        const isJSON = savedUser.startsWith("{") || savedUser.startsWith("[");
+        const userData = isJSON ? JSON.parse(savedUser) : { user_name: savedUser };
+        setUser(userData);
+      }
+    };
 
-  loadUser();
-}, []);
+    loadUser();
+  }, []);
 
 
   // ---------------- Listen for user updates ----------------
@@ -580,15 +580,15 @@ useEffect(() => {
   const handleLogin = (userData) => {
     // Update state first
     setUser(userData);
-    
+
     // Then dispatch events
     window.dispatchEvent(new Event("storage"));
     window.dispatchEvent(new Event("userUpdated"));
-
+    // window.reload();
     setShowLogin(false);
 
     MySwal.fire({
-      title: `Welcome, ${userData.user_name }!`,
+      title: `Welcome, ${userData.user_name}!`,
       icon: "success",
       timer: 1500,
       showConfirmButton: false,
@@ -691,12 +691,29 @@ useEffect(() => {
               <button className="bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2 hover:bg-green-700 transition-colors">
                 <FaUser className="w-4 h-4" />
                 <span className="hidden md:inline">
-                  {user.user_name || user.email || "User"}
+                  {(() => {
+                    // Handle different user data formats
+                    const email =
+                      typeof user === "string"
+                        ? user
+                        : user?.email || user?.user_name || "";
+
+                    if (!email) return "User";
+
+                    // If email has '@', just take first 5 letters of the username part
+                    if (email.includes("@")) {
+                      const namePart = email.split("@")[0];
+                      return namePart.slice(0, 5);
+                    }
+
+                    // Otherwise, just show first 5 characters of the username
+                    return email.slice(0, 5);
+                  })()}
                 </span>
-               
+
               </button>
 
-              <div className="absolute right-0 mt-2 w-50 bg-white rounded-xl shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-100">
+              <div className="absolute -right-1/2 mt-3 w-50 bg-white rounded-xl shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-100">
                 <DropdownItem label="👤 Profile" onClick={() => navigate("/profile")} />
                 <DropdownItem label="🏢 Company Details" onClick={() => navigate("/company-details")} />
                 <DropdownItem label="📋 My Request" onClick={() => navigate("/myrequests")} />

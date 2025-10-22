@@ -52,7 +52,7 @@ const redirectTo = (key) => {
     case "Startup Registrations":
       return "/startup";
 
-    case "Company ":
+    case "Company(MCA) ":
       return "/company";
 
     case "Legal":
@@ -95,7 +95,7 @@ const redirectTo = (key) => {
                     onClick={() =>
                       setDropdownOpen(dropdownOpen === menu.id ? null : menu.id)
                     }
-                    className="font-serif tracking-wide text-lg flex items-center gap-1 cursor-pointer"
+                    className="font-serif tracking-wide  text-lg flex items-center gap-1 cursor-pointer"
                   >
                     <Link to={redirectTo(menu.name || "#")}>{menu.name}</Link>
                     {menu.services?.length > 0 && (
@@ -110,7 +110,7 @@ const redirectTo = (key) => {
                   {menu.services?.length > 0 && (
                     <div
                       onMouseLeave={() => setDropdownOpen(null)}
-                      className={`absolute left-0 mt-4 w-[375px] bg-white text-gray-900 rounded shadow-sm p-4 grid grid-cols-2 gap-2 z-50 text-[15px] font-semibold transform transition-all duration-300 ${dropdownOpen === menu.id
+                      className={`absolute left-0 mt-4 w-[400px] bg-white text-gray-900 rounded shadow-sm font-semibold  p-6 grid grid-cols-2 gap-3 z-50 text-[15px]  transform transition-all duration-300 ${dropdownOpen === menu.id
                         ? "opacity-100 scale-100 pointer-events-auto"
                         : "opacity-0 scale-95 pointer-events-none"
                         }`}
@@ -123,7 +123,7 @@ const redirectTo = (key) => {
                             // onClick={() => navigate(`/${service}`)}
                             className="block text-left hover:text-blue-600"
                           >
-                            <Link to={redirectTo(menu.name || "#")}>{service.service_name}</Link>
+                            <Link to={redirectTo(menu.name )}>{service.service_name}</Link>
                             {/* {service.service_name} */}
                           </button>
                         )

@@ -1,11 +1,8 @@
-
-
-
 import React, { useEffect, useState } from "react";
-import Header from "../../component/Header";
+
 import QuickForm from "../../form/QuickForm";
 import WhatsAppPopup from "../../form/WhatsAppPopup";
-import Footer from "../../component/Footer";
+
 
 export default function StartUp() {
   const [menuData, setMenuData] = useState(null);
@@ -13,8 +10,8 @@ export default function StartUp() {
   const [activeService, setActiveService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [menus, setMenus] = useState([]);
-      const [faqs, setFaqs] = useState([]);
-
+  const [faqs, setFaqs] = useState([]);
+  const [activeSection, setActiveSection] = useState("");
 
   // 1️⃣ Fetch all menus and find Startup menu
   useEffect(() => {
@@ -30,11 +27,6 @@ export default function StartUp() {
 
         setMenus(menusData);
 
-        // console.log("✅ All Menus:", menusData.map(m => ({
-        //   id: m.id,
-        //   name: m.name || m.menu_name
-        // })));
-
         // Find Startup-related menu
         const startupMenu = menusData.find((menu) => {
           const name = (menu.name || menu.menu_name || "").toLowerCase();
@@ -46,7 +38,6 @@ export default function StartUp() {
         });
 
         if (startupMenu) {
-          // console.log("✅ Found startup menu:", startupMenu);
           fetchMenuDetail(startupMenu.id);
         } else {
           console.warn("⚠️ No startup menu found!");
@@ -68,8 +59,6 @@ export default function StartUp() {
       const res = await fetch(`https://auditfiling.com/api/v1/menu/${id}`);
       const data = await res.json();
 
-      // console.log("✅ Startup Menu Data:", data);
-
       const menu = data.menu || data.data || data.menu_data || data || null;
       if (menu) {
         setMenuData(menu);
@@ -88,49 +77,86 @@ export default function StartUp() {
     setLoading(false);
   };
 
-  // 3️⃣ Scroll spy
+  // Handle scroll behavior and active section highlighting
   useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const el = document.getElementById(hash.substring(1));
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    };
+
     const handleScroll = () => {
-      const scrollPos = window.scrollY + 100;
-      for (let i = services.length - 1; i >= 0; i--) {
-        const el = document.getElementById(`service-${services[i].id}`);
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveService(services[i]);
+      const scrollPosition = window.scrollY + 100;
+      
+      // Find which section is currently in view
+      const sections = [
+        { id: "menu-overview", title: "Overview" },
+        ...services.map((service, idx) => ({ 
+          id: `service-${service.id || idx}`, 
+          title: service.service_name || service.name 
+        })),
+        { id: "faq-section", title: "FAQ" }
+      ];
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i].id);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i].id);
           break;
         }
       }
     };
+
+    handleHash();
     window.addEventListener("scroll", handleScroll, { passive: true });
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, [services]);
 
+  const handleSectionClick = (id) => {
+    setActiveSection(id);
+    window.history.pushState(null, null, `#${id}`);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  // Scroll to section on service click
   const handleClick = (service) => {
     setActiveService(service);
-    const el = document.getElementById(`service-${service.id}`);
+    const id = `service-${service.id}`;
+    setActiveSection(id);
+    window.history.pushState(null, null, `#${id}`);
+    const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-   // ✅ Smooth scroll to FAQ section
-    const handleFaqClick = () => {
-      const el = document.getElementById("faq-section");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // ✅ Smooth scroll to FAQ section
+  const handleFaqClick = () => {
+    setActiveSection("faq-section");
+    window.history.pushState(null, null, `#faq-section`);
+    const el = document.getElementById("faq-section");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  // Fetch FAQ dynamically
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const res = await fetch("https://auditfiling.com/api/v1/faq/8");
+        const data = await res.json();
+        setFaqs(Array.isArray(data) ? data : data.faqs || []);
+      } catch (error) {
+        console.error("Error fetching FAQs:", error);
+      }
     };
-  
-    // Fetch FAQ dynamically
-    useEffect(() => {
-      const fetchFaqs = async () => {
-        try {
-            const res = await fetch("https://auditfiling.com/api/v1/faq/6");
-            const data = await res.json();
-            // console.log("FAQ API response:", data); // optional for debugging
-            // ✅ API returns array directly
-            setFaqs(Array.isArray(data) ? data : data.faqs || []);
-          } catch (error) {
-            console.error("Error fetching FAQs:", error);
-          }
-        };
-        fetchFaqs();
-      }, []);
-  
+    fetchFaqs();
+  }, []);
 
   // 4️⃣ Loading & error handling
   if (loading)
@@ -151,47 +177,78 @@ export default function StartUp() {
   return (
     <div className="min-h-screen">
       {/* <Header /> */}
-      <div className="mx-auto w-full mt-25 px-4  py-10 flex flex-col md:flex-row gap-8">
-        {/* Sidebar */}
-        <aside className="sticky top-24 ml-15 bg-white rounded-xl  p-5 h-auto md:h-[90vh] overflow-y-auto">
-          <h1 className="text-3xl font-serif  text-left mb-5 text-gray-800">
+      <div className="mx-auto w-full mt-25 px-4 py-10 flex flex-col md:flex-row gap-8">
+        {/* Sidebar Navigation - Updated to match PrivacyPolicy style */}
+        <nav className="lg:sticky ml-10 lg:top-24 lg:self-start bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-y-auto">
+          <h1 className="text-2xl font-serif text-left mb-5 text-gray-800">
             {menuData.name || menuData.menu_name || "Startup"}
           </h1>
 
           <ul className="space-y-3">
+            {/* Overview Link */}
+            <li>
+              <a
+                href="#menu-overview"
+                onClick={() => handleSectionClick("menu-overview")}
+                className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
+                  activeSection === "menu-overview"
+                    ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
+                    : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                }`}
+              >
+                <span className="text-sm  text-gray-400 w-6 flex-shrink-0">1.</span>
+                <span className="text-lg leading-tight">Overview</span>
+              </a>
+            </li>
+
+            {/* Services Links */}
             {services.length > 0 ? (
               services.map((service, idx) => (
                 <li key={service.id || idx}>
-                  <button
+                  <a
+                    href={`#service-${service.id || idx}`}
                     onClick={() => handleClick(service)}
-                    className={`w-full text-left px-1 py-1 text-[15px] rounded-sm transition-all ${
-                      activeService?.id === service.id
-                        ? "bg-blue-100 border-l-4 border-blue-600 text-blue-700 font-bold"
-                        : "hover:bg-gray-100 text-gray-700"
+                    className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
+                      activeSection === `service-${service.id || idx}`
+                        ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
+                        : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                     }`}
                   >
-                    {idx + 1}. {service.service_name || service.name}
-                  </button>
+                    <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
+                      {idx + 2}.
+                    </span>
+                    <span className="text-lg leading-tight">{service.service_name || service.name}</span>
+                  </a>
                 </li>
               ))
             ) : (
-              <li className="text-gray-500 text-center">No services found</li>
+              <li className="text-gray-500 text-center py-2">No services found</li>
             )}
+
             {/* FAQ link */}
             <li>
-              <button
+              <a
+                href="#faq-section"
                 onClick={handleFaqClick}
-                className="w-full text-left px-2 py-2 text-[15px] rounded-lg transition-all hover:bg-gray-100 text-gray-700"
+                className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
+                  activeSection === "faq-section"
+                    ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
+                    : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                }`}
               >
-                📘 Frequently Asked Questions
-              </button>
+                <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
+                  {services.length + 2}.
+                </span>
+                <span className="text-lg leading-tight">Frequently Asked Questions</span>
+              </a>
             </li>
           </ul>
-        </aside>
+        </nav>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-10 ">
-          <section className="bg-white rounded-2xl p-6 shadow-sm">
+        <main className="flex-1 space-y-10">
+          {/* Overview Section */}
+          <section id="menu-overview" className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-24">
             <h1 className="text-3xl md:text-4xl font-serif text-center mb-2 text-gray-900">
               {menuData.name || "Startup"}
             </h1>
@@ -206,15 +263,16 @@ export default function StartUp() {
             ></div>
           </section>
 
+          {/* Services Sections */}
           {services.map((service, idx) => (
             <section
               key={service.id || idx}
               id={`service-${service.id || idx}`}
-              className="bg-white rounded-2xl p-6"
+              className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-24"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
+              <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
                 {service.service_name || service.name}
-              </h2>
+              </h1>
               <div
                 className="prose prose-blue w-full text-gray-700"
                 dangerouslySetInnerHTML={{
@@ -227,12 +285,11 @@ export default function StartUp() {
             </section>
           ))}
 
-             
           {/* FAQ Section */}
-          <section id="faq-section" className="bg-white rounded-2xl p-6">
-            <h2 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
+          <section id="faq-section" className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-24">
+            <h1 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
               Frequently Asked Questions
-            </h2>
+            </h1>
 
             {faqs.length > 0 ? (
               <ul className="space-y-4">
@@ -248,18 +305,24 @@ export default function StartUp() {
               <p className="text-gray-500 text-center">No FAQs available.</p>
             )}
           </section>
+
+          {/* Mobile QuickForm */}
+          <div className="block lg:hidden">
+            <QuickForm />
+          </div>
         </main>
 
+        {/* Desktop QuickForm */}
         <div className="hidden lg:block w-64">
           <QuickForm />
         </div>
       </div>
 
       <WhatsAppPopup />
-
     </div>
   );
 }
+
 // ✅ FAQ Accordion Item
 function FAQItem({ question, answer }) {
   const [open, setOpen] = useState(false);

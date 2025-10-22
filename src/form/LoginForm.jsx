@@ -155,6 +155,7 @@ const handleLoginSuccess = (userData) => {
   if (onLoginSuccess) onLoginSuccess({ id: userData.id, name: userData.name });
   window.dispatchEvent(new Event("userUpdated"));
   window.dispatchEvent(new Event("storage"));
+  window.location.reload();
   navigate("/");
 };
 

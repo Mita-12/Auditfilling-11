@@ -1,13 +1,10 @@
 import React from "react";
-import Header from "../component/Header";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
-import Footer from "../component/Footer";
 import WhatsAppButton from "../form/WhatsAppPopup";
 
 const Contact = () => {
   return (
     <>
-      <Header />
       <section className="py-16 px-6 md:px-12 ">
         <div className="max-w-screen-xl mt-25 mx-auto">
           {/* Header Section */}

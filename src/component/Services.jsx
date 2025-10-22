@@ -107,7 +107,7 @@ function ServicesSection() {
                     {service.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 text-sm leading-loose tracking-wide  mb-4">
+                <p className="text-gray-600 text-sm text-justifyleading-loose tracking-wide  mb-4">
                   {service.description}
                 </p>
                 <motion.button

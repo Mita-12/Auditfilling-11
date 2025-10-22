@@ -310,7 +310,7 @@ export default function CompanyDetail() {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const user = JSON.parse(localStorage.getItem("user"));
+        const user = JSON.parse(localStorage.getItem("user_name"));
         const userId = user?.id;
 
         if (!userId) {
@@ -333,7 +333,7 @@ export default function CompanyDetail() {
           }
         );
 
-        console.log("📦 API Response:", response.data);
+        // console.log("📦 API Response:", response.data);
 
         // ✅ Proper data mapping
         if (response.data && Array.isArray(response.data.data)) {

@@ -60,7 +60,7 @@ export default function AboutUsPage() {
           </div>
 
           {/* RIGHT SIDE */}
-          <div className="text-gray-800 text-xl p-3 leading-relaxed">
+          <div className="text-gray-800 text-xl leading-loose tracking-wide text-justify p-2 ">
             <p className="mb-2">
               At <span className="font-bold text-blue-600 text-lg">Auditfiling</span>, we believe
               legal and tax compliance shouldn’t be complicated or stressful.
@@ -84,7 +84,7 @@ export default function AboutUsPage() {
               we’re expanding our reach to serve every corner of India.
             </p>
 
-            <p className="mb-2">
+            <p className="">
               At Auditfiling, we don’t just file your documents  we help your
               business stay compliant, grow confidently, and focus on what
               matters most: <span className="font-semibold">success</span>.
@@ -94,7 +94,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* VALUES SECTION */}
-     <section className="py-10 px-4 bg-white">
+     <section className=" px-4 bg-white">
   <div className="max-w-6xl mx-auto text-center">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-15 mt-10">
       {values.map((value, idx) => (

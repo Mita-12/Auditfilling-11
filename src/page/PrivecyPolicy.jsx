@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import Footer from "../component/Footer";
-import Header from "../component/Header";
+
 
 const sections = [
   { id: "info-collect", title: "Information We Collect" },
@@ -58,7 +57,6 @@ export default function PrivacyPolicy() {
 
   return (
     <section className="min-h-screen  text-gray-800">
-        <Header/>
       {/* Hero Section */}
       <div className="relative  mt-20 py-20 lg:py-24">
         <div className="absolute inset-0 "></div>
@@ -251,7 +249,6 @@ export default function PrivacyPolicy() {
           </Section>
         </div>
       </div>
-      <Footer/>
     </section>
   );
 }
