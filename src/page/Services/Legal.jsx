@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import QuickForm from "../../form/QuickForm";
 import WhatsAppPopup from "../../form/WhatsAppPopup";
+import ProceedToPay from "./document/ProceedToPay";
 
 export default function Legal() {
   const [menuData, setMenuData] = useState(null);
@@ -251,9 +252,9 @@ export default function Legal() {
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-12">
+        <main className="flex-1 space-y-12 mr-80">
           {/* Menu Overview */}
-          <section id="menu-overview" className="bg-white rounded-2xl shadow-sm p-6 scroll-mt-24">
+          <section id="menu-overview" className="bg-white rounded-2xl shadow-sm p-6 scroll-mt-30">
             <h1 className="text-3xl md:text-4xl font-serif text-center mb-4 text-gray-900">
               {menuData.name || "Legal"}
             </h1>
@@ -273,7 +274,7 @@ export default function Legal() {
             <section
               key={service.id || idx}
               id={`service-${service.id || idx}`}
-              className="bg-white rounded-2xl shadow-sm p-6 scroll-mt-24"
+              className="bg-white rounded-2xl shadow-sm p-6 scroll-mt-30"
             >
               <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
                 {service.service_name || service.name}
@@ -291,7 +292,7 @@ export default function Legal() {
           ))}
 
           {/* FAQ Section */}
-          <section id="faq-section" className="bg-white rounded-2xl p-6 scroll-mt-24">
+          <section id="faq-section" className="bg-white rounded-2xl p-6 scroll-mt-30">
             <h1 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
               Frequently Asked Questions
             </h1>
@@ -318,9 +319,10 @@ export default function Legal() {
         </main>
 
         {/* Desktop QuickForm */}
-        <div className="w-64">
-          <QuickForm />
-        </div>
+        <div className="fixed mt-1 right-20 w-64 space-y-1">
+                 <QuickForm />
+                 <ProceedToPay />
+               </div>
       </div>
 
       <WhatsAppPopup />

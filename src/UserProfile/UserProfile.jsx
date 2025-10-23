@@ -329,11 +329,23 @@
 //     </div>
 //   );
 // }
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
+
+// API Configuration
+const API_BASE = "https://auditfiling.com/api/v1";
+const API_ENDPOINTS = {
+  PROFILE: (id) => `${API_BASE}/web/user/profile/${id}`,
+  UPDATE_PROFILE: (id) => `${API_BASE}/web/user/update/${id}`,
+  STATES: `${API_BASE}/get_states`,
+  DISTRICTS: `${API_BASE}/get_district`,
+  CITIES: `${API_BASE}/get_city`,
+  PINCODE: `${API_BASE}/get_pincode`
+};
 
 // Validation schema
 const profileSchema = yup.object({
@@ -374,22 +386,183 @@ const profileSchema = yup.object({
     .min(6, "Password must be at least 6 characters"),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password")], "Passwords must match")
-    .when('password', (password, schema) => {
-      return password ? schema.required("Please confirm your password") : schema;
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .when('password', {
+      is: (val) => val && val.length > 0,
+      then: (schema) => schema.required("Please confirm your password"),
     }),
   image: yup.mixed().nullable(),
 });
 
+// Custom hook for location data
+const useLocationData = () => {
+  const [locationData, setLocationData] = useState({
+    states: [],
+    districts: [],
+    cities: [],
+    cityPincodeMap: {}
+  });
+  const [loading, setLoading] = useState({
+    states: false,
+    districts: false,
+    cities: false
+  });
+
+  const fetchStates = useCallback(async () => {
+    setLoading(prev => ({ ...prev, states: true }));
+    try {
+      const response = await fetch(API_ENDPOINTS.STATES);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      
+      const data = await response.json();
+      if (data.status === "success" && Array.isArray(data.states)) {
+        setLocationData(prev => ({ ...prev, states: data.states }));
+      } else {
+        console.error("Unexpected states data structure:", data);
+        setLocationData(prev => ({ ...prev, states: [] }));
+      }
+    } catch (error) {
+      console.error("Error fetching states:", error);
+      setLocationData(prev => ({ ...prev, states: [] }));
+    } finally {
+      setLoading(prev => ({ ...prev, states: false }));
+    }
+  }, []);
+
+  const fetchDistricts = useCallback(async (state) => {
+    if (!state) {
+      setLocationData(prev => ({ ...prev, districts: [], cities: [], cityPincodeMap: {} }));
+      return;
+    }
+
+    setLoading(prev => ({ ...prev, districts: true }));
+    try {
+      const response = await fetch(`${API_ENDPOINTS.DISTRICTS}?state=${encodeURIComponent(state)}`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      
+      const data = await response.json();
+      if (data.status === "success" && data.districts && typeof data.districts === 'object') {
+        const districtNames = Object.keys(data.districts);
+        setLocationData(prev => ({ ...prev, districts: districtNames, cities: [], cityPincodeMap: {} }));
+      } else {
+        console.error("Unexpected districts data structure:", data);
+        setLocationData(prev => ({ ...prev, districts: [], cities: [], cityPincodeMap: {} }));
+      }
+    } catch (error) {
+      console.error("Error fetching districts:", error);
+      setLocationData(prev => ({ ...prev, districts: [], cities: [], cityPincodeMap: {} }));
+    } finally {
+      setLoading(prev => ({ ...prev, districts: false }));
+    }
+  }, []);
+
+  const fetchCities = useCallback(async (state, district) => {
+    if (!district || !state) {
+      setLocationData(prev => ({ ...prev, cities: [], cityPincodeMap: {} }));
+      return;
+    }
+
+    setLoading(prev => ({ ...prev, cities: true }));
+    try {
+      const response = await fetch(
+        `${API_ENDPOINTS.CITIES}?district=${encodeURIComponent(district)}&state=${encodeURIComponent(state)}`
+      );
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      
+      const data = await response.json();
+      let citiesArray = [];
+      let pincodeMap = {};
+
+      if (data.status === "success" && data.cities && typeof data.cities === 'object') {
+        citiesArray = Object.keys(data.cities);
+        pincodeMap = data.cities;
+      } else {
+        console.warn("Unexpected cities format:", data);
+        citiesArray = [];
+      }
+
+      setLocationData(prev => ({ ...prev, cities: citiesArray, cityPincodeMap: pincodeMap }));
+    } catch (error) {
+      console.error("Error fetching cities:", error);
+      setLocationData(prev => ({ ...prev, cities: [], cityPincodeMap: {} }));
+    } finally {
+      setLoading(prev => ({ ...prev, cities: false }));
+    }
+  }, []);
+
+  return {
+    locationData,
+    loading,
+    fetchStates,
+    fetchDistricts,
+    fetchCities
+  };
+};
+
+// Reusable Form Input Component
+const FormInput = ({ 
+  label, 
+  name, 
+  type = "text", 
+  register, 
+  errors, 
+  onChange, 
+  disabled = false,
+  className = "",
+  ...props 
+}) => (
+  <div>
+    <label className="block text-gray-700 mb-1 font-medium">{label}</label>
+    <input
+      type={type}
+      {...register(name)}
+      onChange={onChange}
+      disabled={disabled}
+      className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${
+        errors[name] ? "border-red-500" : "border-gray-300"
+      } ${disabled ? "bg-gray-100 cursor-not-allowed" : ""} ${className}`}
+      {...props}
+    />
+    {errors[name] && (
+      <p className="text-red-500 text-sm mt-1">{errors[name].message}</p>
+    )}
+  </div>
+);
+
+// Loading Spinner Component
+const LoadingSpinner = ({ message = "Loading..." }) => (
+  <div className="flex items-center justify-center h-screen text-lg text-gray-700">
+    <svg
+      className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      ></path>
+    </svg>
+    {message}
+  </div>
+);
+
 export default function UserProfile() {
-  const [states, setStates] = useState([]);
-  const [districts, setDistricts] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [cityPincodeMap, setCityPincodeMap] = useState({}); // Store city to pincode mapping
-  const [isLoadingStates, setIsLoadingStates] = useState(false);
-  const [isLoadingDistricts, setIsLoadingDistricts] = useState(false);
-  const [isLoadingCities, setIsLoadingCities] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const [saveStatus, setSaveStatus] = useState({
+    loading: false,
+    success: false,
+    error: null
+  });
   const [preview, setPreview] = useState(null);
   const [message, setMessage] = useState("");
   const [editableEmail, setEditableEmail] = useState(false);
@@ -397,51 +570,19 @@ export default function UserProfile() {
   const [tempEmail, setTempEmail] = useState("");
   const [tempMobile, setTempMobile] = useState("");
 
-  // Handle email change toggle
-  const handleEmailChange = () => {
-    if (!editableEmail) {
-      // Entering edit mode - store current email
-      setTempEmail(watch("email"));
-      setEditableEmail(true);
-    } else {
-      // Saving - exit edit mode
-      setEditableEmail(false);
-      // Show message if email was changed
-      if (watch("email") !== tempEmail) {
-        setMessage("✅ Email will be updated when you save the profile");
-        setTimeout(() => setMessage(""), 3000);
-      }
-    }
-  };
-
-  // Handle mobile change toggle
-  const handleMobileChange = () => {
-    if (!editableMobile) {
-      // Entering edit mode - store current mobile
-      setTempMobile(watch("mobile"));
-      setEditableMobile(true);
-    } else {
-      // Saving - exit edit mode
-      setEditableMobile(false);
-      // Show message if mobile was changed
-      if (watch("mobile") !== tempMobile) {
-        setMessage("✅ Mobile will be updated when you save the profile");
-        setTimeout(() => setMessage(""), 3000);
-      }
-    }
-  };
-
-  // Handle mobile input formatting
-  const handleMobileInputChange = (e) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 10);
-    setValue("mobile", value);
-    trigger("mobile");
-  };
-
-
-
+  const {
+    locationData,
+    loading: locationLoading,
+    fetchStates,
+    fetchDistricts,
+    fetchCities
+  } = useLocationData();
 
   const user_id = localStorage.getItem("user_id");
+
+  const defaultValues = useMemo(() => ({
+    country: "India",
+  }), []);
 
   const {
     register,
@@ -453,9 +594,7 @@ export default function UserProfile() {
     reset,
   } = useForm({
     resolver: yupResolver(profileSchema),
-    defaultValues: {
-      country: "India",
-    },
+    defaultValues,
     mode: "onBlur",
   });
 
@@ -465,310 +604,171 @@ export default function UserProfile() {
   const watchCity = watch("city");
   const watchPinCode = watch("pincode");
 
+  // Error handling utility
+  const handleApiError = useCallback((error, defaultMessage) => {
+    console.error(error);
+    const message = error.response?.data?.message || 
+                   error.response?.status === 404 ? "Resource not found" : 
+                   defaultMessage;
+    setMessage(`❌ ${message}`);
+    setTimeout(() => setMessage(""), 5000);
+  }, []);
+
   // Fetch user profile data
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "User Profile - AuditFiling";
 
-    if (!user_id) {
-      setMessage("User not logged in.");
-      setLoading(false);
-      return;
-    }
+    const fetchProfile = async () => {
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) {
+        setMessage("User not logged in.");
+        return;
+      }
 
-    axios
-      .get(`https://auditfiling.com/api/v1/web/user/profile/${user_id}`)
-      .then((res) => {
-        const data = res.data;
+      let userId = "";
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        userId = parsedUser?.id || parsedUser;
+      } catch {
+        userId = storedUser;
+      }
 
-        // DEBUG: Detailed logging
-        console.log("🎯 PROFILE API RAW RESPONSE:", data);
-        console.log("📋 Available fields in response:", Object.keys(data));
+      if (!userId) {
+        setMessage("Invalid user data.");
+        return;
+      }
 
-        // Check nested structures
-        if (data.data) {
-          console.log("📦 Data field contents:", data.data);
-          console.log("📦 Data field keys:", Object.keys(data.data));
-        }
+      try {
+        const res = await axios.get(API_ENDPOINTS.PROFILE(userId));
+        const user = res.data?.data || res.data?.user || res.data?.profile || res.data;
+        setUserData(user);
 
-        // Extract user data - handle different response structures
-        let userData = data;
-
-        // If data is nested under 'data' property
-        if (data.data && typeof data.data === 'object') {
-          userData = data.data;
-        }
-        // If data is nested under 'user' property
-        else if (data.user && typeof data.user === 'object') {
-          userData = data.user;
-        }
-        // If data is nested under 'profile' property
-        else if (data.profile && typeof data.profile === 'object') {
-          userData = data.profile;
-        }
-
-        console.log("👤 Extracted user data:", userData);
-        console.log("👤 User data keys:", Object.keys(userData));
-
-        // Create form data with proper fallbacks
         const formData = {
-          fullName: userData.fullName || userData.name || userData.full_name || "",
-          email: userData.email || "",
-          mobile: userData.mobile || userData.phone || userData.phoneNumber || userData.mobileNumber || "",
-          dob: userData.dob || userData.dateOfBirth || userData.birthDate || "",
-          gender: userData.gender || "",
-          aadhaar: userData.aadhaar || userData.aadhar || "",
-          pan: userData.pan || "",
-          address1: userData.address1 || userData.address || userData.street || "",
-          address2: userData.address2 || "",
-          country: userData.country || "India",
-          state: userData.state || "",
-          district: userData.district || "",
-          city: userData.city || "",
-          pincode: userData.pincode || userData.zipCode || userData.postalCode || "",
-          image: userData.image || userData.profileImage || userData.avatar || null,
+          fullName: user.fullName || user.name || user.full_name || "",
+          email: user.email || "",
+          mobile: user.mobile || user.phone || "",
+          dob: user.dob || user.dateOfBirth || "",
+          gender: user.gender || "",
+          aadhaar: user.aadhaar || "",
+          pan: user.pan || "",
+          address1: user.address1 || user.address || "",
+          address2: user.address2 || "",
+          country: user.country || "India",
+          state: user.state || "",
+          district: user.district || "",
+          city: user.city || "",
+          pincode: user.pincode || user.zipCode || "",
+          image: user.image || null,
           password: "",
           confirmPassword: "",
         };
 
-        // DEBUG: Log which fields actually have values
-        const fieldsWithValues = Object.keys(formData).filter(key => formData[key] && formData[key] !== "");
-        console.log("✅ Fields with values:", fieldsWithValues);
-        console.log("❌ Empty fields:", Object.keys(formData).filter(key => !formData[key] || formData[key] === ""));
-
         reset(formData);
-
-        if (formData.image) {
-          setPreview(formData.image);
-        }
-
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("❌ Error loading profile:", error);
-        setMessage("Failed to load profile.");
-        setLoading(false);
-      });
-  }, [user_id, reset]);
-
-  // Fetch states on component mount
-  useEffect(() => {
-    const fetchStates = async () => {
-      setIsLoadingStates(true);
-      try {
-        const response = await fetch("https://auditfiling.com/api/v1/get_states");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.status === "success" && Array.isArray(data.states)) {
-          setStates(data.states);
-        } else {
-          console.error("Unexpected states data structure:", data);
-          setStates([]);
-        }
-      } catch (error) {
-        console.error("Error fetching states:", error);
-        setStates([]);
-      } finally {
-        setIsLoadingStates(false);
+        if (formData.image) setPreview(formData.image);
+      } catch (err) {
+        handleApiError(err, "Failed to load profile");
       }
     };
 
+    fetchProfile();
     fetchStates();
-  }, []);
+  }, [reset, fetchStates, handleApiError]);
 
   // Fetch districts when state changes
   useEffect(() => {
-    const fetchDistricts = async () => {
-      if (!watchState) {
-        setDistricts([]);
-        setCities([]);
-        setCityPincodeMap({});
-        return;
-      }
-
-      setIsLoadingDistricts(true);
-      setDistricts([]);
-      setCities([]);
-      setCityPincodeMap({});
+    if (watchState) {
+      fetchDistricts(watchState);
       setValue("district", "");
       setValue("city", "");
       setValue("pincode", "");
+    }
+  }, [watchState, fetchDistricts, setValue]);
 
-      try {
-        const response = await fetch(
-          `https://auditfiling.com/api/v1/get_district?state=${encodeURIComponent(watchState)}`
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("Districts API Response:", data);
-
-        if (data.status === "success" && data.districts && typeof data.districts === 'object') {
-          const districtNames = Object.keys(data.districts);
-          setDistricts(districtNames);
-        } else {
-          console.error("Unexpected districts data structure:", data);
-          setDistricts([]);
-        }
-      } catch (error) {
-        console.error("Error fetching districts:", error);
-        setDistricts([]);
-      } finally {
-        setIsLoadingDistricts(false);
-      }
-    };
-
-    fetchDistricts();
-  }, [watchState, setValue]);
-
-  // Fetch cities when district changes - UPDATED TO STORE PINCODE MAPPING
-  // Fetch cities when district changes - UPDATED TO STORE PINCODE MAPPING
+  // Fetch cities when district changes
   useEffect(() => {
-    const fetchCities = async () => {
-      if (!watchDistrict || !watchState) {
-        setCities([]);
-        setCityPincodeMap({});
-        return;
-      }
-
-      console.log("🔄 Fetching cities for district:", watchDistrict);
-      setIsLoadingCities(true);
-      setCities([]);
-      setCityPincodeMap({});
+    if (watchDistrict && watchState) {
+      fetchCities(watchState, watchDistrict);
       setValue("city", "");
       setValue("pincode", "");
-
-      try {
-        const response = await fetch(
-          `https://auditfiling.com/api/v1/get_city?district=${encodeURIComponent(watchDistrict)}&state=${encodeURIComponent(watchState)}`
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("📡 Cities API Raw Data:", data);
-
-        let citiesArray = [];
-        let pincodeMap = {};
-
-        // Your API structure: {status: 'success', cities: {CityName: 'PINCode', ...}}
-        if (data.status === "success" && data.cities && typeof data.cities === 'object') {
-          citiesArray = Object.keys(data.cities);
-          pincodeMap = data.cities; // Store the complete mapping
-          console.log("✅ Extracted Cities:", citiesArray);
-          console.log("📍 City-PIN Code Mapping:", pincodeMap);
-        } else {
-          console.warn("⚠️ Unexpected cities format:", data);
-          citiesArray = [];
-        }
-
-        setCities(citiesArray);
-        setCityPincodeMap(pincodeMap);
-      } catch (error) {
-        console.error("❌ Error fetching cities:", error);
-        setCities([]);
-        setCityPincodeMap({});
-      } finally {
-        setIsLoadingCities(false);
-      }
-    };
-
-    fetchCities();
-  }, [watchDistrict, watchState, setValue]);
+    }
+  }, [watchDistrict, watchState, fetchCities, setValue]);
 
   // Auto-fill PIN code when city is selected
   useEffect(() => {
-    if (watchCity && cityPincodeMap[watchCity]) {
-      const pincode = cityPincodeMap[watchCity];
-      console.log(`📍 Auto-filling PIN code for ${watchCity}: ${pincode}`);
+    if (watchCity && locationData.cityPincodeMap[watchCity]) {
+      const pincode = locationData.cityPincodeMap[watchCity];
       setValue("pincode", pincode);
       trigger("pincode");
-
-      // Show success message
+      
       setMessage(`📍 PIN code for ${watchCity}: ${pincode}`);
       setTimeout(() => setMessage(""), 3000);
     }
-  }, [watchCity, cityPincodeMap, setValue, trigger]);
+  }, [watchCity, locationData.cityPincodeMap, setValue, trigger]);
 
-  // Handle city change manually
-  const handleCityChange = (e) => {
-    const selectedCity = e.target.value;
-    setValue("city", selectedCity);
-
-    // Auto-fill PIN code if available
-    if (selectedCity && cityPincodeMap[selectedCity]) {
-      const pincode = cityPincodeMap[selectedCity];
-      setValue("pincode", pincode);
-    }
-
-    trigger("city");
-  };
-
-  // Auto-fill PIN code when city is selected
+  // Auto-fill address when PIN code is entered (with debouncing)
   useEffect(() => {
-    if (watchCity && cityPincodeMap[watchCity]) {
-      const pincode = cityPincodeMap[watchCity];
-      console.log(`📍 Auto-filling PIN code for ${watchCity}: ${pincode}`);
-      setValue("pincode", pincode);
-      trigger("pincode");
-    }
-  }, [watchCity, cityPincodeMap, setValue, trigger]);
-
-  // Auto-fill address when PIN code is entered (optional - keep this if you want both ways)
-  useEffect(() => {
-    const fetchAddressByPinCode = async () => {
-      if (!watchPinCode || watchPinCode.length !== 6) return;
-
+    const fetchAddressByPinCode = async (pincode) => {
       try {
-        const response = await fetch(
-          `https://auditfiling.com/api/v1/get_pincode?pincode=${watchPinCode}`
-        );
-
+        const response = await fetch(`${API_ENDPOINTS.PINCODE}?pincode=${pincode}`);
         if (response.ok) {
           const addressData = await response.json();
-          console.log("PIN Code API Response:", addressData);
-
           if (addressData) {
             const state = addressData.state || addressData.State || addressData.STATE;
             const district = addressData.district || addressData.District || addressData.DISTRICT;
             const city = addressData.city || addressData.City || addressData.CITY || addressData.division;
 
-            if (state) {
-              setValue("state", state);
-              await trigger("state");
-            }
-            if (district) {
-              setValue("district", district);
-              await trigger("district");
-            }
-            if (city) {
-              setValue("city", city);
-              await trigger("city");
-            }
+            if (state) setValue("state", state);
+            if (district) setValue("district", district);
+            if (city) setValue("city", city);
           }
-        } else {
-          console.warn("PIN code API returned non-OK response");
         }
       } catch (error) {
         console.error("Error fetching address by PIN code:", error);
-        setMessage("⚠️ Could not auto-fill address from PIN code");
-        setTimeout(() => setMessage(""), 3000);
       }
     };
 
-    const timeoutId = setTimeout(fetchAddressByPinCode, 1000);
+    const timeoutId = setTimeout(() => {
+      if (watchPinCode?.length === 6) {
+        fetchAddressByPinCode(watchPinCode);
+      }
+    }, 800);
+
     return () => clearTimeout(timeoutId);
-  }, [watchPinCode, setValue, trigger]);
+  }, [watchPinCode, setValue]);
+
+  // Event Handlers
+  const handleEmailChange = () => {
+    if (!editableEmail) {
+      setTempEmail(watch("email"));
+      setEditableEmail(true);
+    } else {
+      setEditableEmail(false);
+      if (watch("email") !== tempEmail) {
+        setMessage("✅ Email will be updated when you save the profile");
+        setTimeout(() => setMessage(""), 3000);
+      }
+    }
+  };
+
+  const handleMobileChange = () => {
+    if (!editableMobile) {
+      setTempMobile(watch("mobile"));
+      setEditableMobile(true);
+    } else {
+      setEditableMobile(false);
+      if (watch("mobile") !== tempMobile) {
+        setMessage("✅ Mobile will be updated when you save the profile");
+        setTimeout(() => setMessage(""), 3000);
+      }
+    }
+  };
+
+  const handleMobileInputChange = (e) => {
+    const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+    setValue("mobile", value);
+    trigger("mobile");
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -791,40 +791,24 @@ export default function UserProfile() {
     trigger("pan");
   };
 
-  // const handleMobileChange = (e) => {
-  //   const value = e.target.value.replace(/\D/g, "").slice(0, 10);
-  //   setValue("mobile", value);
-  //   trigger("mobile");
-  // };
-
   const handlePinCodeChange = (e) => {
     const value = e.target.value.replace(/\D/g, "").slice(0, 6);
     setValue("pincode", value);
     trigger("pincode");
   };
 
-  // Handle city change manually to show PIN code immediately
-  // const handleCityChange = (e) => {
-  //   const selectedCity = e.target.value;
-  //   setValue("city", selectedCity);
-
-  //   // Auto-fill PIN code if available
-  //   if (selectedCity && cityPincodeMap[selectedCity]) {
-  //     const pincode = cityPincodeMap[selectedCity];
-  //     setValue("pincode", pincode);
-  //     setMessage(`📍 PIN code for ${selectedCity}: ${pincode}`);
-  //     setTimeout(() => setMessage(""), 3000);
-  //   }
-
-  //   trigger("city");
-  // };
+  const handleCityChange = (e) => {
+    const selectedCity = e.target.value;
+    setValue("city", selectedCity);
+    trigger("city");
+  };
 
   const onSubmit = async (data) => {
+    setSaveStatus({ loading: true, success: false, error: null });
     setMessage("");
 
     try {
       const formData = new FormData();
-
       Object.keys(data).forEach((key) => {
         if (key === "image" && data[key]?.[0]) {
           formData.append(key, data[key][0]);
@@ -833,29 +817,24 @@ export default function UserProfile() {
         }
       });
 
-      await axios.post(
-        `https://auditfiling.com/api/v1/web/user/update/${user_id}`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      await axios.post(API_ENDPOINTS.UPDATE_PROFILE(user_id), formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
+      setSaveStatus({ loading: false, success: true, error: null });
       setMessage("✅ Profile updated successfully!");
       setEditableEmail(false);
       setEditableMobile(false);
+      
+      setTimeout(() => setMessage(""), 5000);
     } catch (error) {
-      console.error("Error saving profile:", error);
-      setMessage("❌ Error updating profile. Please try again.");
+      setSaveStatus({ loading: false, success: false, error: error.message });
+      handleApiError(error, "Error updating profile. Please try again.");
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen text-lg text-gray-700">
-        Loading user profile...
-      </div>
-    );
+  if (saveStatus.loading && !userData) {
+    return <LoadingSpinner message="Loading user profile..." />;
   }
 
   return (
@@ -870,16 +849,13 @@ export default function UserProfile() {
 
         {message && (
           <p
-            className={`text-center mb-4 font-semibold ${message.includes("✅")
-              ? "text-green-600"
-              : message.includes("❌")
-                ? "text-red-600"
-                : message.includes("⚠️")
-                  ? "text-yellow-600"
-                  : message.includes("📍")
-                    ? "text-blue-600"
-                    : "text-gray-600"
-              }`}
+            className={`text-center mb-4 font-semibold ${
+              message.includes("✅") ? "text-green-600" :
+              message.includes("❌") ? "text-red-600" :
+              message.includes("⚠️") ? "text-yellow-600" :
+              message.includes("📍") ? "text-blue-600" :
+              "text-gray-600"
+            }`}
           >
             {message}
           </p>
@@ -914,11 +890,13 @@ export default function UserProfile() {
               type="email"
               {...register("email")}
               disabled={!editableEmail}
-              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${errors.email ? "border-red-500" : "border-gray-300"
-                } ${editableEmail
+              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              } ${
+                editableEmail
                   ? "border-blue-400 bg-white"
                   : "border-gray-200 bg-gray-100"
-                }`}
+              }`}
             />
             <button
               type="button"
@@ -942,11 +920,13 @@ export default function UserProfile() {
               {...register("mobile")}
               disabled={!editableMobile}
               onChange={handleMobileInputChange}
-              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${errors.mobile ? "border-red-500" : "border-gray-300"
-                } ${editableMobile
+              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${
+                errors.mobile ? "border-red-500" : "border-gray-300"
+              } ${
+                editableMobile
                   ? "border-blue-400 bg-white"
                   : "border-gray-200 bg-gray-100"
-                }`}
+              }`}
             />
             <button
               type="button"
@@ -965,45 +945,64 @@ export default function UserProfile() {
 
         {/* Other Editable Fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          {[
-            ["Full Name", "fullName", "text"],
-            ["Date of Birth", "dob", "date"],
-            ["Aadhaar No", "aadhaar", "text"],
-            ["PAN No", "pan", "text"],
-            ["Address 1", "address1", "text"],
-            ["Address 2", "address2", "text"],
-          ].map(([label, name, type]) => (
-            <div key={name}>
-              <label className="block text-gray-700 mb-1 font-medium">
-                {label}
-              </label>
-              <input
-                type={type}
-                {...register(name)}
-                onChange={
-                  name === "aadhaar" ? handleAadhaarChange :
-                    name === "pan" ? handlePanChange : undefined
-                }
-                className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${errors[name] ? "border-red-500" : "border-gray-300"
-                  }`}
-              />
-              {errors[name] && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors[name].message}
-                </p>
-              )}
-            </div>
-          ))}
+          <FormInput
+            label="Full Name"
+            name="fullName"
+            type="text"
+            register={register}
+            errors={errors}
+          />
+
+          <FormInput
+            label="Date of Birth"
+            name="dob"
+            type="date"
+            register={register}
+            errors={errors}
+          />
+
+          <FormInput
+            label="Aadhaar No"
+            name="aadhaar"
+            type="text"
+            register={register}
+            errors={errors}
+            onChange={handleAadhaarChange}
+          />
+
+          <FormInput
+            label="PAN No"
+            name="pan"
+            type="text"
+            register={register}
+            errors={errors}
+            onChange={handlePanChange}
+          />
+
+          <FormInput
+            label="Address 1"
+            name="address1"
+            type="text"
+            register={register}
+            errors={errors}
+          />
+
+          <FormInput
+            label="Address 2"
+            name="address2"
+            type="text"
+            register={register}
+            errors={errors}
+          />
 
           {/* Gender */}
           <div>
-            <label className="block text-gray-700 mb-1 font-medium">
-              Gender
-            </label>
+            <label className="block text-gray-700 mb-1 font-medium">Gender</label>
             <select
               {...register("gender")}
-              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${errors.gender ? "border-red-500" : "border-gray-300"
-                }`}
+              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${
+                errors.gender ? "border-red-500" : "border-gray-300"
+              }`}
             >
               <option value="">Select</option>
               <option value="male">Male</option>
@@ -1011,9 +1010,7 @@ export default function UserProfile() {
               <option value="other">Other</option>
             </select>
             {errors.gender && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.gender.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.gender.message}</p>
             )}
           </div>
 
@@ -1022,24 +1019,23 @@ export default function UserProfile() {
             <label className="block text-gray-700 mb-1 font-medium">State</label>
             <select
               {...register("state")}
-              disabled={isLoadingStates}
-              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${errors.state ? "border-red-500" : "border-gray-300"
-                }`}
+              disabled={locationLoading.states}
+              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${
+                errors.state ? "border-red-500" : "border-gray-300"
+              }`}
             >
               <option value="">Select State</option>
-              {states.map((state, index) => (
+              {locationData.states.map((state, index) => (
                 <option key={index} value={state}>
                   {state}
                 </option>
               ))}
             </select>
-            {isLoadingStates && (
+            {locationLoading.states && (
               <p className="text-blue-500 text-sm mt-1">Loading states...</p>
             )}
             {errors.state && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.state.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.state.message}</p>
             )}
           </div>
 
@@ -1048,145 +1044,105 @@ export default function UserProfile() {
             <label className="block text-gray-700 mb-1 font-medium">District</label>
             <select
               {...register("district")}
-              disabled={!watchState || isLoadingDistricts}
-              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${errors.district ? "border-red-500" : "border-gray-300"
-                }`}
+              disabled={!watchState || locationLoading.districts}
+              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${
+                errors.district ? "border-red-500" : "border-gray-300"
+              }`}
             >
               <option value="">Select District</option>
-              {districts.map((district, index) => (
+              {locationData.districts.map((district, index) => (
                 <option key={index} value={district}>
                   {district}
                 </option>
               ))}
             </select>
-            {/* {isLoadingDistricts && (
-              <p className="text-blue-500 text-sm mt-1">Loading districts...</p>
-            )} */}
             {errors.district && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.district.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.district.message}</p>
             )}
           </div>
 
-          {/* City - UPDATED WITH AUTO PINCODE */}
-          {/* City - Shows only city names, but auto-fills PIN code */}
+          {/* City */}
           <div>
             <label className="block text-gray-700 mb-1 font-medium">City</label>
             <select
               {...register("city")}
               onChange={handleCityChange}
-              disabled={!watchDistrict || isLoadingCities}
-              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${errors.city ? "border-red-500" : "border-gray-300"
-                }`}
+              disabled={!watchDistrict || locationLoading.cities}
+              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${
+                errors.city ? "border-red-500" : "border-gray-300"
+              }`}
             >
               <option value="">Select City</option>
-              {cities.length > 0 ? (
-                cities.map((city, index) => (
+              {locationData.cities.length > 0 ? (
+                locationData.cities.map((city, index) => (
                   <option key={index} value={city}>
-                    {city} {/* Only show city name, no PIN code */}
+                    {city}
                   </option>
                 ))
               ) : (
                 <option value="" disabled>
-                  {isLoadingCities ? "Loading cities..." : "Select a district first"}
+                  {locationLoading.cities ? "Loading cities..." : "Select a district first"}
                 </option>
               )}
             </select>
-            {/* {isLoadingCities && (
-    <p className="text-blue-500 text-sm mt-1">Loading cities for {watchDistrict}...</p>
-  )} */}
             {errors.city && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.city.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>
             )}
           </div>
 
-          {/* PIN Code - Auto-filled when city is selected */}
-          <div>
-            <label className="block text-gray-700 mb-1 font-medium">PIN Code</label>
-            <input
-              type="text"
-              {...register("pincode")}
-              onChange={handlePinCodeChange}
-              placeholder="Auto-filled when city is selected"
-              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${errors.pincode ? "border-red-500" : "border-gray-300"
-                }`}
-            />
-            {/* {watchCity && cityPincodeMap[watchCity] && (
-    <p className="text-green-500 text-sm mt-1">
-      ✅ PIN code auto-filled for {watchCity}
-    </p>
-  )} */}
-            {errors.pincode && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.pincode.message}
-              </p>
-            )}
-          </div>
+          {/* PIN Code */}
+          <FormInput
+            label="PIN Code"
+            name="pincode"
+            type="text"
+            register={register}
+            errors={errors}
+            onChange={handlePinCodeChange}
+            placeholder="Auto-filled when city is selected"
+          />
 
           {/* Country */}
-          <div>
-            <label className="block text-gray-700 mb-1 font-medium">
-              Country
-            </label>
-            <input
-              type="text"
-              {...register("country")}
-              readOnly
-              className="w-full border border-gray-300 bg-gray-100 rounded-lg p-2"
-            />
-          </div>
+          <FormInput
+            label="Country"
+            name="country"
+            type="text"
+            register={register}
+            errors={errors}
+            className="bg-gray-100 cursor-not-allowed"
+            readOnly
+          />
 
           {/* Passwords */}
-          <div>
-            <label className="block text-gray-700 mb-1 font-medium">
-              Password
-            </label>
-            <input
-              type="password"
-              {...register("password")}
-              placeholder="Enter new password"
-              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${errors.password ? "border-red-500" : "border-gray-300"
-                }`}
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
+          <FormInput
+            label="Password"
+            name="password"
+            type="password"
+            register={register}
+            errors={errors}
+            placeholder="Enter new password"
+          />
 
-          <div>
-            <label className="block text-gray-700 mb-1 font-medium">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              {...register("confirmPassword")}
-              placeholder="Re-enter password"
-              className={`w-full border rounded-lg p-2 focus:ring-2 focus:ring-gray-100 text-sm ${errors.confirmPassword ? "border-red-500" : "border-gray-300"
-                }`}
-            />
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.confirmPassword.message}
-              </p>
-            )}
-          </div>
+          <FormInput
+            label="Confirm Password"
+            name="confirmPassword"
+            type="password"
+            register={register}
+            errors={errors}
+            placeholder="Re-enter password"
+          />
         </div>
 
         <div className="mt-8 flex justify-center">
           <button
             type="submit"
-            disabled={isSubmitting}
-            className={`px-8 py-3 rounded-lg font-semibold text-white transition-all shadow-md hover:shadow-lg ${isSubmitting
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
-              }`}
+            disabled={isSubmitting || saveStatus.loading}
+            className={`px-8 py-3 rounded-lg font-semibold text-white transition-all shadow-md hover:shadow-lg ${
+              isSubmitting || saveStatus.loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
-            {isSubmitting ? (
+            {isSubmitting || saveStatus.loading ? (
               <span className="flex items-center">
                 <svg
                   className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"

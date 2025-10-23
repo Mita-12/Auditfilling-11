@@ -302,43 +302,52 @@ import axios from "axios";
 export default function CompanyDetail() {
   const [companies, setCompanies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [typeFilter, setTypeFilter] = useState("All");
   const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(null);
   const navigate = useNavigate();
+
+  // ✅ Get user identifier
+  const getUserIdentifier = () => {
+    let userId = null;
+    let userEmail = localStorage.getItem("user_name");
+    
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        userId = user?.id || user?.user_id || user?.userId;
+      } catch (e) {
+        console.error("Error parsing user data:", e);
+      }
+    }
+
+    return userId || userEmail;
+  };
 
   // ✅ Fetch companies from API
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const user = JSON.parse(localStorage.getItem("user_name"));
-        const userId = user?.id;
-
-        if (!userId) {
-          console.error("❌ User ID not found in localStorage");
+        const identifier = getUserIdentifier();
+        
+        if (!identifier) {
+          console.error("❌ No user identifier found");
           setLoading(false);
           return;
         }
 
-        console.log("📤 Fetching companies for user_id:", userId);
+        console.log("📤 Using identifier:", identifier);
 
-        // ✅ Using FormData (recommended for PHP APIs)
-        const formData = new FormData();
-        formData.append("id", userId);
-
-        const response = await axios.post(
-          "https://auditfiling.com/api/v1/user/companies/show",
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
+        const response = await axios.get(
+          `https://auditfiling.com/public/api/v1/user/all_companies/${identifier}`
         );
 
-        // console.log("📦 API Response:", response.data);
+        console.log("📦 Full API Response:", response.data);
 
-        // ✅ Proper data mapping
         if (response.data && Array.isArray(response.data.data)) {
-          const formattedCompanies = response.data.data.map((item) => ({
+          const formattedCompanies = response.data.data.map((item, index) => ({
             id: item.id,
+            slNo: index + 1,
             name: item.company_name || "N/A",
             regNo: item.registration_no || "N/A",
             estDate: item.established_date || "N/A",
@@ -347,11 +356,22 @@ export default function CompanyDetail() {
             address: item.address || "Not Provided",
           }));
           setCompanies(formattedCompanies);
+          console.log(`✅ Loaded ${formattedCompanies.length} companies`);
         } else {
+          console.warn("⚠️ No companies data found in response");
           setCompanies([]);
         }
+
       } catch (error) {
-        console.error("❌ Error fetching companies:", error.response || error);
+        console.error("❌ Error fetching companies:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+          console.error("Response status:", error.response.status);
+        } else if (error.request) {
+          console.error("No response received:", error.request);
+        } else {
+          console.error("Error setting up request:", error.message);
+        }
       } finally {
         setLoading(false);
       }
@@ -360,32 +380,166 @@ export default function CompanyDetail() {
     fetchCompanies();
   }, []);
 
-  // ✅ Filter companies
-  const filteredCompanies = companies.filter((company) => {
-    const matchesSearch =
-      company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      company.regNo.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = typeFilter === "All" || company.type === typeFilter;
-    return matchesSearch && matchesType;
-  });
+  // ✅ Delete Company
+  const handleDelete = async (id, name) => {
+    if (!window.confirm(`Are you sure you want to delete ${name}?`)) {
+      return;
+    }
 
-  // ✅ Handlers
-  const handleDelete = (id, name) => {
-    if (window.confirm(`Are you sure you want to delete ${name}?`)) {
-      setCompanies(companies.filter((company) => company.id !== id));
+    setActionLoading(`delete-${id}`);
+    
+    try {
+      const identifier = getUserIdentifier();
+      
+      const formData = new FormData();
+      formData.append("user_id", identifier);
+      formData.append("company_id", id);
+
+      const response = await axios.post(
+        "https://auditfiling.com/api/v1/user/companies/destroy",
+        formData,
+        {
+          headers: { 
+            "Content-Type": "multipart/form-data",
+            "Accept": "application/json"
+          },
+        }
+      );
+
+      console.log("🗑️ Delete response:", response.data);
+
+      if (response.data.success) {
+        // Remove company from local state
+        setCompanies(companies.filter((company) => company.id !== id));
+        alert(`Company ${name} deleted successfully!`);
+      } else {
+        alert(`Failed to delete company: ${response.data.message || "Unknown error"}`);
+      }
+    } catch (error) {
+      console.error("❌ Error deleting company:", error);
+      let errorMessage = "Failed to delete company";
+      
+      if (error.response) {
+        errorMessage = error.response.data?.message || errorMessage;
+        console.error("Response data:", error.response.data);
+      }
+      
+      alert(errorMessage);
+    } finally {
+      setActionLoading(null);
     }
   };
 
-  const handleView = (company) => {
-    alert(`Viewing details for: ${company.name}\nRegistration: ${company.regNo}`);
+  // ✅ View Company Details
+  const handleView = async (company) => {
+    setActionLoading(`view-${company.id}`);
+    
+    try {
+      const identifier = getUserIdentifier();
+      
+      const formData = new FormData();
+      formData.append("user_id", identifier);
+      formData.append("company_id", company.id);
+
+      const response = await axios.post(
+        "https://auditfiling.com/api/v1/user/companies/show",
+        formData,
+        {
+          headers: { 
+            "Content-Type": "multipart/form-data",
+            "Accept": "application/json"
+          },
+        }
+      );
+
+      console.log("👁️ View response:", response.data);
+
+      if (response.data.success) {
+        const companyData = response.data.data;
+        // Display company details in a formatted way
+        alert(
+          `Company Details:\n\n` +
+          `Name: ${companyData.company_name || company.name}\n` +
+          `Registration: ${companyData.registration_no || company.regNo}\n` +
+          `Established: ${formatDate(companyData.established_date) || formatDate(company.estDate)}\n` +
+          `Address: ${companyData.address || company.address}\n` +
+          `Type: ${companyData.company_type || company.type}\n` +
+          `Status: ${companyData.status || company.status}`
+        );
+      } else {
+        alert(`Failed to fetch company details: ${response.data.message || "Unknown error"}`);
+      }
+    } catch (error) {
+      console.error("❌ Error viewing company:", error);
+      let errorMessage = "Failed to fetch company details";
+      
+      if (error.response) {
+        errorMessage = error.response.data?.message || errorMessage;
+      }
+      
+      alert(errorMessage);
+    } finally {
+      setActionLoading(null);
+    }
   };
 
-  const handleEdit = (company) => {
-    alert(`Editing company: ${company.name}`);
+  // ✅ Edit Company
+  const handleEdit = async (company) => {
+    setActionLoading(`edit-${company.id}`);
+    
+    try {
+      const identifier = getUserIdentifier();
+      
+      const formData = new FormData();
+      formData.append("user_id", identifier);
+      formData.append("company_id", company.id);
+
+      const response = await axios.post(
+        "https://auditfiling.com/api/v1/user/companies/show",
+        formData,
+        {
+          headers: { 
+            "Content-Type": "multipart/form-data",
+            "Accept": "application/json"
+          },
+        }
+      );
+
+      console.log("✏️ Edit response:", response.data);
+
+      if (response.data.success) {
+        const companyData = response.data.data;
+        
+        // Navigate to edit form with company data
+        navigate("/company-detailform", { 
+          state: { 
+            company: companyData,
+            isEditing: true 
+          } 
+        });
+      } else {
+        alert(`Failed to fetch company data for editing: ${response.data.message || "Unknown error"}`);
+      }
+    } catch (error) {
+      console.error("❌ Error fetching company for edit:", error);
+      let errorMessage = "Failed to fetch company data for editing";
+      
+      if (error.response) {
+        errorMessage = error.response.data?.message || errorMessage;
+      }
+      
+      alert(errorMessage);
+    } finally {
+      setActionLoading(null);
+    }
   };
 
   const handleAddCompany = () => {
-    navigate("/company-detailform");
+    navigate("/company-detailform", { 
+      state: { 
+        isEditing: false 
+      } 
+    });
   };
 
   const formatDate = (dateString) => {
@@ -397,18 +551,13 @@ export default function CompanyDetail() {
     });
   };
 
-  const getCompanyTypeColor = (type) => {
-    switch (type) {
-      case "Private Limited":
-        return "text-purple-600 bg-purple-50";
-      case "LLP":
-        return "text-blue-600 bg-blue-50";
-      case "Public Limited":
-        return "text-orange-600 bg-orange-50";
-      default:
-        return "text-gray-600 bg-gray-50";
-    }
-  };
+  // ✅ Filter companies
+  const filteredCompanies = companies.filter((company) => {
+    const matchesSearch =
+      company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      company.regNo.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-8 mt-30 px-4">
@@ -439,18 +588,6 @@ export default function CompanyDetail() {
                   className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-100 w-full sm:w-64"
                 />
               </div>
-
-              {/* Type Filter */}
-              <select
-                value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-100"
-              >
-                <option value="All">All Types</option>
-                <option value="Private Limited">Private Limited</option>
-                <option value="LLP">LLP</option>
-                <option value="Public Limited">Public Limited</option>
-              </select>
             </div>
 
             {/* Add Button */}
@@ -476,19 +613,19 @@ export default function CompanyDetail() {
                 <thead className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
                   <tr>
                     <th className="px-6 py-4 text-left font-semibold text-sm uppercase tracking-wider">
-                      Company
+                      SL No
                     </th>
                     <th className="px-6 py-4 text-left font-semibold text-sm uppercase tracking-wider">
-                      Registration
+                      Company Name
                     </th>
                     <th className="px-6 py-4 text-left font-semibold text-sm uppercase tracking-wider">
-                      Type
+                      Registration No
                     </th>
                     <th className="px-6 py-4 text-left font-semibold text-sm uppercase tracking-wider">
-                      Established
+                      Establish Date
                     </th>
-                    <th className="px-6 py-4 text-right font-semibold text-sm uppercase tracking-wider">
-                      Actions
+                    <th className="px-6 py-4 text-center font-semibold text-sm uppercase tracking-wider">
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -499,6 +636,11 @@ export default function CompanyDetail() {
                         key={company.id}
                         className="hover:bg-blue-50 transition-colors duration-150"
                       >
+                        <td className="px-6 py-4">
+                          <div className="text-sm font-semibold text-gray-700">
+                            {company.slNo}
+                          </div>
+                        </td>
                         <td className="px-6 py-4">
                           <div>
                             <div className="font-semibold text-gray-900 text-lg">
@@ -515,41 +657,48 @@ export default function CompanyDetail() {
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <span
-                            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getCompanyTypeColor(
-                              company.type
-                            )}`}
-                          >
-                            {company.type}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
                           <div className="flex items-center text-sm text-gray-700">
                             <Calendar className="w-4 h-4 mr-2 text-gray-400" />
                             {formatDate(company.estDate)}
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <div className="flex justify-end space-x-2">
+                          <div className="flex justify-center space-x-2">
                             <button
                               onClick={() => handleView(company)}
-                              className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors duration-200"
+                              disabled={actionLoading === `view-${company.id}`}
+                              className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                              title="View"
                             >
-                              <Eye className="w-4 h-4" />
+                              {actionLoading === `view-${company.id}` ? (
+                                <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                              ) : (
+                                <Eye className="w-4 h-4" />
+                              )}
                             </button>
                             <button
                               onClick={() => handleEdit(company)}
-                              className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors duration-200"
+                              disabled={actionLoading === `edit-${company.id}`}
+                              className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                              title="Edit"
                             >
-                              <Edit2 className="w-4 h-4" />
+                              {actionLoading === `edit-${company.id}` ? (
+                                <div className="w-4 h-4 border-2 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+                              ) : (
+                                <Edit2 className="w-4 h-4" />
+                              )}
                             </button>
                             <button
-                              onClick={() =>
-                                handleDelete(company.id, company.name)
-                              }
-                              className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-200"
+                              onClick={() => handleDelete(company.id, company.name)}
+                              disabled={actionLoading === `delete-${company.id}`}
+                              className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                              title="Delete"
                             >
-                              <Trash2 className="w-4 h-4" />
+                              {actionLoading === `delete-${company.id}` ? (
+                                <div className="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+                              ) : (
+                                <Trash2 className="w-4 h-4" />
+                              )}
                             </button>
                           </div>
                         </td>
@@ -557,7 +706,7 @@ export default function CompanyDetail() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="6" className="px-6 py-12 text-center">
+                      <td colSpan="5" className="px-6 py-12 text-center">
                         <div className="text-gray-500">
                           No companies found.
                         </div>
@@ -573,5 +722,4 @@ export default function CompanyDetail() {
     </div>
   );
 }
-
 

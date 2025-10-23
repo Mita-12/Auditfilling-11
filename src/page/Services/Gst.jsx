@@ -3,6 +3,7 @@ import Header from "../../component/Header";
 import QuickForm from "../../form/QuickForm";
 import WhatsAppPopup from "../../form/WhatsAppPopup";
 import Footer from "../../component/Footer";
+import ProceedToPay from "./document/ProceedToPay";
 
 export default function GstPage() {
   const [menuData, setMenuData] = useState(null);
@@ -205,9 +206,9 @@ export default function GstPage() {
                   <a
                     href={`#service-${service.id || idx}`}
                     onClick={() => handleClick(service)}
-                    className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
+                    className={`flex items-start py-2 px-2 rounded-lg text-sm transition-all duration-200 ${
                       activeSection === `service-${service.id || idx}`
-                        ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
+                        ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 "
                         : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                     }`}
                   >
@@ -243,9 +244,9 @@ export default function GstPage() {
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-12 ">
+        <main className="flex-1 space-y-12 mr-80 ">
           {/* GST Overview */}
-          <section id="menu-overview" className="bg-white rounded-2xl shadow-sm p-6 scroll-mt-24">
+          <section id="menu-overview" className="bg-white rounded-2xl shadow-sm p-6 scroll-mt-30">
             <h1 className="text-3xl md:text-4xl font-serif text-center mb-4 text-gray-900">
               {menuData.name || "GST"}
             </h1>
@@ -266,7 +267,7 @@ export default function GstPage() {
             <section
               key={service.id || idx}
               id={`service-${service.id || idx}`}
-              className="bg-white rounded-2xl shadow-sm p-6 scroll-mt-24"
+              className="bg-white rounded-2xl shadow-sm p-6 scroll-mt-30"
             >
               <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
                 {service.service_name || service.name}
@@ -284,7 +285,7 @@ export default function GstPage() {
           ))}
           
           {/* FAQ Section */}
-          <section id="faq-section" className="bg-white rounded-2xl p-6 scroll-mt-24">
+          <section id="faq-section" className="bg-white rounded-2xl p-6 scroll-mt-30">
             <h1 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
               Frequently Asked Questions
             </h1>
@@ -309,9 +310,10 @@ export default function GstPage() {
           </div>
         </main>
 
-        <div className="w-64">
-          <QuickForm />
-        </div>
+    <div className="fixed mt-1 right-20 w-64 space-y-1">
+           <QuickForm />
+           <ProceedToPay />
+         </div>
       </div>
 
       <WhatsAppPopup />

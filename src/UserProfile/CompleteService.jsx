@@ -1,71 +1,138 @@
-import React, { useState, useMemo } from "react";
-
-const completedServicesData = [
-  {
-    requestId: "Offline_hEENg1XMtxFGw4",
-    service: "Salaried Individual",
-    date: "15/09/2025",
-    status: "Completed",
-    fileUrl: "/files/sample1.pdf",
-    fileSize: "2.4 MB",
-    completionTime: "3 days",
-  },
-  {
-    requestId: "Offline_kFGNh2YNuyGHx5",
-    service: "Professional Tax Registration",
-    date: "12/09/2025",
-    status: "Completed",
-    fileUrl: "/files/sample2.pdf",
-    fileSize: "1.8 MB",
-    completionTime: "2 days",
-  },
-  {
-    requestId: "Offline_mHHOi3ZOvzHIy6",
-    service: "GST Registration",
-    date: "10/09/2025",
-    status: "Completed",
-    fileUrl: "/files/sample3.pdf",
-    fileSize: "3.1 MB",
-    completionTime: "5 days",
-  },
-  {
-    requestId: "Offline_nIIPj4APwAIJz7",
-    service: "Company Incorporation",
-    date: "08/09/2025",
-    status: "Completed",
-    fileUrl: null,
-    fileSize: "N/A",
-    completionTime: "7 days",
-  },
-];
+import React, { useState, useMemo, useEffect } from "react";
+import axios from "axios";
 
 export default function CompletedService() {
   const [search, setSearch] = useState("");
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [completedServices, setCompletedServices] = useState([]);
+
+  // ✅ Fetch completed services from API
+  useEffect(() => {
+    const fetchCompletedServices = async () => {
+      try {
+        // Get user identifier from localStorage
+        let userId = null;
+        let userEmail = localStorage.getItem("user_name");
+
+        const userData = localStorage.getItem("user");
+        if (userData) {
+          try {
+            const user = JSON.parse(userData);
+            userId = user?.id || user?.user_id || user?.userId;
+          } catch (e) {
+            console.error("Error parsing user data:", e);
+          }
+        }
+
+        const identifier = userId || userEmail;
+
+        if (!identifier) {
+          console.error("❌ No user identifier found");
+          setLoading(false);
+          return;
+        }
+
+        console.log("📤 Fetching completed services for:", identifier);
+
+        const formData = new FormData();
+        formData.append("user_id", identifier);
+
+        const response = await axios.post(
+          "https://auditfiling.com/api/v1/user/completed_service",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "Accept": "application/json"
+            },
+          }
+        );
+
+        console.log("📦 Completed  services API response:", response.data);
+
+        if (response.data.success && Array.isArray(response.data.data)) {
+          const formattedServices = response.data.data.map((item, index) => ({
+            id: item.id || index,
+            requestId: item.order_id || `REQ_${index + 1}`,
+            service: item.service_name || "N/A",
+            date: item.payment_date || new Date().toLocaleDateString('en-IN'),
+            status: item.status || "Completed",
+            fileUrl: item.file_path || null,
+            fileSize: item. file_name || "N/A",
+
+          }));
+          setCompletedServices(formattedServices);
+          console.log(`✅ Loaded ${formattedServices.length} completed services`);
+        } else {
+          console.warn("⚠️ No completed services data found in response");
+          setCompletedServices([]);
+        }
+
+      } catch (error) {
+        console.error("❌ Error fetching completed services:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+          console.error("Response status:", error.response.status);
+        } else if (error.request) {
+          console.error("No response received:", error.request);
+        } else {
+          console.error("Error setting up request:", error.message);
+        }
+        setCompletedServices([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCompletedServices();
+  }, []);
 
   // Filter and paginate data
   const filteredData = useMemo(() => {
-    return completedServicesData.filter(
+    return completedServices.filter(
       (item) =>
         item.requestId.toLowerCase().includes(search.toLowerCase()) ||
         item.service.toLowerCase().includes(search.toLowerCase())
     );
-  }, [search]);
+  }, [search, completedServices]);
 
   // Calculate pagination
   const totalPages = Math.ceil(filteredData.length / entriesPerPage);
   const startIndex = (currentPage - 1) * entriesPerPage;
   const paginatedData = filteredData.slice(startIndex, startIndex + entriesPerPage);
 
-  const handleDownload = (item) => {
+  const handleDownload = async (item) => {
     if (!item.fileUrl) {
       alert("No file available for download");
       return;
     }
-    // Simulate download
-    console.log(`Downloading: ${item.fileUrl}`);
-    // In real implementation, this would trigger the actual download
+
+    try {
+      console.log(`Downloading: ${item.fileUrl}`);
+
+      // For actual file download
+      const response = await fetch(item.fileUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+
+      // Extract filename from URL or use request ID
+      const filename = item.fileUrl.split('/').pop() || `${item.requestId}_document.pdf`;
+      link.download = filename;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      console.log(`✅ Downloaded: ${filename}`);
+    } catch (error) {
+      console.error("❌ Error downloading file:", error);
+      alert("Failed to download file. Please try again.");
+    }
   };
 
   const handlePageChange = (page) => {
@@ -121,11 +188,10 @@ export default function CompletedService() {
         <button
           key={page}
           onClick={() => handlePageChange(page)}
-          className={`px-3 py-1 border rounded-lg transition-colors ${
-            currentPage === page
-              ? "bg-blue-600 text-white border-blue-600"
-              : "border-gray-300 hover:bg-gray-50"
-          }`}
+          className={`px-3 py-1 border rounded-lg transition-colors ${currentPage === page
+            ? "bg-blue-600 text-white border-blue-600"
+            : "border-gray-300 hover:bg-gray-50"
+            }`}
         >
           {page}
         </button>
@@ -167,6 +233,50 @@ export default function CompletedService() {
     return buttons;
   };
 
+  // Format date for display
+  const formatDisplayDate = (dateString) => {
+    if (!dateString || dateString === "N/A") return "N/A";
+
+    try {
+      // Handle different date formats from API
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        // If direct parsing fails, try handling Indian format (DD/MM/YYYY)
+        const parts = dateString.split('/');
+        if (parts.length === 3) {
+          const formattedDate = new Date(parts[2], parts[1] - 1, parts[0]);
+          return formattedDate.toLocaleDateString('en-IN', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+          });
+        }
+        return dateString;
+      }
+      return date.toLocaleDateString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      });
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return dateString;
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 mt-30 p-4 sm:p-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading completed services...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 mt-30 p-4 sm:p-6">
       <div className="max-w-7xl mx-auto">
@@ -187,7 +297,7 @@ export default function CompletedService() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Completed</p>
-                <p className="text-2xl font-bold text-gray-900">{completedServicesData.length}</p>
+                <p className="text-2xl font-bold text-gray-900">{completedServices.length}</p>
               </div>
             </div>
           </div>
@@ -197,14 +307,9 @@ export default function CompletedService() {
                 <span className="text-2xl">⏱️</span>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Avg. Completion</p>
+                <p className="text-sm font-medium text-gray-600">Files Available</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {Math.round(
-                    completedServicesData.reduce((acc, item) => {
-                      const days = parseInt(item.completionTime) || 0;
-                      return acc + days;
-                    }, 0) / completedServicesData.length
-                  )} days
+                  {completedServices.filter(item => item.fileUrl).length}
                 </p>
               </div>
             </div>
@@ -215,9 +320,9 @@ export default function CompletedService() {
                 <span className="text-2xl">✅</span>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Files Available</p>
+                <p className="text-sm font-medium text-gray-600">Completed</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {completedServicesData.filter(item => item.fileUrl).length}
+                  {completedServices.filter(item => item.status === 'Completed').length}
                 </p>
               </div>
             </div>
@@ -230,10 +335,15 @@ export default function CompletedService() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">This Month</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {completedServicesData.filter(item => {
-                    const itemDate = new Date(item.date.split('/').reverse().join('-'));
-                    const now = new Date();
-                    return itemDate.getMonth() === now.getMonth() && itemDate.getFullYear() === now.getFullYear();
+                  {completedServices.filter(item => {
+                    try {
+                      const itemDate = new Date(item.date);
+                      const now = new Date();
+                      return itemDate.getMonth() === now.getMonth() &&
+                        itemDate.getFullYear() === now.getFullYear();
+                    } catch {
+                      return false;
+                    }
                   }).length}
                 </p>
               </div>
@@ -290,44 +400,51 @@ export default function CompletedService() {
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Request Details
+                    Request ID
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Service Information
+                    Service Name
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Completion
+                    Date
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Documents
+                    Status
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Action
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {paginatedData.length > 0 ? (
                   paginatedData.map((item, idx) => (
-                    <tr key={item.requestId} className="hover:bg-gray-50 transition-colors group">
+                    <tr key={item.id} className="hover:bg-gray-50 transition-colors group">
                       <td className="px-6 py-4">
-                        <div>
-                          <div className="text-sm font-mono text-blue-600 font-medium">
-                            {item.requestId}
-                          </div>
-                          <div className="text-xs text-gray-500 mt-1">
-                            ID #{startIndex + idx + 1}
-                          </div>
+                        <div className="text-sm font-mono text-blue-600 font-medium">
+                          {item.requestId}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          ID #{startIndex + idx + 1}
                         </div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-sm font-medium text-gray-900">
                           {item.service}
                         </div>
-                        <div className="text-xs text-gray-500 mt-1">
-                          Completed in {item.completionTime}
+                        {item.completionTime && item.completionTime !== "N/A" && (
+                          <div className="text-xs text-gray-500 mt-1">
+                            Completed in {item.completionTime}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-900">
+                          {formatDisplayDate(item.date)}
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900">{item.date}</div>
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                           ✅ {item.status}
                         </span>
                       </td>
@@ -341,9 +458,11 @@ export default function CompletedService() {
                               <span className="mr-2">📥</span>
                               Download
                             </button>
-                            <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                              {item.fileSize}
-                            </span>
+                            {item.fileSize && item.fileSize !== "N/A" && (
+                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                                {item.fileSize}
+                              </span>
+                            )}
                           </div>
                         ) : (
                           <div className="text-gray-400 text-sm">
@@ -358,7 +477,7 @@ export default function CompletedService() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4" className="px-6 py-12 text-center">
+                    <td colSpan="5" className="px-6 py-12 text-center">
                       <div className="text-gray-400 text-6xl mb-4">📭</div>
                       <h3 className="text-lg font-medium text-gray-900 mb-2">No completed services found</h3>
                       <p className="text-gray-500">

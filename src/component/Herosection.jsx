@@ -11,7 +11,11 @@ export default function Herosection() {
       <section className="w-full min-h-[70vh] flex flex-col items-center justify-center bg-white text-[#222222] text-center px-6 md:px-12">
         {/* Hero Heading */}
         <h1 className="text-5xl font-bold font-serif  mt-15 pt-15 leading-tight">
-          Trusted Legal Services <br />
+          Trusted Legal Services 
+
+
+          
+          <br />
           for Your <span className="text-black  pt-5">Business & Compliance</span>
         </h1>
 
@@ -58,18 +62,18 @@ export default function Herosection() {
           {/* Image */}
           <motion.div
             className="w-full md:w-2/3 flex justify-center"
-            initial={{ opacity: 0, x: 80 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            viewport={{ once: true }}
+            // initial={{ opacity: 0, x: 80 }}
+            // whileInView={{ opacity: 1, x: 0 }}
+            // transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            // viewport={{ once: true }}
           >
             <motion.img
               src="/img/support.jpg"
               alt="Who Are We"
               loading="lazy"
               className="w-full rounded-2xl object-cover"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 200, damping: 12 }}
+              // whileHover={{ scale: 1.05 }}
+              // transition={{ type: "spring", stiffness: 200, damping: 12 }}
             />
           </motion.div>
 

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import QuickForm from "../../form/QuickForm";
 import WhatsAppPopup from "../../form/WhatsAppPopup";
 
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import ProceedToPay from "./document/ProceedToPay";
 
 export default function IncomeTax({ menuId }) {
@@ -89,17 +89,17 @@ export default function IncomeTax({ menuId }) {
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
-      
+
       // Find which section is currently in view
       const sections = [
         { id: "menu-overview", title: "Overview" },
-        ...services.map((service, idx) => ({ 
-          id: `service-${service.id || idx}`, 
-          title: service.service_name || service.name 
+        ...services.map((service, idx) => ({
+          id: `service-${service.id || idx}`,
+          title: service.service_name || service.name
         })),
         { id: "faq-section", title: "FAQ" }
       ];
-      
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i].id);
         if (section && section.offsetTop <= scrollPosition) {
@@ -111,7 +111,7 @@ export default function IncomeTax({ menuId }) {
 
     handleHash();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [services]);
 
@@ -172,9 +172,9 @@ export default function IncomeTax({ menuId }) {
     <div className="min-h-screen">
       {/* <Header /> */}
 
-      <div className="mx-auto w-full px-4 md:px-8 mt-25 py-10 flex flex-col md:flex-row gap-8">
+      <div className="mx-auto w-full px-4 md:px-4 mt-25 py-10 flex flex-col md:flex-row gap-8">
         {/* Sidebar Navigation - Updated to match PrivacyPolicy style */}
-        <nav className="lg:sticky lg:top-24 ml-10 lg:self-start bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-x-auto">
+        <nav className="lg:sticky lg:top-24 ml-15 lg:self-start bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-x-auto">
           <h1 className="text-3xl font-serif pl-5 mb-5 text-gray-800">
             {menuData.name || "Income Tax"}
           </h1>
@@ -185,11 +185,10 @@ export default function IncomeTax({ menuId }) {
               <a
                 href="#menu-overview"
                 onClick={() => handleSectionClick("menu-overview")}
-                className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
-                  activeSection === "menu-overview"
+                className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${activeSection === "menu-overview"
                     ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
                     : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">1.</span>
                 <span className="text-lg leading-tight">Overview</span>
@@ -203,11 +202,10 @@ export default function IncomeTax({ menuId }) {
                   <a
                     href={`#service-${service.id || idx}`}
                     onClick={() => handleClick(service)}
-                    className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
-                      activeSection === `service-${service.id || idx}`
+                    className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${activeSection === `service-${service.id || idx}`
                         ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
                         : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                    }`}
+                      }`}
                   >
                     <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
                       {idx + 2}.
@@ -225,11 +223,10 @@ export default function IncomeTax({ menuId }) {
               <a
                 href="#faq-section"
                 onClick={handleFaqClick}
-                className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
-                  activeSection === "faq-section"
+                className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${activeSection === "faq-section"
                     ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
                     : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
                   {services.length + 2}.
@@ -241,9 +238,9 @@ export default function IncomeTax({ menuId }) {
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-12">
+        <main className="flex-1 space-y-12 mr-85">
           {/* Menu Overview */}
-          <section id="menu-overview" className="bg-white rounded-2xl shadow-sm p-6 scroll-mt-24">
+          <section id="menu-overview" className="bg-white rounded-2xl  shadow-sm p-6 scroll-mt-30">
             <h1 className="text-3xl md:text-4xl font-serif text-center mb-4 text-gray-900">
               {menuData.name || "Income Tax"}
             </h1>
@@ -264,9 +261,9 @@ export default function IncomeTax({ menuId }) {
             <section
               key={service.id || idx}
               id={`service-${service.id || idx}`}
-              className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-24"
+              className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-35"
             >
-              <h1 className="text-2xl md:text-3xl  font-bold font-serif text-center mb-10 text-gray-900">
+              <h1 className="text-2xl md:text-3xl  font-bold font-serif text-center mb-5 text-gray-900">
                 {service.service_name || service.name}
               </h1>
 
@@ -313,10 +310,11 @@ export default function IncomeTax({ menuId }) {
         </main>
 
         {/* Desktop QuickForm */}
-        <div className="w-64">
+        <div className="fixed mt-1 right-20 w-64 space-y-1">
           <QuickForm />
           <ProceedToPay />
         </div>
+
       </div>
 
       <WhatsAppPopup />

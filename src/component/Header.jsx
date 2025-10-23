@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
-import { h2 } from "framer-motion/client";
-import { h1 } from "framer-motion/m";
+// import { h2 } from "framer-motion/client";
+// import { h1 } from "framer-motion/m";
 
 
 function Header() {
@@ -14,7 +14,6 @@ function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSubmenu, setMobileSubmenu] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const navigate = useNavigate();
 
 
 
@@ -111,7 +110,7 @@ const redirectTo = (key) => {
                     <div
                       onMouseLeave={() => setDropdownOpen(null)}
                       className={`absolute left-0 mt-4 w-[400px] bg-white text-gray-900 rounded shadow-sm font-semibold  p-6 grid grid-cols-2 gap-3 z-50 text-[15px]  transform transition-all duration-300 ${dropdownOpen === menu.id
-                        ? "opacity-100 scale-100 pointer-events-auto"
+                        ? "opacity-100 scale-100 "
                         : "opacity-0 scale-95 pointer-events-none"
                         }`}
                     >

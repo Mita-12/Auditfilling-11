@@ -97,8 +97,8 @@ export default function ProceedToPay() {
   };
 
   return (
-    <div className="flex justify-center items-center  px-3 py-10">
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md border border-gray-100">
+    <div className="flex justify-center items-center  px-3 py-5">
+      <div className="bg-white shadow-sm rounded-2xl p-4 w-full max-w-md border border-gray-100">
         {/* Heading */}
         <h2 className="text-2xl font-semibold text-gray-800 text-center mb-1">
           Proceed to Payment

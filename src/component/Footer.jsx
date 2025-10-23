@@ -26,7 +26,7 @@ export default function Footer() {
             <p className="text-gray-300 text-sm leading-relaxed ">
               Your trusted partner for tax, compliance, and business solutions
             </p>
-            <div className="flex gap-4 mt-6">
+            {/* <div className="flex gap-4 mt-6">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                 <FaFacebook className="text-blue-600 text-2xl hover:scale-110 transition-transform duration-200" />
               </a>
@@ -39,7 +39,7 @@ export default function Footer() {
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin className="text-blue-500 text-2xl hover:scale-110 transition-transform duration-200" />
               </a>
-            </div>
+            </div> */}
           </div>
 
           {/* Quick Links */}
@@ -49,7 +49,7 @@ export default function Footer() {
               <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
             </div>
 
-            <ul className="space-y-1 text-gray-300 text-sm ">
+            <ul className="space-y-1 text-gray-300 text-lg leading-relaxed ">
               {[
                 { path: "/about", label: "About Us" },
                 { path: "/contact", label: "Contact Us" },
@@ -58,7 +58,7 @@ export default function Footer() {
                 { path: "/privacy", label: "Privacy Policy" },
                 { path: "/reseller", label: "Become a Reseller" },
                 { path: "/service-provider", label: "Become a Service Provider" },
-                { path: "/login", label: "Login" },
+                { path: "https://auditfiling.com/login", label: "Login" },
               ].map((item) => (
                 <li key={item.path}>
                   <Link
@@ -79,7 +79,7 @@ export default function Footer() {
               <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
             </div>
 
-            <ul className="space-y-3 text-gray-300 text-sm ">
+            <ul className="space-y-3 text-gray-300 text-lg  leading-relaxed">
               {[
                 { path: "/", label: "AuditFiling" },
                 { path: "http://localhost:5173/income-tax", label: "Tracolab" },
@@ -132,23 +132,39 @@ export default function Footer() {
 
               <div className="flex items-start gap-3 px-1 py-1 rounded-sm">
                 <HiOutlineOfficeBuilding className="text-red-400 text-4xl mt-1" />
-                <div>
-                  <h4 className="text-white font-semibold mb-1">Head Office</h4>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    H No-511, Sarahah Tower, Subhash Nagar, Gurugram, India
-                  </p>
-                </div>
+               <div>
+  <h4 className="text-white font-semibold mb-1">Head Office</h4>
+  <p className="text-gray-400 text-sm">
+    <a
+      href="https://www.google.com/maps?q=H+No-511,+Sarahah+Tower,+Subhash+Nagar,+Gurugram,+122006,+India"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:text-blue-400  transition-colors duration-200"
+    >
+      H No-511, Sarahah Tower, Subhash Nagar, Gurugram, India, 122006
+    </a>
+  </p>
+</div>
+
               </div>
 
               <div className="flex items-start gap-3 px-1 py-1 rounded-sm">
                 <HiOutlineLocationMarker className="text-red-400 text-6xl mt-1" />
                 <div>
                   <h4 className="text-white font-semibold mb-1">Branch Office</h4>
-                  <p className="text-gray-400 text-sm leading-relaxed">
-                    Room No-12, 2nd Floor, BMC Panchadeep Market Complex,
-                    Bhoumya Nagar, Unit-4, Bhubaneswar, India
+                  <p className="text-gray-400 text-lg">
+                    <a
+                      href="https://www.google.com/maps?q=Room+No-12,+2nd+Floor,+BMC+Panchadeep+Market+Complex,+Bhoumya+Nagar,+Unit-4,+Bhubaneswar,+751001,+India"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-blue-400  transition-colors duration-200"
+                    >
+                      Room No-12, 2nd Floor, BMC Panchadeep Market Complex, Bhoumya Nagar,
+                      Unit-4,  Bhubaneswar, India, 751001
+                    </a>
                   </p>
                 </div>
+
               </div>
             </div>
           </div>

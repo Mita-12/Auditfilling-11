@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import QuickForm from "../../form/QuickForm";
 import WhatsAppPopup from "../../form/WhatsAppPopup";
+import ProceedToPay from "./document/ProceedToPay";
 
 
 export default function Company() {
@@ -181,7 +182,7 @@ export default function Company() {
       {/* <Header /> */}
       <div className="mx-auto w-full mt-25 px-4 py-10 flex flex-col md:flex-row gap-8">
         {/* Sidebar Navigation - Updated to match PrivacyPolicy style */}
-        <nav className="lg:sticky ml-10 lg:top-24 lg:self-start bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-y-auto">
+        <nav className="lg:sticky ml-15 lg:top-24 lg:self-start bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-y-auto">
           <h1 className="text-2xl font-serif text-left mb-5 text-gray-800">
             {menuData.name || menuData.menu_name || "company"}
           </h1>
@@ -194,7 +195,7 @@ export default function Company() {
                 onClick={() => handleSectionClick("menu-overview")}
                 className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
                   activeSection === "menu-overview"
-                    ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
+                    ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 "
                     : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                 }`}
               >
@@ -212,14 +213,14 @@ export default function Company() {
                     onClick={() => handleClick(service)}
                     className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
                       activeSection === `service-${service.id || idx}`
-                        ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
+                        ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 "
                         : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                     }`}
                   >
                     <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
                       {idx + 2}.
                     </span>
-                    <span className="text-lg leading-tight">{service.service_name || service.name}</span>
+                    <span className="text-lg ">{service.service_name || service.name}</span>
                   </a>
                 </li>
               ))
@@ -248,9 +249,9 @@ export default function Company() {
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-10">
+        <main className="flex-1 space-y-10 mr-85">
           {/* Overview Section */}
-          <section id="menu-overview" className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-24">
+          <section id="menu-overview" className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-30">
             <h1 className="text-3xl md:text-4xl font-serif text-center mb-2 text-gray-900">
               {menuData.name || "company"}
             </h1>
@@ -270,7 +271,7 @@ export default function Company() {
             <section
               key={service.id || idx}
               id={`service-${service.id || idx}`}
-              className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-24"
+              className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-30"
             >
               <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
                 {service.service_name || service.name}
@@ -288,7 +289,7 @@ export default function Company() {
           ))}
 
           {/* FAQ Section */}
-          <section id="faq-section" className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-24">
+          <section id="faq-section" className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-30">
             <h1 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
               Frequently Asked Questions
             </h1>
@@ -315,9 +316,10 @@ export default function Company() {
         </main>
 
         {/* Desktop QuickForm */}
-        <div className="hidden lg:block w-64">
-          <QuickForm />
-        </div>
+        <div className="fixed mt-1 right-20 w-64 space-y-1">
+                 <QuickForm />
+                 <ProceedToPay />
+               </div>
       </div>
 
       <WhatsAppPopup />
