@@ -294,55 +294,73 @@ export default function NotificationUpdates() {
   // Due Dates with priority
   const dueDates = [
     {
+    {
       id: 1,
+      text: "TDS Payment for March 2025",
       text: "TDS Payment for March 2025",
       date: "30-Apr-2025",
       category: "TDS"
     },
     {
+    {
       id: 2,
+      text: "Professional Tax (PT) on Salaries for April 2025",
       text: "Professional Tax (PT) on Salaries for April 2025",
       date: "10-May-2025",
       category: "PT"
     },
     {
+    {
       id: 3,
+      text: "GSTR 1 (Monthly) for April 2025",
       text: "GSTR 1 (Monthly) for April 2025",
       date: "11-May-2025",
       category: "GST"
     },
     {
+    {
       id: 4,
+      text: "GSTR 1 IFF (Optional) (Apr 2025) for QRMP",
       text: "GSTR 1 IFF (Optional) (Apr 2025) for QRMP",
       date: "13-May-2025",
       category: "GST"
     },
     {
+    {
       id: 5,
+      text: "Provident Fund (PF) & ESI Returns and Payment for April 2025",
       text: "Provident Fund (PF) & ESI Returns and Payment for April 2025",
       date: "15-May-2025",
       category: "PF/ESI"
     },
     {
+    {
       id: 6,
+      text: "GSTR 3B for April 2025 (Monthly)",
       text: "GSTR 3B for April 2025 (Monthly)",
       date: "20-May-2025",
       category: "GST"
     },
     {
+    {
       id: 7,
+      text: "TDS Return in Form 24Q, 26Q, and 27Q for Jan-Mar 2025",
       text: "TDS Return in Form 24Q, 26Q, and 27Q for Jan-Mar 2025",
       date: "31-May-2025",
       category: "TDS"
     },
     {
+    {
       id: 8,
+      text: "Advance tax Payment for April to June 2025 (1st Installment)",
       text: "Advance tax Payment for April to June 2025 (1st Installment)",
       date: "15-Jun-2025",
       category: "Income Tax"
     },
     {
+    {
       id: 9,
+      text: "Provident Fund (PF) & ESI Returns and Payment for May 2025",
       text: "Provident Fund (PF) & ESI Returns and Payment for May 2025",
       date: "15-Jun-2025",
       category: "PF/ESI"
