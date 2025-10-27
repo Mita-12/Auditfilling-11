@@ -7,15 +7,17 @@ export default function CompletedService() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [completedServices, setCompletedServices] = useState([]);
+  const [error, setError] = useState(null);
 
   // ✅ Fetch completed services from API
   useEffect(() => {
     const fetchCompletedServices = async () => {
       try {
+        setLoading(true);
+        setError(null);
+
         // Get user identifier from localStorage
         let userId = null;
-        let userEmail = localStorage.getItem("user_name");
-
         const userData = localStorage.getItem("user");
         if (userData) {
           try {
@@ -26,60 +28,89 @@ export default function CompletedService() {
           }
         }
 
-        const identifier = userId || userEmail;
-
+        const identifier = userId || localStorage.getItem("user_name");
         if (!identifier) {
-          console.error("❌ No user identifier found");
+          setError("User not authenticated. Please login again.");
           setLoading(false);
           return;
         }
 
-        console.log("📤 Fetching completed services for:", identifier);
-
-        const formData = new FormData();
-        formData.append("user_id", identifier);
+        const token = localStorage.getItem("token") || localStorage.getItem("user_name");
 
         const response = await axios.post(
-          "https://auditfiling.com/api/v1/user/completed_service",
-          formData,
+          "https://auditfiling.com/api/v1/user/completed_services",
+          { user_id: identifier },
           {
             headers: {
-              "Content-Type": "multipart/form-data",
-              "Accept": "application/json"
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization": `Bearer ${token}`
             },
           }
         );
 
-        console.log("📦 Completed  services API response:", response.data);
+        // Handle API response
+        if (response.data && response.data.success) {
+          let servicesData = [];
 
-        if (response.data.success && Array.isArray(response.data.data)) {
-          const formattedServices = response.data.data.map((item, index) => ({
-            id: item.id || index,
-            requestId: item.order_id || `REQ_${index + 1}`,
-            service: item.service_name || "N/A",
-            date: item.payment_date || new Date().toLocaleDateString('en-IN'),
+          // Check different possible response structures
+          if (Array.isArray(response.data.data)) {
+            servicesData = response.data.data;
+          } else if (Array.isArray(response.data.services)) {
+            servicesData = response.data.services;
+          } else if (Array.isArray(response.data.completed_services)) {
+            servicesData = response.data.completed_services;
+          } else if (response.data.data && typeof response.data.data === 'object') {
+            servicesData = Object.values(response.data.data);
+          } else if (Array.isArray(response.data)) {
+            servicesData = response.data;
+          } else {
+            // Try to find any array in the response
+            for (let key in response.data) {
+              if (Array.isArray(response.data[key])) {
+                servicesData = response.data[key];
+                break;
+              }
+            }
+          }
+
+          // Map API data to your specific field structure
+          const formattedServices = servicesData.map((item, index) => ({
+            id: item.id || item.request_id || item.order_id || item.service_id || `item_${index}`,
+            requestId: item.order_id || item.request_id || item.transaction_id || item.reference_id || `REQ_${index + 1}`,
+            service: item.service_name || item.service_type || item.service || item.product_name || item.name || "Unknown Service",
+            date: item.payment_date || item.completed_date || item.created_at || item.date || item.order_date || new Date().toISOString().split('T')[0],
             status: item.status || "Completed",
-            fileUrl: item.file_path || null,
-            fileSize: item. file_name || "N/A",
-
+            fileUrl: item.file_path || item.document_url || item.file_url || item.download_link || item.attachment || null,
+            fileName: item.file_name || item.document_name || "document.pdf",
           }));
+
           setCompletedServices(formattedServices);
-          console.log(`✅ Loaded ${formattedServices.length} completed services`);
         } else {
-          console.warn("⚠️ No completed services data found in response");
-          setCompletedServices([]);
+          const errorMsg = response.data?.message || "No completed services data found";
+          setError(errorMsg);
         }
 
       } catch (error) {
-        console.error("❌ Error fetching completed services:", error);
+        let errorMessage = "Failed to load completed services";
+
         if (error.response) {
-          console.error("Response data:", error.response.data);
-          console.error("Response status:", error.response.status);
+          if (error.response.status === 401) {
+            errorMessage = "Authentication failed. Please login again.";
+          } else if (error.response.status === 404) {
+            errorMessage = "No completed services found for this user.";
+          } else if (error.response.status === 500) {
+            errorMessage = "Server error. Please try again later.";
+          } else if (error.response.data?.message) {
+            errorMessage = error.response.data.message;
+          }
         } else if (error.request) {
-          console.error("No response received:", error.request);
+          errorMessage = "Network error. Please check your internet connection.";
         } else {
-          console.error("Error setting up request:", error.message);
+          errorMessage = error.message;
         }
+
+        setError(errorMessage);
         setCompletedServices([]);
       } finally {
         setLoading(false);
@@ -91,6 +122,8 @@ export default function CompletedService() {
 
   // Filter and paginate data
   const filteredData = useMemo(() => {
+    if (!Array.isArray(completedServices)) return [];
+
     return completedServices.filter(
       (item) =>
         item.requestId.toLowerCase().includes(search.toLowerCase()) ||
@@ -110,27 +143,24 @@ export default function CompletedService() {
     }
 
     try {
-      console.log(`Downloading: ${item.fileUrl}`);
+      const token = localStorage.getItem("token") || localStorage.getItem("user_name");
+      const response = await fetch(item.fileUrl, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
 
-      // For actual file download
-      const response = await fetch(item.fileUrl);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-
-      // Extract filename from URL or use request ID
-      const filename = item.fileUrl.split('/').pop() || `${item.requestId}_document.pdf`;
-      link.download = filename;
-
+      link.download = item.fileName || `${item.requestId}_document.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-
-      console.log(`✅ Downloaded: ${filename}`);
     } catch (error) {
-      console.error("❌ Error downloading file:", error);
+      console.error("Error downloading file:", error);
       alert("Failed to download file. Please try again.");
     }
   };
@@ -139,127 +169,19 @@ export default function CompletedService() {
     setCurrentPage(page);
   };
 
-  const renderPaginationButtons = () => {
-    const buttons = [];
-    const maxVisiblePages = 5;
-
-    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-    if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    }
-
-    // Previous button
-    buttons.push(
-      <button
-        key="prev"
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-      >
-        ← Previous
-      </button>
-    );
-
-    // First page
-    if (startPage > 1) {
-      buttons.push(
-        <button
-          key={1}
-          onClick={() => handlePageChange(1)}
-          className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-        >
-          1
-        </button>
-      );
-      if (startPage > 2) {
-        buttons.push(
-          <span key="ellipsis1" className="px-2 py-1">
-            ...
-          </span>
-        );
-      }
-    }
-
-    // Page numbers
-    for (let page = startPage; page <= endPage; page++) {
-      buttons.push(
-        <button
-          key={page}
-          onClick={() => handlePageChange(page)}
-          className={`px-3 py-1 border rounded-lg transition-colors ${currentPage === page
-            ? "bg-blue-600 text-white border-blue-600"
-            : "border-gray-300 hover:bg-gray-50"
-            }`}
-        >
-          {page}
-        </button>
-      );
-    }
-
-    // Last page
-    if (endPage < totalPages) {
-      if (endPage < totalPages - 1) {
-        buttons.push(
-          <span key="ellipsis2" className="px-2 py-1">
-            ...
-          </span>
-        );
-      }
-      buttons.push(
-        <button
-          key={totalPages}
-          onClick={() => handlePageChange(totalPages)}
-          className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-        >
-          {totalPages}
-        </button>
-      );
-    }
-
-    // Next button
-    buttons.push(
-      <button
-        key="next"
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-      >
-        Next →
-      </button>
-    );
-
-    return buttons;
-  };
-
-  // Format date for display
   const formatDisplayDate = (dateString) => {
     if (!dateString || dateString === "N/A") return "N/A";
 
     try {
-      // Handle different date formats from API
       const date = new Date(dateString);
-      if (isNaN(date.getTime())) {
-        // If direct parsing fails, try handling Indian format (DD/MM/YYYY)
-        const parts = dateString.split('/');
-        if (parts.length === 3) {
-          const formattedDate = new Date(parts[2], parts[1] - 1, parts[0]);
-          return formattedDate.toLocaleDateString('en-IN', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric'
-          });
-        }
-        return dateString;
-      }
+      if (isNaN(date.getTime())) return dateString;
+      
       return date.toLocaleDateString('en-IN', {
         day: '2-digit',
         month: 'short',
         year: 'numeric'
       });
     } catch (error) {
-      console.error("Error formatting date:", error);
       return dateString;
     }
   };
@@ -277,6 +199,26 @@ export default function CompletedService() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 mt-30 p-4 sm:p-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+            <div className="text-red-500 text-6xl mb-4">⚠️</div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Error Loading Services</h3>
+            <p className="text-gray-500 mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 mt-30 p-4 sm:p-6">
       <div className="max-w-7xl mx-auto">
@@ -284,71 +226,8 @@ export default function CompletedService() {
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-3">Completed Services</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            View and download all your successfully completed service documents and certificates
+            View and download all your successfully completed service documents
           </p>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <span className="text-2xl">📋</span>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Completed</p>
-                <p className="text-2xl font-bold text-gray-900">{completedServices.length}</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <span className="text-2xl">⏱️</span>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Files Available</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {completedServices.filter(item => item.fileUrl).length}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <span className="text-2xl">✅</span>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Completed</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {completedServices.filter(item => item.status === 'Completed').length}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-2 bg-orange-100 rounded-lg">
-                <span className="text-2xl">📅</span>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">This Month</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {completedServices.filter(item => {
-                    try {
-                      const itemDate = new Date(item.date);
-                      const now = new Date();
-                      return itemDate.getMonth() === now.getMonth() &&
-                        itemDate.getFullYear() === now.getFullYear();
-                    } catch {
-                      return false;
-                    }
-                  }).length}
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Table Container */}
@@ -366,7 +245,6 @@ export default function CompletedService() {
                   }}
                   className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                 >
-                  <option value={5}>5</option>
                   <option value={10}>10</option>
                   <option value={25}>25</option>
                   <option value={50}>50</option>
@@ -418,25 +296,17 @@ export default function CompletedService() {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {paginatedData.length > 0 ? (
-                  paginatedData.map((item, idx) => (
-                    <tr key={item.id} className="hover:bg-gray-50 transition-colors group">
+                  paginatedData.map((item) => (
+                    <tr key={item.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-4">
                         <div className="text-sm font-mono text-blue-600 font-medium">
                           {item.requestId}
-                        </div>
-                        <div className="text-xs text-gray-500 mt-1">
-                          ID #{startIndex + idx + 1}
                         </div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-sm font-medium text-gray-900">
                           {item.service}
                         </div>
-                        {item.completionTime && item.completionTime !== "N/A" && (
-                          <div className="text-xs text-gray-500 mt-1">
-                            Completed in {item.completionTime}
-                          </div>
-                        )}
                       </td>
                       <td className="px-6 py-4">
                         <div className="text-sm text-gray-900">
@@ -450,27 +320,15 @@ export default function CompletedService() {
                       </td>
                       <td className="px-6 py-4">
                         {item.fileUrl ? (
-                          <div className="flex items-center space-x-3">
-                            <button
-                              onClick={() => handleDownload(item)}
-                              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors group-hover:bg-blue-700"
-                            >
-                              <span className="mr-2">📥</span>
-                              Download
-                            </button>
-                            {item.fileSize && item.fileSize !== "N/A" && (
-                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                                {item.fileSize}
-                              </span>
-                            )}
-                          </div>
+                          <button
+                            onClick={() => handleDownload(item)}
+                            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                          >
+                            <span className="mr-2">📥</span>
+                            Download
+                          </button>
                         ) : (
-                          <div className="text-gray-400 text-sm">
-                            <span className="bg-gray-100 px-3 py-2 rounded-lg inline-flex items-center">
-                              <span className="mr-2">📄</span>
-                              No file available
-                            </span>
-                          </div>
+                          <span className="text-gray-400 text-sm">No file</span>
                         )}
                       </td>
                     </tr>
@@ -479,9 +337,11 @@ export default function CompletedService() {
                   <tr>
                     <td colSpan="5" className="px-6 py-12 text-center">
                       <div className="text-gray-400 text-6xl mb-4">📭</div>
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">No completed services found</h3>
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">
+                        {completedServices.length === 0 ? "No completed services found" : "No matching services found"}
+                      </h3>
                       <p className="text-gray-500">
-                        {search ? "Try adjusting your search terms" : "No services have been completed yet"}
+                        {search ? "Try adjusting your search terms" : "You haven't completed any services yet"}
                       </p>
                     </td>
                   </tr>
@@ -498,7 +358,35 @@ export default function CompletedService() {
                 {filteredData.length} entries
               </div>
               <div className="flex flex-wrap gap-2 justify-center">
-                {renderPaginationButtons()}
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
+                >
+                  ← Previous
+                </button>
+                
+                {[...Array(totalPages)].map((_, index) => (
+                  <button
+                    key={index + 1}
+                    onClick={() => handlePageChange(index + 1)}
+                    className={`px-3 py-1 border rounded-lg transition-colors ${
+                      currentPage === index + 1
+                        ? "bg-blue-600 text-white border-blue-600"
+                        : "border-gray-300 hover:bg-gray-50"
+                    }`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+                
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
+                >
+                  Next →
+                </button>
               </div>
             </div>
           )}

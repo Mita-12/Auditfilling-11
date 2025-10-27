@@ -69,7 +69,7 @@
 
 //   return (
 //     <div className="flex flex-col min-h-screen">
- 
+
 
 //       {/* Main Content */}
 //       <div className="flex-1 container mt-25 mx-auto px-4 lg:px-8 py-8">
@@ -260,7 +260,7 @@
 //       {/* WhatsApp Button */}
 //       <WhatsAppPopup />
 
-    
+
 //     </div>
 //   );
 // }
@@ -368,7 +368,7 @@ function BlogPage() {
       <div className="container mx-auto px-4 lg:px-8 py-12">
         {/* Page header */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-3">Professional Blogs</h1>
+          <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-3">Our Stories</h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Expert insights on taxation, compliance, legal matters, and business advisory.
           </p>
@@ -403,8 +403,8 @@ function BlogPage() {
                   key={cat}
                   onClick={() => handleCategorySelect(cat)}
                   className={`text-sm px-4 py-2 rounded-full transition ${selectedCategory === cat
-                      ? "bg-blue-600 text-white shadow-md"
-                      : "bg-white text-gray-700 border border-gray-200 hover:shadow-sm"
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "bg-white text-gray-700 border border-gray-200 hover:shadow-sm"
                     }`}
                 >
                   {cat}

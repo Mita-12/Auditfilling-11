@@ -145,19 +145,19 @@ export default function LoginForm({ isOpen, onClose, onLoginSuccess }) {
   };
 
   // -------------------- Unified Login Success Handler --------------------
-const handleLoginSuccess = (userData) => {
-  localStorage.setItem("token", userData.token);
-  localStorage.setItem("user", JSON.stringify({ id: userData.id, name: userData.user_name, }));
-  
-  // Store the actual username/email/mobile separately
-  localStorage.setItem("user_name", user_name); // <-- This keeps the email/mobile entered
+  const handleLoginSuccess = (userData) => {
+    localStorage.setItem("token", userData.token);
+    localStorage.setItem("user", JSON.stringify({ id: userData.id, name: userData.user_name, }));
 
-  if (onLoginSuccess) onLoginSuccess({ id: userData.id, name: userData.name });
-  window.dispatchEvent(new Event("userUpdated"));
-  window.dispatchEvent(new Event("storage"));
-  window.location.reload();
-  navigate("/");
-};
+    // Store the actual username/email/mobile separately
+    localStorage.setItem("user_name", user_name); // <-- This keeps the email/mobile entered
+
+    if (onLoginSuccess) onLoginSuccess({ id: userData.id, name: userData.name });
+    window.dispatchEvent(new Event("userUpdated"));
+    window.dispatchEvent(new Event("storage"));
+    window.location.reload();
+    navigate("/");
+  };
 
   if (!isOpen) return null;
 
@@ -251,14 +251,14 @@ const handleLoginSuccess = (userData) => {
           <div className="text-center">
             <button type="submit"
               className={`px-6 py-2 rounded-full text-white font-semibold shadow transition 
-                ${loginOption === "password" ? !user_name || !password ? "bg-blue-400 cursor-not-allowed" : "bg-teal-500 hover:bg-teal-600" 
-                : !user_name || !otp ? "bg-blue-400 cursor-not-allowed" : "bg-teal-500 hover:bg-teal-600"}`}>
+                ${loginOption === "password" ? !user_name || !password ? "bg-blue-400 cursor-not-allowed" : "bg-teal-500 hover:bg-teal-600"
+                  : !user_name || !otp ? "bg-blue-400 cursor-not-allowed" : "bg-teal-500 hover:bg-teal-600"}`}>
               Login
             </button>
           </div>
         </form>
 
-       
+
       </div>
     </div>
   );

@@ -3,7 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 import React from "react";
 import { FaBalanceScale, FaFileInvoiceDollar, FaRegBuilding, FaTrademark, FaUniversity, FaGavel, FaRocket } from "react-icons/fa";
-import { FaLock, FaMoneyBillWave, FaCheckCircle, FaUserGraduate, FaBuilding, FaReceipt, FaUserFriends, FaHome } from "react-icons/fa";
+import {
+  FaReceipt,
+  FaBuilding,
+  FaChartLine,
+  FaCalculator,
+  FaShieldAlt,
+  FaHandshake,
+  FaRegFileAlt,
+  FaUserTie
+} from "react-icons/fa";
+
 import { motion } from "framer-motion";
 
 function ServicesSection() {
@@ -13,44 +23,44 @@ function ServicesSection() {
   const services = [
     {
       title: "Income Tax",
-      description: "Get complete income tax details, ITR refund, PAN card info, and updates from the Income Tax Department.",
-      icon: <FaFileInvoiceDollar className="text-blue-600 text-4xl" />,
+      description: "Hassle-free income tax filing made simple. Save time, avoid errors, and stay compliant with experts",
+      icon: <FaCalculator className="text-blue-600 text-4xl" />,
       link: "/income-tax",
     },
     {
       title: "GST",
-      description: "Easily manage GST on AuditFiling: GST portal access, login, registration, status check, calculator, and more.",
-      icon: <FaBalanceScale className="text-green-600 text-4xl" />,
+      description: "Simplify your GST process: registration, filing, calculator, and return status — all in one place",
+      icon: <FaRegFileAlt className="text-green-600 text-4xl" />,
       link: "/gst",
     },
     {
       title: "Startup Registrations",
-      description: "Complete support for Startup India, DPIIT Startup Registration, MSME/Udyam, and related services.",
+      description: "End-to-end startup registration—DPIIT, Udyam/MSME, and Startup India compliance are made easy for you",
       icon: <FaRocket className="text-purple-600 text-4xl" />,
       link: "/startup",
     },
     {
       title: "Company (MCA)",
-      description: "Expert services in ESI return filing, PF & ESI registration, ITR filing, and company compliance in India.",
-      icon: <FaRegBuilding className="text-indigo-600 text-4xl" />,
+      description: "Simplify your business with company registration, ITR filing, PF/ESI returns, and legal compliance",
+      icon: <FaUserTie className="text-indigo-600 text-4xl" />,
       link: "/company",
     },
     {
       title: "Trademark",
-      description: "We manage Trademark Registration, responses to objections, and brand protection services in India.",
-      icon: <FaTrademark className="text-yellow-600 text-4xl" />,
+      description: "Fast, reliable Trademark registration and objection handling to secure your brand identity",
+      icon: <FaShieldAlt className="text-yellow-600 text-4xl" />,
       link: "/trademark",
     },
     {
       title: "Bank Valuation",
-      description: "Reliable bank and business valuation services, wealth management, and financial advisory solutions.",
-      icon: <FaUniversity className="text-red-600 text-4xl" />,
+      description: "Expert bank and business valuation with wealth management and advisory solutions at in one place",
+      icon: <FaBalanceScale className="text-red-600 text-4xl" />,
       link: "/bankvaluation",
     },
     {
       title: "Legal",
-      description: "Simplify legal work with online Legal Notices, Rent Agreements, and expert Legal Advice.",
-      icon: <FaGavel className="text-teal-600 text-4xl" />,
+      description: "Handle legal work effortlessly with online Legal Notices, Rent Agreements, and expert legal advice",
+      icon: <FaHandshake className="text-teal-600 text-4xl" />,
       link: "/legal",
     },
   ];
@@ -101,13 +111,13 @@ function ServicesSection() {
                   show: { opacity: 1, y: 0 },
                 }}
               >
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3  mb-4">
                   <div className="p-3 rounded-full bg-gray-100">{service.icon}</div>
                   <h3 className="font-semibold font-serif text-gray-900 text-lg">
                     {service.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 text-sm text-justifyleading-loose tracking-wide  mb-4">
+                <p className="text-gray-600 text-sm m-2  mb-4">
                   {service.description}
                 </p>
                 <motion.button
@@ -166,7 +176,7 @@ function ServicesSection() {
                     {service.title}
                   </h3>
                 </div>
-                <p className="text-gray-600 text-sm leading-loose tracking-wide  mb-4">
+                <p className="text-gray-600 text-base  m-2 mb-4">
                   {service.description}
                 </p>
                 <motion.button
@@ -194,7 +204,7 @@ function ServicesSection() {
           </motion.div>
         </div>
       </section>
-    
+
 
     </div>
   );

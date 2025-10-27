@@ -70,7 +70,7 @@ export default function Herosection() {
             <motion.img
               src="/img/support.jpg"
               alt="Who Are We"
-              loading="lazy"
+              
               className="w-full rounded-2xl object-cover"
               // whileHover={{ scale: 1.05 }}
               // transition={{ type: "spring", stiffness: 200, damping: 12 }}

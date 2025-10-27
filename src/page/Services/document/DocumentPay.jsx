@@ -1,306 +1,290 @@
-// import React, { useEffect } from "react";
-// import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import {
+  BuildingOfficeIcon,
+  DocumentTextIcon,
+  CurrencyRupeeIcon,
+  PlusIcon,
+  CheckBadgeIcon
+} from '@heroicons/react/24/outline';
 
-// export default function DocumentPay() {
-//   const { service } = useParams();
+const DocumentsPay = () => {
+  const [serviceData, setServiceData] = useState(null);
+  const [companies, setCompanies] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [pricing, setPricing] = useState(null);
+  const [error, setError] = useState('');
+  const [documents, setDocuments] = useState([]);
+  const [serviceIds, setServiceIds] = useState([]);
 
-//   // ✅ Service configuration (name + price)
-//   const serviceData = {
-//     "salary-individual": {
-//       name: "Salary Individual",
-//       price: 499,
-//     },
-//     professional: {
-//       name: "Professional",
-//       price: 799,
-//     },
-//     employee: {
-//       name: "Employee",
-//       price: 599,
-//     },
-//     huf: {
-//       name: "HUF",
-//       price: 699,
-//     },
-//   };
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { serviceName } = useParams();
 
-//   const currentService = serviceData[service];
+  // ✅ Fetch all services and their IDs
+  useEffect(() => {
+    async function fetchServiceIds() {
+      try {
+        const res = await fetch("https://auditfiling.com/api/v1/web/menu");
+        const data = await res.json();
 
-//   if (!currentService) {
-//     return (
-//       <div className="flex justify-center items-center min-h-screen">
-//         <p className="text-red-500 text-lg font-semibold">
-//           Invalid service selected.
-//         </p>
-//       </div>
-//     );
-//   }
+        const menus = Array.isArray(data) ? data : data.menus || [];
 
-//   // ✅ Razorpay Payment Handler
-//   const handlePayment = async () => {
-//     const options = {
-//       key: "rzp_test_YourRazorpayKeyHere", // 👉 Replace with your Razorpay key
-//       amount: currentService.price * 100,
-//       currency: "INR",
-//       name: "AuditFiling Services",
-//       description: `Payment for ${currentService.name}`,
-//       image: "https://auditfiling.com/logo.png", // optional
-//       handler: function (response) {
-//         alert(`✅ Payment Successful!\nPayment ID: ${response.razorpay_payment_id}`);
-//       },
-//       prefill: {
-//         name: "John Doe",
-//         email: "john@example.com",
-//         contact: "9999999999",
-//       },
-//       theme: {
-//         color: "#2563eb",
-//       },
-//     };
+        const allServices = menus.flatMap((menu) =>
+          menu.services ? menu.services.map((srv) => srv) : []
+        );
 
-//     const rzp = new window.Razorpay(options);
-//     rzp.open();
-//   };
+        setServiceIds(allServices);
+      } catch (err) {
+        console.error("Error fetching service IDs:", err);
+      }
+    }
 
-//   // ✅ Load Razorpay script if not already loaded
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//     const script = document.createElement("script");
-//     script.src = "https://checkout.razorpay.com/v1/checkout.js";
-//     script.async = true;
-//     document.body.appendChild(script);
-//   }, []);
+    fetchServiceIds();
+  }, []);
 
-//   return (
-//     <div className="min-h-screen flex justify-center items-center bg-gray-50 px-4 py-10">
-//       <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md border border-gray-100">
-//         {/* Heading */}
-//         <h2 className="text-2xl font-semibold text-gray-800 text-center mb-2">
-//           {currentService.name}
-//         </h2>
-//         <p className="text-gray-500 text-center mb-6">
-//           Please upload or keep ready the following documents:
-//         </p>
+  // ✅ Fetch service details by ID
 
-//         {/* Document List */}
-//         <ul className="space-y-3 mb-6">
-//           {[
-//             "Copy of PAN Card",
-//             "Copy of Aadhaar Card",
-//             "Previous Year IT Return (if any)",
-//           ].map((doc, index) => (
-//             <li
-//               key={index}
-//               className="flex items-center gap-2 text-gray-700 font-medium"
-//             >
-//               <span className="w-3 h-3 bg-blue-600 rounded-full"></span>
-//               {doc}
-//             </li>
-//           ))}
-//         </ul>
+  const fetchServiceById = async (serviceId) => {
+    console.log(serviceId);
+    
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const response = await fetch(`https://auditfiling.com/api/v1/service/${serviceId}`, {
+        headers: {
+          'Authorization': `Bearer ${user?.token}`,
+        }
+      });
+      if (response.ok) {
+        const serviceDetails = await response.json();
 
-//         {/* Price Section */}
-//         <div className="flex justify-between items-center mb-6">
-//           <span className="text-lg font-semibold text-gray-700">Price</span>
-//           <span className="text-xl font-bold text-blue-600">
-//             ₹{currentService.price}
-//           </span>
-//         </div>
+        const apiDocuments = serviceDetails.required_documents?.map(doc => ({
+          name: doc.document_name,
+          mandatory: doc.status === 1,
+          id: doc.id
+        })) || [];
+        console.log(serviceDetails);
 
-//         {/* Proceed to Pay Button */}
-//         <button
-//           onClick={handlePayment}
-//           className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition duration-200"
-//         >
-//           Proceed to Pay
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
-export default function DocumentPay() {
-  const { service } = useParams();
-
-  const [userType, setUserType] = useState(""); // Individual | Business | Both
-  const [companyRegistered, setCompanyRegistered] = useState(false);
-  const [companyName, setCompanyName] = useState("");
-
-  const serviceData = {
-    "salary-individual": { name: "Salary Individual", price: 1000 },
-    professional: { name: "Professional", price: 1000 },
-    employee: { name: "Employee", price: 1000 },
-    huf: { name: "HUF", price: 1000 },
+        return {
+          serviceDetails,
+          documents: apiDocuments
+        };
+      }
+      return null;
+    } catch (error) {
+      console.error('Error fetching service by ID:', error);
+      return null;
+    }
   };
 
-  const currentService = serviceData[service];
+  // ✅ Initialize page with service details
+  useEffect(() => {
+    const initializePage = async () => {
+      try {
+        setLoading(true);
 
-  if (!currentService) {
+        if (location.state?.serviceData) {
+          const service = location.state.serviceData;
+          setServiceData(service);
+          setPricing({ finalAmount: service.price || 1000 });
+
+          const serviceWithDocs = await fetchServiceById(service.id);
+          if (serviceWithDocs && serviceWithDocs.documents.length > 0) {
+            setDocuments(serviceWithDocs.documents);
+          }
+        } else {
+          const safeServiceName = serviceName ? serviceName.toLowerCase() : "";
+
+          const foundService = serviceIds.find((srv) => {
+            const content = srv?.service_content?.toLowerCase?.() || "";
+            const nameSlug = srv?.service_name
+              ? srv.service_name.toLowerCase().replace(/\s+/g, "-")
+              : "";
+
+            return content === safeServiceName || nameSlug === safeServiceName;
+          });
+
+
+          if (!foundService) {
+            setError('Service not found');
+            return;
+          }
+
+          setServiceData(foundService);
+          setPricing({ finalAmount: foundService.service_price || 1000 });
+
+          const serviceWithDocs = await fetchServiceById(foundService.id);
+          if (serviceWithDocs && serviceWithDocs.documents.length > 0) {
+            setDocuments(serviceWithDocs.documents);
+          }
+        }
+
+        const currentServiceType = location.state?.serviceType || location.state?.serviceData?.type;
+        if (currentServiceType === 'business') {
+          setCompanies([]);
+        }
+      } catch (error) {
+        console.error('Error initializing page:', error);
+        setError('Failed to load service details. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializePage();
+  }, [location.state, serviceName, serviceIds]);
+
+  // ✅ Helper Functions
+  const handleCompanySelect = (companyId) => setSelectedCompany(companyId);
+
+  const handleProceedWithService = () => {
+    if (!serviceData) return;
+
+    if (serviceData.type === 'business' && !selectedCompany) {
+      setError('Please select a company to proceed');
+      return;
+    }
+
+    const selectedCompanyData = companies.find(c => c.id === selectedCompany);
+
+    navigate(`/service/${serviceData.service_content}/checkout`, {
+      state: {
+        serviceData,
+        serviceType: serviceData.type,
+        company: selectedCompanyData,
+        pricing,
+        documents
+      }
+    });
+  };
+
+  const handleAddCompany = () => {
+    navigate('/company-detailform', {
+      state: {
+        redirectBack: `/documents/${serviceName}`,
+        serviceData
+      }
+    });
+  };
+
+  const formatPrice = (price) => {
+    if (!price && price !== 0) return '0.00';
+    return typeof price === 'number' ? price.toFixed(2) : parseFloat(price).toFixed(2);
+  };
+
+  // ✅ UI Rendering
+  if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-red-500 text-lg font-semibold">
-          Invalid service selected.
-        </p>
+      <div className="flex justify-center items-center h-96">
+        <p className="text-gray-600 text-lg">Loading service details...</p>
       </div>
     );
   }
 
-  // ✅ Razorpay Payment Handler
-  const handlePayment = async () => {
-    const options = {
-      key: "rzp_test_YourRazorpayKeyHere",
-      amount: currentService.price * 100,
-      currency: "INR",
-      name: "AuditFiling Services",
-      description: `Payment for ${currentService.name}`,
-      image: "https://auditfiling.com/logo.png",
-      handler: function (response) {
-        alert(
-          `✅ Payment Successful!\nPayment ID: ${response.razorpay_payment_id}`
-        );
-      },
-      prefill: { name: "John Doe", email: "john@example.com", contact: "9999999999" },
-      theme: { color: "#2563eb" },
-    };
-
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-  };
-
-  // ✅ Load Razorpay script
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-96 text-center">
+        <p className="text-red-500 text-lg mb-3">{error}</p>
+        <button
+          onClick={() => navigate('/')}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+        >
+          Go Back Home
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className=" bg-gray-50 mt-30 px-4 py-10 flex justify-center items-start">
-      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-5xl border border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* LEFT SIDE - Documents & Form */}
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            {currentService.name}
+    <div className="max-w-5xl mx-auto p-6 mt-30 ">
+      <h1 className="text-2xl font-semibold mb-6 flex items-center gap-2">
+        <DocumentTextIcon className="w-6 h-6 text-blue-600" />
+        {serviceData?.service_name || 'Loading...'}
+      </h1>
+
+      <div className="space-y-6">
+        {/* Documents */}
+        <div className="bg-white rounded-2xl shadow p-5">
+          <h2 className="text-lg font-semibold flex items-center gap-2 mb-4">
+            <CheckBadgeIcon className="w-5 h-5 text-green-600" />
+            Required Documents
           </h2>
 
-          <p className="text-gray-500 mb-4">
-            Please upload or keep ready the following documents:
-          </p>
-
-          <ul className="space-y-3 mb-6">
-            {[
-              "Copy of PAN Card",
-              "Copy of Aadhaar Card",
-              "Previous Year IT Return (if any)",
-            ].map((doc, index) => (
-              <li
-                key={index}
-                className="flex items-center gap-2 text-gray-700 font-medium"
-              >
-                <span className="w-3 h-3 bg-blue-600 rounded-full"></span>
-                {doc}
-              </li>
-            ))}
-          </ul>
-
-          
-          {/* Price Section */}
-          <div className="flex justify-between items-center mb-6">
-            <span className="text-lg font-semibold text-gray-700">Price</span>
-            <span className="text-xl font-bold text-blue-600">
-              ₹{currentService.price}
-            </span>
-          </div>
-
-          {/* User Type Dropdown */}
-          <div className="mb-6">
-            <label
-              htmlFor="userType"
-              className="block text-gray-700 font-medium mb-2"
-            >
-              Select Type
-            </label>
-            <select
-              id="userType"
-              value={userType}
-              onChange={(e) => setUserType(e.target.value)}
-              className="w-full border border-gray-300 px-3 py-2 rounded-md text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-            >
-              <option value="">-- Choose Service --</option>
-              <option value="Individual">Individual</option>
-              <option value="Business">Business</option>
-              <option value="Both">Both</option>
-            </select>
-          </div>
-
-
-          {/* Proceed Button (only if Individual) */}
-          {userType === "Individual" && (
-            <button
-              onClick={handlePayment}
-              className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition duration-200"
-            >
-              Proceed to Pay
-            </button>
+          {documents.length > 0 ? (
+            <ul className="list-disc pl-6 space-y-2">
+              {documents.map((doc) => (
+                <li key={doc.id} className="text-gray-700">
+                  {doc.name} {doc.mandatory && <span className="text-red-500">*</span>}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500">No documents listed for this service.</p>
           )}
         </div>
 
-        {/* RIGHT SIDE - Company Section */}
-        {userType === "Business" || userType === "Both" ? (
-          <div className="border-l border-gray-200 pl-6">
-            {companyRegistered ? (
-              <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold text-green-700">
-                  Registered Company
-                </h3>
-                <p className="text-gray-700 mt-2">
-                  Company Name: <span className="font-semibold">{companyName}</span>
-                </p>
+        {/* Pricing */}
+        <div className="bg-white rounded-2xl shadow p-5">
+          <h2 className="text-lg font-semibold flex items-center gap-2 mb-4">
+            <CurrencyRupeeIcon className="w-5 h-5 text-blue-600" />
+            Pricing
+          </h2>
+          <p className="text-xl font-bold text-gray-800">
+            ₹{formatPrice(pricing?.finalAmount)} /-
+          </p>
+        </div>
+
+        {/* Company Selection (if applicable) */}
+        {serviceData?.type === 'business' && (
+          <div className="bg-white rounded-2xl shadow p-5">
+            <h2 className="text-lg font-semibold flex items-center gap-2 mb-4">
+              <BuildingOfficeIcon className="w-5 h-5 text-indigo-600" />
+              Select Company
+            </h2>
+
+            {companies.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {companies.map((company) => (
+                  <div
+                    key={company.id}
+                    onClick={() => handleCompanySelect(company.id)}
+                    className={`border rounded-xl p-4 cursor-pointer transition ${selectedCompany === company.id
+                        ? 'border-blue-600 bg-blue-50'
+                        : 'border-gray-200 hover:border-blue-400'
+                      }`}
+                  >
+                    <h3 className="font-medium text-gray-800">{company.name}</h3>
+                    <p className="text-sm text-gray-500">{company.type}</p>
+                  </div>
+                ))}
               </div>
             ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (companyName.trim()) setCompanyRegistered(true);
-                }}
-                className="bg-gray-50 border border-gray-200 rounded-lg p-4"
-              >
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                  Register Your Company
-                </h3>
-
-                <div className="mb-4">
-                  <label
-                    htmlFor="companyName"
-                    className="block text-gray-700 font-medium mb-2"
-                  >
-                    Company Name
-                  </label>
-                  <input
-                    type="text"
-                    id="companyName"
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                    placeholder="Enter your company name"
-                    className="w-full border border-gray-300 px-3 py-2 rounded-md text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition"
-                >
-                  Save Company
-                </button>
-              </form>
+              <p className="text-gray-500 mb-3">No companies added yet.</p>
             )}
+
+            <button
+              onClick={handleAddCompany}
+              className="mt-3 flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+            >
+              <PlusIcon className="w-4 h-4" />
+              Add New Company
+            </button>
           </div>
-        ) : null}
+        )}
+
+        {/* Proceed Button */}
+        <div className="text-right">
+          <button
+            onClick={handleProceedWithService}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Proceed to Pay
+          </button>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default DocumentsPay;

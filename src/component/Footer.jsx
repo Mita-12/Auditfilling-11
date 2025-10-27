@@ -19,37 +19,24 @@ export default function Footer() {
           {/* Brand Section */}
           <div>
             <div className="relative inline-block group mb-6">
-              <h2 className="text-2xl font-bold font-serif">AuditFiling</h2>
+              <h1 className="text-2xl font-bold font-serif">AuditFiling</h1>
               <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
             </div>
 
             <p className="text-gray-300 text-sm leading-relaxed ">
               Your trusted partner for tax, compliance, and business solutions
             </p>
-            {/* <div className="flex gap-4 mt-6">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                <FaFacebook className="text-blue-600 text-2xl hover:scale-110 transition-transform duration-200" />
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-                <FaYoutube className="text-red-600 text-2xl hover:scale-110 transition-transform duration-200" />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                <FaInstagram className="text-pink-500 text-2xl hover:scale-110 transition-transform duration-200" />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                <FaLinkedin className="text-blue-500 text-2xl hover:scale-110 transition-transform duration-200" />
-              </a>
-            </div> */}
+
           </div>
 
           {/* Quick Links */}
           <div>
             <div className="relative inline-block group mb-6">
-              <h3 className="text-lg font-semibold font-serif">Quick Links</h3>
+              <h1 className="text-lg font-semibold font-serif">Quick Links</h1>
               <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
             </div>
 
-            <ul className="space-y-1 text-gray-300 text-lg leading-relaxed ">
+            <ul className="space-y-1 list-none text-gray-300 text-lg leading-relaxed ">
               {[
                 { path: "/about", label: "About Us" },
                 { path: "/contact", label: "Contact Us" },
@@ -75,11 +62,11 @@ export default function Footer() {
           {/* Services */}
           <div>
             <div className="relative inline-block group mb-6">
-              <h3 className="text-lg font-semibold font-serif">Cloudsat's Entities</h3>
+              <h1 className="text-lg font-semibold font-serif">Cloudsat's Entities</h1>
               <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
             </div>
 
-            <ul className="space-y-3 text-gray-300 text-lg  leading-relaxed">
+            <ul className="space-y-3 list-none text-gray-300 text-lg  leading-relaxed">
               {[
                 { path: "/", label: "AuditFiling" },
                 { path: "http://localhost:5173/income-tax", label: "Tracolab" },
@@ -105,7 +92,7 @@ export default function Footer() {
           {/* Contact Section */}
           <div>
             <div className="relative inline-block group mb-6">
-              <h3 className="text-lg font-semibold font-serif">Contact</h3>
+              <h1 className="text-lg font-semibold font-serif">Contact</h1>
               <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
             </div>
 
@@ -132,19 +119,19 @@ export default function Footer() {
 
               <div className="flex items-start gap-3 px-1 py-1 rounded-sm">
                 <HiOutlineOfficeBuilding className="text-red-400 text-4xl mt-1" />
-               <div>
-  <h4 className="text-white font-semibold mb-1">Head Office</h4>
-  <p className="text-gray-400 text-sm">
-    <a
-      href="https://www.google.com/maps?q=H+No-511,+Sarahah+Tower,+Subhash+Nagar,+Gurugram,+122006,+India"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="hover:text-blue-400  transition-colors duration-200"
-    >
-      H No-511, Sarahah Tower, Subhash Nagar, Gurugram, India, 122006
-    </a>
-  </p>
-</div>
+                <div>
+                  <h4 className="text-white font-semibold mb-1">Head Office</h4>
+                  <p className="text-gray-400 text-sm">
+                    <a
+                      href="https://www.google.com/maps?q=H+No-511,+Sarahah+Tower,+Subhash+Nagar,+Gurugram,+122006,+India"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-blue-400  transition-colors duration-200"
+                    >
+                      H No-511, Sarahah Tower, Subhash Nagar, Gurugram, India, 122006
+                    </a>
+                  </p>
+                </div>
 
               </div>
 
@@ -172,7 +159,7 @@ export default function Footer() {
           {/* Newsletter */}
           <div>
             <div className="relative inline-block group mb-6">
-              <h3 className="text-lg font-semibold font-serif">Newsletter</h3>
+              <h1 className="text-lg font-semibold font-serif">Newsletter</h1>
               <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-12 h-[2px] bg-white rounded-full transition-all duration-500 group-hover:w-full"></span>
             </div>
 
@@ -193,6 +180,33 @@ export default function Footer() {
                 Subscribe
               </button>
             </form>
+                    <div className="mt-5 flex   justify-center items-center gap-4 flex-wrap text-center">
+  {/* Google Play */}
+  <a
+    href="https://play.google.com/store/apps/details?id=com.auditfiling.user"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+      alt="Get it on Google Play"
+      className="w-44 h-auto"
+    />
+  </a>
+
+  {/* App Store */}
+  <a
+    href="#"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      src="https://auditfiling.com/images/images.png"
+      alt="Download on the App Store"
+      className="w-44 h-auto"
+    />
+  </a>
+</div>
           </div>
         </div>
 

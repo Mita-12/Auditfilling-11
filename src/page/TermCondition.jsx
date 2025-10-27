@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../component/Footer";
-import Header from "../component/Header";
 
 const sections = [
-  { id: "accepting-terms", title: "Accepting the Terms" },
-  { id: "provision-services", title: "Provision of Services" },
-  { id: "use-services", title: "Use of Services" },
-  { id: "account-security", title: "Account Security" },
-  { id: "privacy", title: "Privacy" },
-  { id: "accuracy-tax", title: "Accuracy of Tax Returns" },
-  { id: "disclaimer-warranties", title: "Disclaimer of Warranties" },
+  { id: "acceptance-of-terms", title: "Acceptance of Terms" },
+  { id: "scope-of-services", title: "Scope of Services" },
+  { id: "user-obligations", title: "User Obligations" },
+  { id: "account-security", title: "Account and Security" },
+  { id: "privacy-policy", title: "Privacy Policy" },
+  { id: "accuracy-disclaimer", title: "Accuracy of Information and Disclaimer" },
   { id: "limitation-liability", title: "Limitation of Liability" },
-  { id: "refunds-cancellations", title: "Refunds & Cancellations" },
+  { id: "payments-refunds", title: "Payments, Refunds & Cancellations" },
+  { id: "intellectual-property", title: "Intellectual Property" },
+  { id: "termination", title: "Termination" },
+  { id: "governing-law", title: "Governing Law and Jurisdiction" },
+  { id: "contact-information", title: "Contact Information" },
 ];
 
 export default function TermsAndConditions() {
@@ -31,7 +32,7 @@ export default function TermsAndConditions() {
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
-      
+
       // Find which section is currently in view
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i].id);
@@ -44,7 +45,7 @@ export default function TermsAndConditions() {
 
     handleHash();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -55,18 +56,15 @@ export default function TermsAndConditions() {
 
   return (
     <section className="min-h-screen text-gray-800">
-      <Header/>
       {/* Hero Section */}
       <div className="relative mt-20 py-20 lg:py-24">
         <div className="absolute inset-0"></div>
         <div className="relative font-serif max-w-6xl mx-auto px-6 text-center">
-          <h1 className="text-4xl text-black md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+          <h1 className="text-4xl text-black md:text-5xl lg:text-6xl font-bold leading-tight">
             Terms and Conditions
             <span className="block w-24 h-1 bg-blue-600 mx-auto mt-3 transition-all duration-500"></span>
           </h1>
-          <p className="text-xl md:text-2xl text-black max-w-3xl mx-auto leading-relaxed">
-            Please read these terms carefully before using Auditfiling.com services
-          </p>
+
         </div>
       </div>
 
@@ -74,9 +72,11 @@ export default function TermsAndConditions() {
       <div className="max-w-6xl mx-auto px-6 -mt-8 lg:-mt-12 relative z-10">
         <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-10 border border-orange-100">
           <p className="text-lg lg:text-xl leading-relaxed text-gray-700 text-center">
-            <span className="font-semibold text-black">Auditfiling.com</span> is a product of{" "}
-            <span className="font-semibold text-black">Cloudsat Pvt. Ltd.</span>. 
-            By creating an account and using our services, you agree to be bound by these Terms and Conditions.
+            Welcome to <span className="font-semibold text-black">Auditfiling.com</span>, a product of{" "}
+            <span className="font-semibold text-black">Cloudsat Pvt. Ltd.</span> ("we", "our", or "Auditfiling").
+            By accessing or using our website, platform, or any of our services, you ("you", "your", or "client")
+            agree to be bound by the following terms and conditions ("Terms"). Please take a moment to read these terms before using our services.
+
           </p>
         </div>
       </div>
@@ -91,16 +91,15 @@ export default function TermsAndConditions() {
                 <a
                   href={`#${sec.id}`}
                   onClick={() => handleSectionClick(sec.id)}
-                  className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
-                    activeSection === sec.id
-                      ? "bg-orange-50 text-red-600 border-l-4 border-red-600 font-medium"
-                      : "text-gray-600 hover:text-red-600 hover:bg-gray-50"
-                  }`}
+                  className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${activeSection === sec.id
+                    ? "bg-blue-50 text-blue-500 border-l-4 border-blue-500 "
+                    : "text-gray-600 hover:text-blue-500 hover:bg-gray-50"
+                    }`}
                 >
-                  <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
+                  <span className="text-sm  text-gray-400 w-6 flex-shrink-0">
                     {index + 1}.
                   </span>
-                  <span className="text-xl lg:text-xl leading-tight">{sec.title}</span>
+                  <span className="text-lg  leading-tight">{sec.title}</span>
                 </a>
               </li>
             ))}
@@ -109,150 +108,116 @@ export default function TermsAndConditions() {
 
         {/* Main Content */}
         <div className="flex-1 space-y-2">
-          <Section id="accepting-terms" title="1. Accepting the Terms">
+          <Section id="acceptance-of-terms" title="1. Acceptance of Terms">
             <ul className="space-y-1">
               <ListItem>
-                <strong>Auditfiling.com</strong> is a product of <strong>Cloudsat Pvt. Ltd.</strong> (called Auditfiling.com from here onwards).
+                By creating an account or availing any of our services, you agree to comply with these Terms.
               </ListItem>
               <ListItem>
-                By creating an account and using any Auditfiling.com services, you agree to these terms.
+                You must be an Indian resident of legal age to enter into binding contracts.
               </ListItem>
               <ListItem>
-                You must be of legal age and a resident of India to use the services.
+                If you disagree with any part of these terms, we request you not to continue using our service.
               </ListItem>
               <ListItem>
-                If you are using our services on behalf of an organization, you represent that you have the authority to bind that organization.
+                Auditfiling reserves the right to modify, update, or replace any part of these Terms without prior notice.
+              </ListItem>
+              <ListItem>
+                Continued use of our services after such changes constitutes acceptance of the revised Terms.
               </ListItem>
             </ul>
           </Section>
 
-          <Section id="provision-services" title="2. Provision of Services">
+          <Section id="scope-of-services" title="2. Scope of Services">
             <ul className="space-y-1">
               <ListItem>
-                Auditfiling.com may change or stop services at any time without notice.
+                Auditfiling.com provides digital and assisted legal, tax, and compliance services, including but not limited to GST filing, ITR filing, company registration, and business compliance management.
               </ListItem>
               <ListItem>
-                By using the service, you agree to be added as a client on Income Tax Department web services.
+                We may modify, suspend, or discontinue any service or feature at any time, with or without notice.
               </ListItem>
               <ListItem>
-                Limits may be imposed on transmissions or storage space at our discretion.
-              </ListItem>
-              <ListItem>
-                We reserve the right to modify, suspend, or discontinue any service with or without notice.
+                By using our platform, you authorize Auditfiling and its representatives to act on your behalf for submissions, filings, or registrations with government departments such as the Income Tax Department, MCA, and GST portals.
               </ListItem>
             </ul>
           </Section>
 
-          <Section id="use-services" title="3. Use of Services">
+          <Section id="user-obligations" title="3. User Obligations">
             <ul className="space-y-1">
               <ListItem>
-                You must provide accurate and current tax information and only use the services legally.
+                You agree to provide accurate, complete, and current information while using our services.
               </ListItem>
               <ListItem>
-                Unauthorized access, automation, reproduction, or interference with services is strictly prohibited.
+                You are solely responsible for verifying the accuracy of filings, forms, or other submissions before approval.
               </ListItem>
               <ListItem>
-                If filing for another person, you must have their explicit consent and authority.
+                Unauthorized use, reproduction, or distribution of our services, tools, or content is strictly prohibited.
               </ListItem>
               <ListItem>
-                You agree not to use the service for any unlawful purpose or to violate any laws.
-              </ListItem>
-              <ListItem>
-                Any attempt to compromise the security or functionality of our services may result in termination of your account.
+                If filing on behalf of another individual or entity, you must have proper authorization.
               </ListItem>
             </ul>
           </Section>
 
-          <Section id="account-security" title="4. Account Security">
+          <Section id="account-security" title="4. Account and Security">
             <ul className="space-y-1">
               <ListItem>
-                You are solely responsible for maintaining the confidentiality of your account and passwords.
+                You're responsible for keeping your account details secure and not sharing them with anyone.
               </ListItem>
               <ListItem>
-                Notify Auditfiling.com immediately if you suspect any unauthorized access to your account.
+                Any loss or damage resulting from unauthorized account access is not Auditfiling's responsibility.
               </ListItem>
               <ListItem>
-                You are responsible for all activities that occur under your account.
+                Notify us immediately if you suspect any breach of security.
+              </ListItem>
+            </ul>
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 mt-4">
+              <p className="text-lg font-semibold mb-2">Security Contact:</p>
+              <ContactInfo
+                label="Email:"
+                value="support@auditfiling.com"
+                href="mailto:support@auditfiling.com"
+              />
+              <ContactInfo
+                label="Phone:"
+                value="+91 74286 00607"
+                href="tel:+917428600607"
+              />
+            </div>
+          </Section>
+
+          <Section id="privacy-policy" title="5. Privacy Policy">
+            <ul className="space-y-1">
+              <ListItem>
+                Your use of our services is subject to our Privacy Policy, which explains how we collect, use, and protect your information.
               </ListItem>
               <ListItem>
-                We reserve the right to disable your account if we believe there has been any security breach.
+                Continued use implies consent to our privacy practices.
               </ListItem>
             </ul>
           </Section>
 
-          <Section id="privacy" title="5. Privacy">
+          <Section id="accuracy-disclaimer" title="6. Accuracy of Information and Disclaimer">
             <ul className="space-y-1">
               <ListItem>
-                Refer to our Privacy Policy to understand how your data is handled.
+                We strive to provide accurate and reliable services; however, Auditfiling does not guarantee error-free performance.
               </ListItem>
               <ListItem>
-                Use of the service implies consent to our privacy policy.
+                All filings and documents are prepared based on information provided by you, and the responsibility for correctness lies with the client.
               </ListItem>
               <ListItem>
-                We collect and process personal information in accordance with our Privacy Policy and applicable laws.
-              </ListItem>
-              <ListItem>
-                You acknowledge that we may use your contact information to send service-related communications.
+                Services are provided "as is" and "as available," without any warranties, express or implied.
               </ListItem>
             </ul>
           </Section>
 
-          <Section id="accuracy-tax" title="6. Accuracy of Tax Returns">
+          <Section id="limitation-liability" title="7. Limitation of Liability">
             <ul className="space-y-1">
               <ListItem>
-                Auditfiling.com strives for accuracy in tax preparation and filing services.
+                Auditfiling, its employees, or affiliates will not be liable for any indirect, incidental, or consequential damages arising from the use or inability to use our services.
               </ListItem>
               <ListItem>
-                However, the ultimate responsibility lies with you to verify your return before submission.
-              </ListItem>
-              <ListItem>
-                We provide no warranties regarding the correctness or completeness of the tax returns.
-              </ListItem>
-              <ListItem>
-                You are responsible for reviewing all information and ensuring its accuracy before filing.
-              </ListItem>
-              <ListItem>
-                We recommend consulting with a qualified tax professional for complex tax situations.
-              </ListItem>
-            </ul>
-          </Section>
-
-          <Section id="disclaimer-warranties" title="7. Disclaimer of Warranties">
-            <ul className="space-y-1">
-              <ListItem>
-                Services are provided "as is" without any warranties, express or implied.
-              </ListItem>
-              <ListItem>
-                We do not guarantee uninterrupted or error-free service.
-              </ListItem>
-              <ListItem>
-                No oral or written information will create any warranty not stated in these terms.
-              </ListItem>
-              <ListItem>
-                We disclaim all warranties including merchantability, fitness for a particular purpose, and non-infringement.
-              </ListItem>
-              <ListItem>
-                We do not warrant that the services will meet your requirements or be available on an uninterrupted basis.
-              </ListItem>
-            </ul>
-          </Section>
-
-          <Section id="limitation-liability" title="8. Limitation of Liability">
-            <ul className="space-y-1">
-              <ListItem>
-                Auditfiling.com is not liable for any indirect, incidental, special, or consequential damages.
-              </ListItem>
-              <ListItem>
-                This includes but is not limited to loss of profits, data, reputation, or business opportunities.
-              </ListItem>
-              <ListItem>
-                The limitations apply even if we have been advised of potential losses.
-              </ListItem>
-              <ListItem>
-                Our total liability to you for any claims shall not exceed the amount you paid for the services.
-              </ListItem>
-              <ListItem>
-                We are not liable for any delays or failures in performance due to circumstances beyond our reasonable control.
+                Our total liability, in any case, shall not exceed the amount paid by you for the specific service.
               </ListItem>
             </ul>
             <ImportantNote>
@@ -260,86 +225,172 @@ export default function TermsAndConditions() {
             </ImportantNote>
           </Section>
 
-          <Section id="refunds-cancellations" title="9. Refunds & Cancellations">
+          <Section id="payments-refunds" title="8. Payments, Refunds & Cancellations">
+            <SubSection title="Payments:">
+              <ul className="space-y-2">
+                <ListItem>
+                  All prices are inclusive of applicable GST unless otherwise stated.
+                </ListItem>
+              </ul>
+            </SubSection>
+
             <SubSection title="Refund Policy:">
               <ul className="space-y-2">
                 <ListItem>
-                  <strong>For self e-Filing plans:</strong> Refunds are only available before the service has been used.
+                  <strong>For self-filing plans:</strong> Refunds are available only before service usage.
                 </ListItem>
                 <ListItem>
-                  <strong>For assisted plans:</strong> Refunds are possible before an expert starts working on your file.
+                  <strong>For assisted plans:</strong> Refunds are available only before an expert begins work.
                 </ListItem>
                 <ListItem>
-                  Once an expert has begun work on your assisted filing, refunds cannot be processed.
+                  Once a service has been initiated, refunds or cancellations will not be processed.
+                </ListItem>
+                <ListItem>
+                  All refund requests must be sent to auditfilling@gmail.com and will be handled within 3–5 weeks.
+                </ListItem>
+                <ListItem>
+                  Auditfiling reserves the right to deduct applicable processing or administrative charges on approved refunds.
                 </ListItem>
               </ul>
             </SubSection>
 
-            <SubSection title="Cancellation Policy:">
-              <ul className="space-y-2">
-                <ListItem>
-                  You may cancel your account at any time by contacting our support team.
-                </ListItem>
-                <ListItem>
-                  Cancellation of service does not automatically entitle you to a refund.
-                </ListItem>
-                <ListItem>
-                  We reserve the right to suspend or terminate your account for violation of these terms.
-                </ListItem>
-              </ul>
-            </SubSection>
-
-            <SubSection title="Contact for Refunds:">
+            <SubSection title="Refund Contact:">
               <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
                 <p className="text-lg font-semibold mb-2">Refund Inquiries:</p>
-                <ContactInfo 
-                  label="Email:" 
-                  value="payments@auditfiling.com" 
-                  href="mailto:payments@auditfiling.com" 
+                <ContactInfo
+                  label="Email:"
+                  value="auditfilling@gmail.com"
+                  href="mailto:auditfilling@gmail.com"
                 />
                 <p className="text-sm text-gray-600 mt-2">
                   Please include your account details and reason for refund request.
                 </p>
               </div>
             </SubSection>
+          </Section>
 
-            <ImportantNote>
-              By using Auditfiling.com, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
-            </ImportantNote>
+          <Section id="intellectual-property" title="9. Intellectual Property">
+            <ul className="space-y-1">
+              <ListItem>
+                All content, logos, trademarks, and resources on Auditfiling.com are the intellectual property of Cloudsat Pvt. Ltd.
+              </ListItem>
+              <ListItem>
+                You may not copy, distribute, or reproduce any material without our prior written consent.
+              </ListItem>
+            </ul>
+          </Section>
+
+          <Section id="termination" title="10. Termination">
+            <ul className="space-y-1">
+              <ListItem>
+                We reserve the right to suspend or terminate access to our services at any time for violations of these Terms, fraudulent activity, or misuse of our platform.
+              </ListItem>
+              <ListItem>
+                Upon termination, your right to use our services will immediately cease.
+              </ListItem>
+            </ul>
+          </Section>
+
+          <Section id="governing-law" title="11. Governing Law and Jurisdiction">
+            <ul className="space-y-1">
+              <ListItem>
+                All our terms and conditions are governed by and interpreted in accordance with the laws of India.
+              </ListItem>
+              <ListItem>
+                Any disputes arising under or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts in Odisha, India.
+              </ListItem>
+            </ul>
+          </Section>
+
+          <Section id="contact-information" title="12. Contact Information">
+            <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+              <p className="text-lg font-semibold mb-4">For any queries, feedback, or concerns regarding these Terms, please contact us at:</p>
+
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Cloudsat Pvt. Ltd.</h4>
+                  <p className="text-gray-700">(Cloudsat.in / Auditfiling.com)</p>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <h5 className="font-medium text-gray-900 mb-2">Head Office:</h5>
+                    <p className="text-gray-700">
+                      H No-511, Sarahah Tower,<br />
+                      Subhash Nagar,<br />
+                      Gurugram, India
+                    </p>
+                  </div>
+
+                  <div>
+                    <h5 className="font-medium text-gray-900 mb-2">Branch Office:</h5>
+                    <p className="text-gray-700">
+                      2nd Floor, BMC Panchadeep Market Complex,<br />
+                      Bhoumya Nagar, Unit-4,<br />
+                      Bhubaneswar, India
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <ContactInfo
+                    label="Phone:"
+                    value="+91 7428600607"
+                    href="tel:+917428600607"
+                  />
+                  <ContactInfo
+                    label="Email:"
+                    value="info@cloudsat.in"
+                    href="mailto:info@cloudsat.in"
+                  />
+                  <ContactInfo
+                    label="Support:"
+                    value="support@auditfiling.com"
+                    href="mailto:support@auditfiling.com"
+                  />
+                </div>
+              </div>
+            </div>
           </Section>
 
           {/* Last Updated Section */}
           <div className="bg-white p-6 rounded-lg border border-gray-200 mt-8">
             <h3 className="text-xl font-bold text-gray-900 mb-2">Last Updated</h3>
             <p className="text-gray-700">
-              These Terms and Conditions were last updated on {new Date().toLocaleDateString('en-IN', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+              These Terms and Conditions were last updated on {new Date().toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
               })}.
             </p>
             <p className="text-gray-600 text-sm mt-2">
               We recommend reviewing these terms periodically for any changes.
             </p>
           </div>
+
+          {/* Agreement Notice */}
+          <div className="bg-blue-50 p-6 rounded-lg border border-blue-200 mt-6">
+            <p className="text-lg font-semibold text-blue-900 text-center">
+              By using Auditfiling.com, you agree to these terms.
+            </p>
+          </div>
         </div>
       </div>
-      <Footer/>
     </section>
   );
 }
 
-// Reusable Components (same as Privacy Policy)
+// Reusable Components
 function Section({ id, title, children }) {
   return (
-    <div 
-      id={id} 
+    <div
+      id={id}
       className="bg-white p-4 transition-all duration-300"
     >
-      <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-200 pb-2">
+      <h1 className="text-2xl font-bold text-gray-900 border-b border-gray-200 pb-2">
         {title}
-      </h2>
-      <div className="text-gray-700 leading-relaxed text-lg space-y-6">
+      </h1>
+      <div className="text-gray-700 leading-relaxed space-y-6">
         {children}
       </div>
     </div>
@@ -358,7 +409,7 @@ function SubSection({ title, children }) {
 function ListItem({ children }) {
   return (
     <li className="flex items-start">
-      <span className="text-red-600 mr-3 mt-1">•</span>
+      <span className="text-blue-500 mr-3 mt-1">•</span>
       <span>{children}</span>
     </li>
   );
@@ -366,7 +417,7 @@ function ListItem({ children }) {
 
 function ImportantNote({ children }) {
   return (
-    <div className="p-2 bg-orange-50 border-l-2 border-red-600 rounded-r-sm">
+    <div className="p-2 bg-blue-50 border-l-2 border-blue-500 rounded-r-sm">
       <p className="text-gray-800 font-medium text-lg">{children}</p>
     </div>
   );
@@ -377,9 +428,9 @@ function ContactInfo({ label, value, href }) {
     <p className="flex flex-col sm:flex-row sm:items-center">
       <span className="font-medium text-gray-600 sm:w-24 sm:flex-shrink-0">{label}</span>
       {href ? (
-        <a 
-          href={href} 
-          className="text-red-600 hover:text-red-700 hover:underline font-medium transition-colors"
+        <a
+          href={href}
+          className="text-blue-500 hover:text-red-700 hover:underline font-medium transition-colors"
         >
           {value}
         </a>

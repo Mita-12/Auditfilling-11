@@ -1,11 +1,475 @@
+// import React, { useEffect, useState } from "react";
+// import QuickForm from "../../form/QuickForm";
+// import WhatsAppPopup from "../../form/WhatsAppPopup";
+// import ProceedToPay from "./document/ProceedToPay";
+// import { useNavigate } from "react-router-dom";
+
+// export default function Company() {
+//   const [menuData, setMenuData] = useState(null);
+//   const [services, setServices] = useState([]);
+//   const [activeService, setActiveService] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [menus, setMenus] = useState([]);
+//   const [faqs, setFaqs] = useState([]);
+//   const [activeSection, setActiveSection] = useState("");
+//   const [selectedService, setSelectedService] = useState(""); // Added missing state
+//    const navigate = useNavigate();
+
+//   // 1️⃣ Fetch all menus and find company menu
+//   useEffect(() => {
+//     async function fetchMenus() {
+//       try {
+//         const res = await fetch("https://auditfiling.com/api/v1/web/menu");
+//         const data = await res.json();
+
+//         const menusData =
+//           Array.isArray(data)
+//             ? data
+//             : data.menus || data.data || data.menu || [];
+
+//         setMenus(menusData);
+
+//         // Find company-related menu - Fixed duplicate conditions
+//         const companyMenu = menusData.find((menu) => {
+//           const name = (menu.name || menu.menu_name || "").toLowerCase();
+//           return (
+//             name.includes("company") ||
+//             name.includes("incorporation") || // Added different terms
+//             name.includes("business")
+//           );
+//         });
+
+//         if (companyMenu) {
+//           fetchMenuDetail(companyMenu.id);
+//         } else {
+//           console.warn("⚠️ No company menu found!");
+//           setLoading(false);
+//         }
+//       } catch (err) {
+//         console.error("❌ Error fetching menus:", err);
+//         setLoading(false);
+//       }
+//     }
+
+//     fetchMenus();
+//   }, []);
+
+//   // 2️⃣ Fetch menu details by ID
+//   const fetchMenuDetail = async (id) => {
+//     setLoading(true);
+//     try {
+//       const res = await fetch(`https://auditfiling.com/api/v1/menu/${id}`);
+//       const data = await res.json();
+
+//       const menu = data.menu || data.data || data.menu_data || data || null;
+//       if (menu) {
+//         setMenuData(menu);
+//         const allServices =
+//           menu.services ||
+//           menu.menu_services ||
+//           menu.items ||
+//           menu.submenus ||
+//           [];
+//         setServices(allServices);
+//         if (allServices.length > 0) {
+//           setActiveService(allServices[0]);
+//           // Set initial selected service for payment
+//           setSelectedService(allServices[0].id || allServices[0].service_id || "");
+//         }
+//       }
+//     } catch (err) {
+//       console.error("❌ Error fetching company data:", err);
+//     }
+//     setLoading(false);
+//   };
+
+//   // Handle scroll behavior and active section highlighting
+//   useEffect(() => {
+//     const handleHash = () => {
+//       const hash = window.location.hash;
+//       if (hash) {
+//         const el = document.getElementById(hash.substring(1));
+//         if (el) {
+//           el.scrollIntoView({ behavior: "smooth", block: "start" });
+//         }
+//       }
+//     };
+
+//     const handleScroll = () => {
+//       const scrollPosition = window.scrollY + 100;
+
+//       // Find which section is currently in view
+//       const sections = [
+//         { id: "menu-overview", title: "Overview" },
+//         ...services.map((service, idx) => ({ 
+//           id: `service-${service.id || idx}`, 
+//           title: service.service_name || service.name 
+//         })),
+//         { id: "faq-section", title: "FAQ" }
+//       ];
+
+//       for (let i = sections.length - 1; i >= 0; i--) {
+//         const section = document.getElementById(sections[i].id);
+//         if (section && section.offsetTop <= scrollPosition) {
+//           setActiveSection(sections[i].id);
+//           break;
+//         }
+//       }
+//     };
+
+//     handleHash();
+//     window.addEventListener("scroll", handleScroll, { passive: true });
+
+//     return () => window.removeEventListener("scroll", handleScroll);
+//   }, [services]);
+
+//   const handleSectionClick = (id) => {
+//     setActiveSection(id);
+//     window.history.pushState(null, null, `#${id}`);
+//     const element = document.getElementById(id);
+//     if (element) {
+//       element.scrollIntoView({ behavior: "smooth", block: "start" });
+//     }
+//   };
+
+//   // Scroll to section on service click
+//   const handleClick = (service) => {
+//     setActiveService(service);
+//     const id = `service-${service.id || services.indexOf(service)}`; // Fixed ID generation
+//     setActiveSection(id);
+//     window.history.pushState(null, null, `#${id}`);
+//     const el = document.getElementById(id);
+//     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+//   };
+
+//   // ✅ Smooth scroll to FAQ section
+//   const handleFaqClick = () => {
+//     setActiveSection("faq-section");
+//     window.history.pushState(null, null, `#faq-section`);
+//     const el = document.getElementById("faq-section");
+//     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+//   };
+
+// const handleProceed = async () => {
+//   if (!selectedService) return;
+
+//   try {
+//     const serviceId = parseInt(selectedService);
+//     const serviceObj = services.find((s) => s.id === serviceId);
+
+//     if (!serviceObj) {
+//       console.error('Service not found in local data');
+//       return;
+//     }
+
+//     // Use the current menuData ID dynamically
+//     const currentMenuId = menuData?.id;
+
+//     if (!currentMenuId) {
+//       throw new Error('No menu ID available');
+//     }
+
+//     const response = await fetch(`https://auditfiling.com/api/v1/menu/${currentMenuId}`);
+
+//     if (!response.ok) {
+//       throw new Error(`API error: ${response.status}`);
+//     }
+
+//     const menuDataResponse = await response.json();
+//     console.log('API Response:', menuDataResponse);
+
+//     // Find the specific service in the services array that matches our selected service ID
+//     const selectedServiceData = menuDataResponse.services?.find(service => 
+//       service.id === serviceId
+//     );
+
+//     if (selectedServiceData) {
+//       // Use the service_content directly from API (already URL-friendly)
+//       const routeName = selectedServiceData.service_content;
+
+//       console.log(`Service type: ${selectedServiceData.type}`);
+//       console.log(`Navigating to: /documents/${routeName}`);
+
+//       navigate(`/documents/${routeName}`);
+//     } else {
+//       // Fallback if service not found in API response
+//       throw new Error('Service not found in API response');
+//     }
+
+//   } catch (error) {
+//     console.error('Error in handleProceed:', error);
+
+//     // Fallback: proceed without API using local service data
+//     const serviceObj = services.find((s) => s.id === parseInt(selectedService));
+//     if (serviceObj) {
+//       console.warn('API failed, proceeding with fallback navigation');
+//       const routeName = serviceObj.service_name
+//         .toLowerCase()
+//         .replace(/\s+/g, "-")
+//         .replace(/[()]/g, "");
+//       navigate(`/documents/${routeName}`);
+//     } else {
+//       alert('Unable to proceed. Please try again.');
+//     }
+//   }
+// };
+//   // Fetch FAQ dynamically
+// useEffect(() => {
+//   const fetchFaqs = async () => {
+//     if (!menuData?.id) return; // Wait until menu data is available
+
+//     try {
+//       const res = await fetch(`https://auditfiling.com/api/v1/faq/${menuData.id}`);
+//       const data = await res.json();
+//       setFaqs(Array.isArray(data) ? data : data.faqs || []);
+//     } catch (error) {
+//       console.error("Error fetching FAQs:", error);
+//     }
+//   };
+
+//   fetchFaqs();
+// }, [menuData?.id]); // Re-fetch when menu ID changes 
 
 
+//   // 4️⃣ Loading & error handling
+//   if (loading)
+//     return (
+//       <div className="flex items-center justify-center h-screen text-gray-700 font-semibold text-lg">
+//         Loading company data...
+//       </div>
+//     );
+
+//   if (!menuData)
+//     return (
+//       <div className="flex items-center justify-center h-screen text-red-500 text-lg font-semibold">
+//         Company data not found.
+//       </div>
+//     );
+
+//   // 5️⃣ Render UI
+//   return (
+//     <div className="min-h-screen">
+//       {/* <Header /> */}
+//       <div className="mx-auto w-full mt-25 px-4 py-10 flex flex-col md:flex-row gap-8">
+//         {/* Sidebar Navigation */}
+//         <nav className="lg:sticky ml-15 lg:top-24 lg:self-start bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-y-auto">
+//           <h1 className="text-2xl font-serif text-left mb-5 text-gray-800">
+//             {menuData.name || menuData.menu_name || "Company"}
+//           </h1>
+
+//           <ul className="space-y-3">
+//             {/* Overview Link */}
+//             <li>
+//               <a
+//                 href="#menu-overview"
+//                 onClick={() => handleSectionClick("menu-overview")}
+//                 className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
+//                   activeSection === "menu-overview"
+//                     ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 "
+//                     : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+//                 }`}
+//               >
+//                 <span className="text-sm  text-gray-400 w-6 flex-shrink-0">1.</span>
+//                 <span className="text-lg leading-tight">Overview</span>
+//               </a>
+//             </li>
+
+//             {/* Services Links */}
+//             {services.length > 0 ? (
+//               services.map((service, idx) => (
+//                 <li key={service.id || idx}>
+//                   <a
+//                     href={`#service-${service.id || idx}`}
+//                     onClick={() => handleClick(service)}
+//                     className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
+//                       activeSection === `service-${service.id || idx}`
+//                         ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 "
+//                         : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+//                     }`}
+//                   >
+//                     <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
+//                       {idx + 2}.
+//                     </span>
+//                     <span className="text-lg ">{service.service_name || service.name}</span>
+//                   </a>
+//                 </li>
+//               ))
+//             ) : (
+//               <li className="text-gray-500 text-center py-2">No services found</li>
+//             )}
+
+//             {/* FAQ link */}
+//             <li>
+//               <a
+//                 href="#faq-section"
+//                 onClick={handleFaqClick}
+//                 className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
+//                   activeSection === "faq-section"
+//                     ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
+//                     : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+//                 }`}
+//               >
+//                 <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
+//                   {services.length + 2}.
+//                 </span>
+//                 <span className="text-lg leading-tight">Frequently Asked Questions</span>
+//               </a>
+//             </li>
+//           </ul>
+//         </nav>
+
+//         {/* Main Content */}
+//         <main className="flex-1 space-y-10 mr-85">
+//           {/* Overview Section */}
+//           <section id="menu-overview" className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-30">
+//             <h1 className="text-3xl md:text-4xl font-serif text-center mb-2 text-gray-900">
+//               {menuData.name || "Company"}
+//             </h1>
+//             <div
+//               className="prose prose-blue w-full text-gray-700"
+//               dangerouslySetInnerHTML={{
+//                 __html:
+//                   menuData.menu_description ||
+//                   menuData.description ||
+//                   "<p>No description available.</p>",
+//               }}
+//             ></div>
+//           </section>
+
+//           {/* Services Sections */}
+//           {services.map((service, idx) => (
+//             <section
+//               key={service.id || idx}
+//               id={`service-${service.id || idx}`}
+//               className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-30"
+//             >
+//               <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
+//                 {service.service_name || service.name}
+//               </h1>
+//               <div
+//                 className="prose prose-blue w-full text-gray-700"
+//                 dangerouslySetInnerHTML={{
+//                   __html:
+//                     service.service_description ||
+//                     service.description ||
+//                     "<p>No details available.</p>",
+//                 }}
+//               ></div>
+//             </section>
+//           ))}
+
+//           {/* FAQ Section */}
+//           <section id="faq-section" className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-30">
+//             <h1 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
+//               Frequently Asked Questions
+//             </h1>
+
+//             {faqs.length > 0 ? (
+//               <ul className="space-y-4">
+//                 {faqs.map((faq, idx) => (
+//                   <FAQItem
+//                     key={faq.id || faq.faq_id || idx} // Fixed key prop
+//                     question={faq.question}
+//                     answer={faq.answer}
+//                   />
+//                 ))}
+//               </ul>
+//             ) : (
+//               <p className="text-gray-500 text-center">No FAQs available.</p>
+//             )}
+//           </section>
+
+//           {/* Mobile QuickForm */}
+//           <div className="block lg:hidden">
+//             <QuickForm />
+//           </div>
+//         </main>
+
+//         {/* Desktop QuickForm and Payment Section */}
+//         <div className="hidden lg:block fixed mt-1 right-20 w-64 space-y-4">
+//           <QuickForm />
+//           <div className="bg-white shadow-sm rounded-2xl p-1 w-full border border-gray-100">
+//             <h2 className="text-lg font-semibold text-gray-800 text-center mb-2">
+//               Proceed to Payment
+//             </h2>
+//             <p className="text-gray-500 text-center text-sm mb-2">
+//               Choose your Company service to continue with payment
+//             </p>
+
+//             <div className="mb-4">
+//               <label htmlFor="service" className="block text-gray-700 font-medium mb-1">
+//                 Select Service
+//               </label>
+//               <select
+//                 id="service"
+//                 value={selectedService}
+//                 onChange={(e) => setSelectedService(e.target.value)}
+//                 className="w-full border border-gray-300 px-1 py-1 rounded-md text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+//               >
+//                 <option value="">-- Choose a service --</option>
+//                 {services.map((service) => (
+//                   <option 
+//                     key={service.id || service.service_id} 
+//                     value={service.id || service.service_id}
+//                   >
+//                     {service.service_name || service.name}
+//                   </option>
+//                 ))}
+//               </select>
+//             </div>
+
+//             <button
+//               onClick={handleProceed}
+//               disabled={!selectedService}
+//               className={`w-full font-semibold py-1 rounded-lg transition duration-200 ${
+//                 selectedService
+//                   ? "bg-blue-600 text-white hover:bg-blue-700"
+//                   : "bg-gray-300 text-gray-600 cursor-not-allowed"
+//               }`}
+//             >
+//               Proceed to Pay
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+
+//       <WhatsAppPopup />
+//     </div>
+//   );
+// }
+
+// // ✅ FAQ Accordion Item
+// function FAQItem({ question, answer }) {
+//   const [open, setOpen] = useState(false);
+
+//   return (
+//     <li className="border border-gray-200 rounded-xl p-4 shadow-sm">
+//       <button
+//         onClick={() => setOpen(!open)}
+//         className="w-full text-left font-bold text-[16px] text-blue-800 flex justify-between items-center"
+//       >
+//         <span
+//           dangerouslySetInnerHTML={{ __html: question || "Untitled Question" }}
+//         ></span>
+//         <span className="text-lg font-bold">{open ? "−" : "+"}</span>
+//       </button>
+
+//       {open && (
+//         <div
+//           className="mt-3 text-gray-700"
+//           dangerouslySetInnerHTML={{
+//             __html: answer || "No answer available.",
+//           }}
+//         ></div>
+//       )}
+//     </li>
+//   );
+// }
 import React, { useEffect, useState } from "react";
-
 import QuickForm from "../../form/QuickForm";
 import WhatsAppPopup from "../../form/WhatsAppPopup";
 import ProceedToPay from "./document/ProceedToPay";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Company() {
   const [menuData, setMenuData] = useState(null);
@@ -15,6 +479,24 @@ export default function Company() {
   const [menus, setMenus] = useState([]);
   const [faqs, setFaqs] = useState([]);
   const [activeSection, setActiveSection] = useState("");
+  const [selectedService, setSelectedService] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const navigate = useNavigate();
+
+  // Check screen size
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      setIsTablet(width >= 768 && width < 1024);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   // 1️⃣ Fetch all menus and find company menu
   useEffect(() => {
@@ -35,8 +517,8 @@ export default function Company() {
           const name = (menu.name || menu.menu_name || "").toLowerCase();
           return (
             name.includes("company") ||
-            name.includes("company") ||
-            name.includes("company")
+            name.includes("incorporation") ||
+            name.includes("business")
           );
         });
 
@@ -72,7 +554,10 @@ export default function Company() {
           menu.submenus ||
           [];
         setServices(allServices);
-        if (allServices.length > 0) setActiveService(allServices[0]);
+        if (allServices.length > 0) {
+          setActiveService(allServices[0]);
+          setSelectedService(allServices[0].id || allServices[0].service_id || "");
+        }
       }
     } catch (err) {
       console.error("❌ Error fetching company data:", err);
@@ -87,24 +572,27 @@ export default function Company() {
       if (hash) {
         const el = document.getElementById(hash.substring(1));
         if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          const offset = isMobile ? 80 : 100;
+          const elementPosition = el.offsetTop - offset;
+          window.scrollTo({ top: elementPosition, behavior: "smooth" });
         }
       }
     };
 
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100;
-      
+      const offset = isMobile ? 80 : 100;
+      const scrollPosition = window.scrollY + offset;
+
       // Find which section is currently in view
       const sections = [
         { id: "menu-overview", title: "Overview" },
-        ...services.map((service, idx) => ({ 
-          id: `service-${service.id || idx}`, 
-          title: service.service_name || service.name 
+        ...services.map((service, idx) => ({
+          id: `service-${service.id || idx}`,
+          title: service.service_name || service.name
         })),
         { id: "faq-section", title: "FAQ" }
       ];
-      
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i].id);
         if (section && section.offsetTop <= scrollPosition) {
@@ -116,27 +604,33 @@ export default function Company() {
 
     handleHash();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [services]);
+  }, [services, isMobile]);
 
   const handleSectionClick = (id) => {
     setActiveSection(id);
     window.history.pushState(null, null, `#${id}`);
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      const offset = isMobile ? 80 : 100;
+      const elementPosition = element.offsetTop - offset;
+      window.scrollTo({ top: elementPosition, behavior: "smooth" });
     }
   };
 
   // Scroll to section on service click
   const handleClick = (service) => {
     setActiveService(service);
-    const id = `service-${service.id}`;
+    const id = `service-${service.id || services.indexOf(service)}`;
     setActiveSection(id);
     window.history.pushState(null, null, `#${id}`);
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (el) {
+      const offset = isMobile ? 80 : 100;
+      const elementPosition = el.offsetTop - offset;
+      window.scrollTo({ top: elementPosition, behavior: "smooth" });
+    }
   };
 
   // ✅ Smooth scroll to FAQ section
@@ -144,22 +638,88 @@ export default function Company() {
     setActiveSection("faq-section");
     window.history.pushState(null, null, `#faq-section`);
     const el = document.getElementById("faq-section");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (el) {
+      const offset = isMobile ? 80 : 100;
+      const elementPosition = el.offsetTop - offset;
+      window.scrollTo({ top: elementPosition, behavior: "smooth" });
+    }
+  };
+
+  const handleProceed = async () => {
+    if (!selectedService) return;
+
+    try {
+      const serviceId = parseInt(selectedService);
+      const serviceObj = services.find((s) => s.id === serviceId);
+
+      if (!serviceObj) {
+        console.error('Service not found in local data');
+        return;
+      }
+
+      const currentMenuId = menuData?.id;
+
+      if (!currentMenuId) {
+        throw new Error('No menu ID available');
+      }
+
+      const response = await fetch(`https://auditfiling.com/api/v1/menu/${currentMenuId}`);
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const menuDataResponse = await response.json();
+      console.log('API Response:', menuDataResponse);
+
+      const selectedServiceData = menuDataResponse.services?.find(service =>
+        service.id === serviceId
+      );
+
+      if (selectedServiceData) {
+        const routeName = selectedServiceData.service_content;
+
+        console.log(`Service type: ${selectedServiceData.type}`);
+        console.log(`Navigating to: /documents/${routeName}`);
+
+        navigate(`/documents/${routeName}`);
+      } else {
+        throw new Error('Service not found in API response');
+      }
+
+    } catch (error) {
+      console.error('Error in handleProceed:', error);
+
+      const serviceObj = services.find((s) => s.id === parseInt(selectedService));
+      if (serviceObj) {
+        console.warn('API failed, proceeding with fallback navigation');
+        const routeName = serviceObj.service_name
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[()]/g, "");
+        navigate(`/documents/${routeName}`);
+      } else {
+        alert('Unable to proceed. Please try again.');
+      }
+    }
   };
 
   // Fetch FAQ dynamically
   useEffect(() => {
     const fetchFaqs = async () => {
+      if (!menuData?.id) return;
+
       try {
-        const res = await fetch("https://auditfiling.com/api/v1/faq/8");
+        const res = await fetch(`https://auditfiling.com/api/v1/faq/${menuData.id}`);
         const data = await res.json();
         setFaqs(Array.isArray(data) ? data : data.faqs || []);
       } catch (error) {
         console.error("Error fetching FAQs:", error);
       }
     };
+
     fetchFaqs();
-  }, []);
+  }, [menuData?.id]);
 
   // 4️⃣ Loading & error handling
   if (loading)
@@ -172,91 +732,84 @@ export default function Company() {
   if (!menuData)
     return (
       <div className="flex items-center justify-center h-screen text-red-500 text-lg font-semibold">
-        company data not found.
+        Company data not found.
       </div>
     );
 
   // 5️⃣ Render UI
   return (
-    <div className="min-h-screen">
-      {/* <Header /> */}
-      <div className="mx-auto w-full mt-25 px-4 py-10 flex flex-col md:flex-row gap-8">
-        {/* Sidebar Navigation - Updated to match PrivacyPolicy style */}
-        <nav className="lg:sticky ml-15 lg:top-24 lg:self-start bg-white rounded-2xl p-5 h-auto md:h-[90vh] overflow-y-auto">
-          <h1 className="text-2xl font-serif text-left mb-5 text-gray-800">
-            {menuData.name || menuData.menu_name || "company"}
-          </h1>
+    <div className="min-h-screen bg-gray-50">
+      <div className="mx-auto w-full px-2 sm:px-4 lg:px-6 mt-20 sm:mt-25 py-6 sm:py-10 flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8">
+        {/* Sidebar Navigation - Hidden on mobile */}
+        {!isMobile && (
+          <nav className={`flex-none ${isTablet ? 'lg:w-64' : 'xl:w-80'} sticky top-24 self-start bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 h-auto overflow-y-auto shadow-sm`}>
+            <h1 className="text-lg sm:text-xl lg:text-2xl font-serif text-left mb-4 sm:mb-5 text-gray-800">
+              {menuData.name || menuData.menu_name || "Company"}
+            </h1>
 
-          <ul className="space-y-3">
-            {/* Overview Link */}
-            <li>
-              <a
-                href="#menu-overview"
-                onClick={() => handleSectionClick("menu-overview")}
-                className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
-                  activeSection === "menu-overview"
-                    ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 "
+            <ul className="space-y-2 list-none sm:space-y-3">
+              {/* Overview Link */}
+              <li>
+                <a
+                  href="#menu-overview"
+                  onClick={() => handleSectionClick("menu-overview")}
+                  className={`flex items-start py-1 px-2 rounded-lg transition-all duration-200 ${activeSection === "menu-overview"
+                    ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600"
                     : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                }`}
-              >
-                <span className="text-sm  text-gray-400 w-6 flex-shrink-0">1.</span>
-                <span className="text-lg leading-tight">Overview</span>
-              </a>
-            </li>
-
-            {/* Services Links */}
-            {services.length > 0 ? (
-              services.map((service, idx) => (
-                <li key={service.id || idx}>
-                  <a
-                    href={`#service-${service.id || idx}`}
-                    onClick={() => handleClick(service)}
-                    className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
-                      activeSection === `service-${service.id || idx}`
-                        ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 "
-                        : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                     }`}
-                  >
-                    <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
-                      {idx + 2}.
-                    </span>
-                    <span className="text-lg ">{service.service_name || service.name}</span>
-                  </a>
-                </li>
-              ))
-            ) : (
-              <li className="text-gray-500 text-center py-2">No services found</li>
-            )}
+                >
+                  <span className="text-sm sm:text-lg leading-tight">Overview</span>
+                </a>
+              </li>
 
-            {/* FAQ link */}
-            <li>
-              <a
-                href="#faq-section"
-                onClick={handleFaqClick}
-                className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
-                  activeSection === "faq-section"
+              {/* Services Links */}
+              {services.length > 0 ? (
+                services.map((service, idx) => (
+                  <li key={service.id || idx}>
+                    <a
+                      href={`#service-${service.id || idx}`}
+                      onClick={() => handleClick(service)}
+                      className={`flex items-start py-1 px-2 rounded-lg transition-all duration-200 ${activeSection === `service-${service.id || idx}`
+                        ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600"
+                        : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                        }`}
+                    >
+                      
+                      <span className="text-lg leading-tight">{service.service_name || service.name}</span>
+                    </a>
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-500 text-center py-2">No services found</li>
+              )}
+
+              {/* FAQ link */}
+              <li>
+                <a
+                  href="#faq-section"
+                  onClick={handleFaqClick}
+                  className={`flex items-start py-1 px-2 rounded-lg transition-all duration-200 ${activeSection === "faq-section"
                     ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
                     : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                }`}
-              >
-                <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
-                  {services.length + 2}.
-                </span>
-                <span className="text-lg leading-tight">Frequently Asked Questions</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+                    }`}
+                >
+                 
+                  <span className="text-sm sm:text-lg leading-tight">Frequently Asked Questions</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        )}
 
         {/* Main Content */}
-        <main className="flex-1 space-y-10 mr-85">
+        <main className={`flex-1 space-y-6 sm:space-y-8 lg:space-y-10 ${!isMobile ? 'lg:mr-1 xl:mr-3' : ''}`}>
           {/* Overview Section */}
-          <section id="menu-overview" className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-30">
-            <h1 className="text-3xl md:text-4xl font-serif text-center mb-2 text-gray-900">
-              {menuData.name || "company"}
+          <section id="menu-overview" className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-sm scroll-mt-24 sm:scroll-mt-30">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-center mb-2 text-gray-900">
+              {menuData.name || "Company"}
             </h1>
             <div
-              className="prose prose-blue w-full text-gray-700"
+              className="prose prose-sm sm:prose-base text-justify max-w-none text-gray-700"
               dangerouslySetInnerHTML={{
                 __html:
                   menuData.menu_description ||
@@ -271,13 +824,13 @@ export default function Company() {
             <section
               key={service.id || idx}
               id={`service-${service.id || idx}`}
-              className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-30"
+              className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-sm scroll-mt-24 sm:scroll-mt-30"
             >
-              <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-4 text-gray-900">
                 {service.service_name || service.name}
               </h1>
               <div
-                className="prose prose-blue w-full text-gray-700"
+                className="prose prose-sm sm:prose-base text-justify max-w-none text-gray-700"
                 dangerouslySetInnerHTML={{
                   __html:
                     service.service_description ||
@@ -289,18 +842,19 @@ export default function Company() {
           ))}
 
           {/* FAQ Section */}
-          <section id="faq-section" className="bg-white rounded-2xl p-6 shadow-sm scroll-mt-30">
-            <h1 className="text-2xl md:text-3xl font-bold font-serif text-center mb-6 text-gray-900">
+          <section id="faq-section" className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-sm scroll-mt-24 sm:scroll-mt-30">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold font-serif text-center mb-4 sm:mb-6 text-gray-900">
               Frequently Asked Questions
             </h1>
 
             {faqs.length > 0 ? (
-              <ul className="space-y-4">
+              <ul className="space-y-3 sm:space-y-4">
                 {faqs.map((faq, idx) => (
                   <FAQItem
-                    key={faq.menu_id || idx}
+                    key={faq.id || faq.faq_id || idx}
                     question={faq.question}
                     answer={faq.answer}
+                    isMobile={isMobile}
                   />
                 ))}
               </ul>
@@ -309,17 +863,110 @@ export default function Company() {
             )}
           </section>
 
+          {/* Mobile Payment Section */}
+          {isMobile && (
+            <div className="bg-white shadow-sm rounded-xl p-4 w-full border border-gray-100 mt-6">
+              <h2 className="text-xl font-semibold text-gray-800 text-center mb-3">
+                Proceed to Payment
+              </h2>
+              <p className="text-gray-500 text-center text-sm mb-4">
+                Choose your Company service to continue with payment
+              </p>
+
+              <div className="mb-4">
+                <label htmlFor="mobile-service" className="block text-gray-700 font-medium mb-2">
+                  Select Service
+                </label>
+                <select
+                  id="mobile-service"
+                  value={selectedService}
+                  onChange={(e) => setSelectedService(e.target.value)}
+                  className="w-full border border-gray-300 px-3 py-2 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                >
+                  <option value="">-- Choose a service --</option>
+                  {services.map((service) => (
+                    <option
+                      key={service.id || service.service_id}
+                      value={service.id || service.service_id}
+                    >
+                      {service.service_name || service.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button
+                onClick={handleProceed}
+                disabled={!selectedService}
+                className={`w-full font-semibold py-3 rounded-lg transition duration-200 ${selectedService
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                  }`}
+              >
+                Proceed to Pay
+              </button>
+            </div>
+          )}
+
           {/* Mobile QuickForm */}
-          <div className="block lg:hidden">
-            <QuickForm />
-          </div>
+          {isMobile && (
+            <div className="mt-6">
+              <QuickForm />
+            </div>
+          )}
         </main>
 
-        {/* Desktop QuickForm */}
-        <div className="fixed mt-1 right-20 w-64 space-y-1">
-                 <QuickForm />
-                 <ProceedToPay />
-               </div>
+        {/* Desktop & Tablet Sidebar - QuickForm & Payment */}
+        {!isMobile && (
+          <div className={`flex-none ${isTablet ? 'lg:w-60' : 'xl:w-72'} space-y-4 lg:space-y-6`}>
+            <div className="sticky top-24 space-y-4 lg:space-y-6">
+              <QuickForm />
+
+              {/* Payment Section */}
+              <div className="bg-white shadow-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 w-full border border-gray-100">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-800 text-center mb-2 sm:mb-3">
+                  Proceed to Payment
+                </h2>
+                <p className="text-gray-500 text-center text-xs sm:text-sm mb-3 sm:mb-4">
+                  Choose your Company service to continue with payment
+                </p>
+
+                <div className="mb-4 sm:mb-6">
+                  <label htmlFor="desktop-service" className="block text-gray-700 font-medium mb-1 sm:mb-2 text-sm sm:text-base">
+                    Select Service
+                  </label>
+                  <select
+                    id="desktop-service"
+                    value={selectedService}
+                    onChange={(e) => setSelectedService(e.target.value)}
+                    className="w-full border border-gray-300 px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm sm:text-base"
+                  >
+                    <option value="">-- Choose a service --</option>
+                    {services.map((service) => (
+                      <option
+                        key={service.id || service.service_id}
+                        value={service.id || service.service_id}
+                      >
+                        {service.service_name || service.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <button
+                  onClick={handleProceed}
+                  disabled={!selectedService}
+                  className={`w-full font-semibold py-2 sm:py-3 rounded-lg transition duration-200 text-sm sm:text-base ${selectedService
+                    ? "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                    }`}
+                >
+                  Proceed to Pay
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <WhatsAppPopup />
@@ -328,24 +975,27 @@ export default function Company() {
 }
 
 // ✅ FAQ Accordion Item
-function FAQItem({ question, answer }) {
+function FAQItem({ question, answer, isMobile }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <li className="border-gray-200 rounded-xl p-2 shadow-sm">
+    <li className="border border-gray-200 rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full text-left font-bold text-[16px] text-blue-800 flex justify-between items-center"
+        className="w-full text-left font-semibold sm:font-bold text-sm sm:text-[16px] text-blue-800 flex justify-between items-start hover:text-blue-900 transition-colors duration-200"
       >
         <span
+          className="text-left flex-1 pr-2"
           dangerouslySetInnerHTML={{ __html: question || "Untitled Question" }}
         ></span>
-        <span>{open ? "−" : "+"}</span>
+        <span className="text-lg sm:text-xl font-light flex-shrink-0 mt-1">
+          {open ? "−" : "+"}
+        </span>
       </button>
 
       {open && (
         <div
-          className="mt-2 text-gray-700"
+          className="mt-2 sm:mt-3 text-gray-700 leading-relaxed border-t border-gray-100 pt-2 sm:pt-3 text-sm sm:text-base"
           dangerouslySetInnerHTML={{
             __html: answer || "No answer available.",
           }}
