@@ -22,7 +22,7 @@ import TermsAndConditions from "./page/TermCondition.jsx";
 import ResellerRegistrationForm from "./reseller/Reseller.jsx";
 
 import ServiceProviderForm from "./page/ServiceProvider/ServiceProvider.jsx";
-import ProceedToPay from "./page/Services/document/ProceedToPay.jsx";
+// import ProceedToPay from "./page/Services/document/ProceedToPay.jsx";
 import DocumentPay from "./page/Services/document/DocumentPay.jsx";
 import LoginForm from "./form/LoginForm.jsx";
 import UserProfile from "./UserProfile/UserProfile.jsx";
@@ -47,7 +47,7 @@ function App() {
           {/* Add other nested routes here */}
           <Route path="/about" element={<About />} />
           <Route path="/income-tax" element={<IncomeTax />} />
-          
+
           <Route path="/gst" element={<Gst />} />
           <Route path="/startup" element={<StartUp />} />
           <Route path="/company" element={<Company />} />
@@ -71,15 +71,15 @@ function App() {
           <Route path="/payment-history" element={<PaymentHistory />} />
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/blog-detail" element={<BlogDetailPage />} />
-          <Route path="/invoice" element={<  PreviewInvoice/>}/>
-                    <Route path="/documents/:service" element={<  DocumentPay/>}/>
-                       <Route path="/proceed-to-pay/:category" element={<ProceedToPay />} />
+          <Route path="/invoice" element={<  PreviewInvoice />} />
+          <Route path="/documents/:service" element={<  DocumentPay />} />
+          {/* <Route path="/proceed-to-pay/:category" element={<ProceedToPay />} /> */}
 
- <Route
-          path="/service/:serviceName/checkout"
-          element={<Checkout />}
-        />
-                       
+          <Route
+            path="/service/:serviceName/checkout"
+            element={<Checkout />}
+          />
+
 
 
 

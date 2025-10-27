@@ -640,63 +640,78 @@ export default function StartUp() {
   };
 
   const handleProceed = async () => {
-    if (!selectedService) return;
+    if (!selectedService) {
+      console.warn("No service selected.");
+      return;
+    }
+
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    // 🔒 Check login
+    if (!user || !user.id) {
+      const serviceObj = services.find((s) => s.id === parseInt(selectedService));
+      navigate('/', {
+        state: {
+          redirectTo: '/documents',
+          selectedService: selectedService,
+          serviceData: serviceObj,
+          message: 'Please login to access documents'
+        }
+      });
+      return;
+    }
 
     try {
       const serviceId = parseInt(selectedService);
-      const serviceObj = services.find((s) => s.id === serviceId);
 
-      if (!serviceObj) {
-        console.error('Service not found in local data');
-        return;
-      }
+      // 🔗 Fetch from API
+      const response = await fetch(`https://auditfiling.com/api/v1/service/${serviceId}`, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`,
+          'User-ID': user.id
+        }
+      });
 
-      // Use the current menuData ID dynamically
-      const currentMenuId = menuData?.id;
+      if (!response.ok) throw new Error(`API error: ${response.status}`);
+      const data = await response.json();
+      console.log("API Response:", data);
 
-      if (!currentMenuId) {
-        throw new Error('No menu ID available');
-      }
-
-      const response = await fetch(`https://auditfiling.com/api/v1/menu/${currentMenuId}`);
-
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-
-      const menuDataResponse = await response.json();
-      console.log('API Response:', menuDataResponse);
-
-      // Find the specific service in the services array that matches our selected service ID
-      const selectedServiceData = menuDataResponse.services?.find(service =>
-        service.id === serviceId
-      );
+      // ✅ Handle both object and array response formats
+      const selectedServiceData = Array.isArray(data.services)
+        ? data.services.find((s) => s.id === serviceId)
+        : data.id === serviceId
+          ? data
+          : null;
 
       if (selectedServiceData) {
-        // Use the service_content directly from API (already URL-friendly)
-        const routeName = selectedServiceData.service_content;
+        const routeName = selectedServiceData.service_name
+          .toLowerCase()
+          .replace(/\s+/g, '-')
+          .replace(/[()]/g, '');
 
-        console.log(`Service type: ${selectedServiceData.type}`);
-        console.log(`Navigating to: /documents/${routeName}`);
-
-        navigate(`/documents/${routeName}`);
+        navigate(`/documents/${routeName}`, {
+          state: { serviceData: selectedServiceData }
+        });
       } else {
-        // Fallback if service not found in API response
-        throw new Error('Service not found in API response');
+        console.warn("Service not found in API response — using fallback");
+        throw new Error("Service not found");
       }
 
     } catch (error) {
-      console.error('Error in handleProceed:', error);
+      console.error("Error in handleProceed:", error);
 
-      // Fallback: proceed without API using local service data
+      // 🔁 Fallback — use local service data
       const serviceObj = services.find((s) => s.id === parseInt(selectedService));
       if (serviceObj) {
-        console.warn('API failed, proceeding with fallback navigation');
         const routeName = serviceObj.service_name
           .toLowerCase()
-          .replace(/\s+/g, "-")
-          .replace(/[()]/g, "");
-        navigate(`/documents/${routeName}`);
+          .replace(/\s+/g, '-')
+          .replace(/[()]/g, '');
+        const queryParams = new URLSearchParams({ serviceId: selectedService }).toString();
+        const redirectPath = `/documents/${routeName}?${queryParams}`;
+
+        console.warn("API failed, proceeding with fallback navigation");
+        navigate(redirectPath, { state: { serviceData: serviceObj } });
       } else {
         alert('Unable to proceed. Please try again.');
       }
@@ -757,7 +772,7 @@ export default function StartUp() {
                     : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                     }`}
                 >
-               
+
                   <span className="text-sm sm:text-lg leading-tight">Overview</span>
                 </a>
               </li>
@@ -774,7 +789,7 @@ export default function StartUp() {
                         : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                         }`}
                     >
-                      
+
                       <span className="text-lg leading-tight">{service.service_name || service.name}</span>
                     </a>
                   </li>
@@ -793,7 +808,7 @@ export default function StartUp() {
                     : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                     }`}
                 >
-                
+
                   <span className="text-sm sm:text-lg leading-tight">Frequently Asked Questions</span>
                 </a>
               </li>

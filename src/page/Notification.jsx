@@ -242,7 +242,7 @@
 //   );
 // }
 import React from "react";
-import { FaBell, FaCalendarAlt, FaExclamationTriangle, FaInfoCircle } from "react-icons/fa";
+import { FaBell, FaCalendarAlt } from "react-icons/fa";
 
 export default function NotificationUpdates() {
   // Updates with categories
@@ -251,130 +251,112 @@ export default function NotificationUpdates() {
       id: 1,
       text: "Opted for GST composition scheme? File GSTR-4 on or before 30.04.25 to be compliant!",
       category: "GST",
-      timestamp: "2 hours ago"
+      timestamp: "2 hours ago",
     },
     {
       id: 2,
       text: "GSTR-3B Due Date is Approaching! File returns on or before 20.04.2025 & be compliant.",
       category: "GST",
-      timestamp: "5 hours ago"
+      timestamp: "5 hours ago",
     },
     {
       id: 3,
       text: "Attention GST Composition Taxpayers! Form CMP-08 for Q4 is due on 18.04.2025 - Act now!",
       category: "GST",
-      timestamp: "1 day ago"
+      timestamp: "1 day ago",
     },
     {
       id: 4,
       text: "From April 2025, all GST taxpayers must report HSN codes in Table 12 of GSTR-1/1A!",
       category: "GST",
-      timestamp: "2 days ago"
+      timestamp: "2 days ago",
     },
     {
       id: 5,
       text: "MCA imposes ₹7 lakh penalty on company for failing to maintain its registered office!",
       category: "MCA",
-      timestamp: "3 days ago"
+      timestamp: "3 days ago",
     },
     {
       id: 6,
       text: "National Savings Scheme account holders can now withdraw funds without TDS!",
       category: "Income Tax",
-      timestamp: "4 days ago"
+      timestamp: "4 days ago",
     },
     {
       id: 7,
       text: "MCA issues show cause notice to companies for cost audit non-compliance - Act now!",
       category: "MCA",
-      timestamp: "5 days ago"
+      timestamp: "5 days ago",
     },
   ];
 
-  // Due Dates with priority
+  // ✅ Fixed Due Dates Array
   const dueDates = [
-    {
     {
       id: 1,
       text: "TDS Payment for March 2025",
-      text: "TDS Payment for March 2025",
       date: "30-Apr-2025",
-      category: "TDS"
+      category: "TDS",
     },
-    {
     {
       id: 2,
       text: "Professional Tax (PT) on Salaries for April 2025",
-      text: "Professional Tax (PT) on Salaries for April 2025",
       date: "10-May-2025",
-      category: "PT"
+      category: "PT",
     },
-    {
     {
       id: 3,
       text: "GSTR 1 (Monthly) for April 2025",
-      text: "GSTR 1 (Monthly) for April 2025",
       date: "11-May-2025",
-      category: "GST"
+      category: "GST",
     },
-    {
     {
       id: 4,
       text: "GSTR 1 IFF (Optional) (Apr 2025) for QRMP",
-      text: "GSTR 1 IFF (Optional) (Apr 2025) for QRMP",
       date: "13-May-2025",
-      category: "GST"
+      category: "GST",
     },
-    {
     {
       id: 5,
       text: "Provident Fund (PF) & ESI Returns and Payment for April 2025",
-      text: "Provident Fund (PF) & ESI Returns and Payment for April 2025",
       date: "15-May-2025",
-      category: "PF/ESI"
+      category: "PF/ESI",
     },
-    {
     {
       id: 6,
       text: "GSTR 3B for April 2025 (Monthly)",
-      text: "GSTR 3B for April 2025 (Monthly)",
       date: "20-May-2025",
-      category: "GST"
+      category: "GST",
     },
-    {
     {
       id: 7,
       text: "TDS Return in Form 24Q, 26Q, and 27Q for Jan-Mar 2025",
-      text: "TDS Return in Form 24Q, 26Q, and 27Q for Jan-Mar 2025",
       date: "31-May-2025",
-      category: "TDS"
+      category: "TDS",
     },
-    {
     {
       id: 8,
-      text: "Advance tax Payment for April to June 2025 (1st Installment)",
-      text: "Advance tax Payment for April to June 2025 (1st Installment)",
+      text: "Advance Tax Payment for April to June 2025 (1st Installment)",
       date: "15-Jun-2025",
-      category: "Income Tax"
+      category: "Income Tax",
     },
-    {
     {
       id: 9,
       text: "Provident Fund (PF) & ESI Returns and Payment for May 2025",
-      text: "Provident Fund (PF) & ESI Returns and Payment for May 2025",
       date: "15-Jun-2025",
-      category: "PF/ESI"
+      category: "PF/ESI",
     },
   ];
 
   const getCategoryColor = (category) => {
     const colors = {
-      "GST": "bg-purple-100 text-purple-800 border-purple-200",
-      "MCA": "bg-blue-100 text-blue-800 border-blue-200",
-      "TDS": "bg-green-100 text-green-800 border-green-200",
+      GST: "bg-purple-100 text-purple-800 border-purple-200",
+      MCA: "bg-blue-100 text-blue-800 border-blue-200",
+      TDS: "bg-green-100 text-green-800 border-green-200",
       "Income Tax": "bg-red-100 text-red-800 border-red-200",
-      "PT": "bg-yellow-100 text-yellow-800 border-yellow-200",
-      "PF/ESI": "bg-indigo-100 text-indigo-800 border-indigo-200"
+      PT: "bg-yellow-100 text-yellow-800 border-yellow-200",
+      "PF/ESI": "bg-indigo-100 text-indigo-800 border-indigo-200",
     };
     return colors[category] || "bg-gray-100 text-gray-800 border-gray-200";
   };
@@ -396,9 +378,8 @@ export default function NotificationUpdates() {
           </p>
         </div>
 
-        {/* Content - Responsive Columns */}
+        {/* Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 w-full">
-
           {/* Left Column - Updates */}
           <div className="rounded-xl sm:rounded-2xl shadow-lg overflow-hidden border border-gray-200">
             <div className="p-4 sm:p-6">
@@ -482,10 +463,11 @@ export default function NotificationUpdates() {
         {/* Footer Note */}
         <div className="text-center mt-6 sm:mt-8">
           <p className="text-gray-500 text-xs sm:text-sm">
-            Last updated: {new Date().toLocaleDateString('en-IN', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric'
+            Last updated:{" "}
+            {new Date().toLocaleDateString("en-IN", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
             })}
           </p>
         </div>

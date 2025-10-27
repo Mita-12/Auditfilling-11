@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import QuickForm from "../../form/QuickForm";
 import WhatsAppButton from "../../form/WhatsAppPopup";
@@ -147,206 +147,94 @@ export default function IncomeTax({ menuId }) {
   };
 
   // Handle proceed to payment
-const handleProceed = async () => {
-  var service_id = document.getElementById('service').value;
-  console.log(service_id);
-  
-  if (!selectedService) return;
+  const handleProceed = async () => {
+    const service_id = document.getElementById('service').value;
+    console.log("Selected service ID:", service_id);
 
-  // Check if user is logged in
-  const user = JSON.parse(localStorage.getItem('user'));
+    if (!service_id) return;
 
-  if (!user || !user.id) {
-    const serviceObj = services.find((s) => s.id === parseInt(selectedService));
-    navigate('/', { 
-      state: { 
-        redirectTo: '/documents',
-        selectedService: selectedService,
-        serviceData: serviceObj,
-        message: 'Please login to access documents'
-      } 
-    });
-    return;
-  }
+    const user = JSON.parse(localStorage.getItem('user'));
 
-  // User is logged in, proceed with API call
-  try {
-    const serviceId = parseInt(selectedService);
-    // console.log(serviceId);
-    
-    const serviceObj = services.find((s) => s.id === serviceId);
-
-    if (!serviceObj) {
-      console.error('Service not found in local data');
+    // If user not logged in, redirect to home/login
+    if (!user || !user.id) {
+      const serviceObj = services.find((s) => s.id === parseInt(service_id));
+      navigate('/', {
+        state: {
+          redirectTo: '/documents',
+          selectedService: service_id,
+          serviceData: serviceObj,
+          message: 'Please login to access documents'
+        }
+      });
       return;
     }
 
-    // const currentMenuId = menuData?.id;
-    // if (!currentMenuId) {
-    //   throw new Error('No menu ID available');
-    // }
+    try {
+      const serviceId = parseInt(service_id);
+      const response = await fetch(`https://auditfiling.com/api/v1/service/${serviceId}`, {
+        headers: {
+          'Authorization': `Bearer ${user.token}`,
+          'User-ID': user.id
+        }
+      });
 
-    const response = await fetch(`https://auditfiling.com/api/v1/service/${serviceId}`, {
-      headers: {
-        'Authorization': `Bearer ${user.token}`,
-        'User-ID': user.id
-      }
-    });
+      if (!response.ok) throw new Error(`API error: ${response.status}`);
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
+      const serviceData = await response.json();
+      console.log('API Response:', serviceData);
 
-    const menuDataResponse = await response.json();
-    console.log('API Response:', menuDataResponse);
+      // Find the exact service
+      const selectedServiceData = serviceData.services?.find(s => s.id === serviceId);
+      if (!selectedServiceData) throw new Error('Service not found in API response');
 
-    const selectedServiceData = menuDataResponse.services?.find(service => 
-      service.id === serviceId
-    );
-
-    if (selectedServiceData) {
+      // Get route name and redirect directly
       const routeName = selectedServiceData.service_content;
-      const serviceType = selectedServiceData.type?.toLowerCase();
-
-      console.log(`Service type: ${serviceType}`);
-      console.log(`User ${user.id} processing service: ${routeName}`);
-
-      // Handle different service types
-      let redirectPath = '';
-      let navigateState = { 
-        serviceData: selectedServiceData,
-        serviceType: serviceType
-      };
-
-      // Create query parameter with service ID
-      const queryParams = new URLSearchParams({
-        serviceId: selectedService
-      }).toString();
-
-      switch(serviceType) {
-        case 'individual':
-          // Show documents and price for individual
-          redirectPath = `/documents/${routeName}?${queryParams}`;
-          navigateState.serviceType = 'individual';
-          break;
-
-        case 'business':
-          // Check if user has companies
-          const userCompanies = await checkUserCompanies(user.id);
-          if (userCompanies && userCompanies.length > 0) {
-            // Show company list to select from
-            redirectPath = `/service/${routeName}/select-company?${queryParams}`;
-            navigateState.companies = userCompanies;
-          } else {
-            // Redirect to add company
-            redirectPath = `/company/add?${queryParams}`;
-            navigateState.message = 'Please add a company to proceed with this service';
-          }
-          break;
-
-        case 'both':
-          // Show type selection (individual vs business)
-          redirectPath = `/service/${routeName}/select-type?${queryParams}`;
-          break;
-
-        default:
-          // Default to individual behavior
-          redirectPath = `/documents/${routeName}?${queryParams}`;
-      }
+      const queryParams = new URLSearchParams({ serviceId }).toString();
+      const redirectPath = `/documents/${routeName}?${queryParams}`;
 
       console.log(`Navigating to: ${redirectPath}`);
-      navigate(redirectPath, { state: navigateState });
+      navigate(redirectPath, { state: { serviceData: selectedServiceData } });
 
-    } else {
-      throw new Error('Service not found in API response');
-    }
-
-  } catch (error) {
-    console.error('Error in handleProceed:', error);
-
-    // Fallback: proceed without API using local service data
-    const serviceObj = services.find((s) => s.id === parseInt(selectedService));
-    if (serviceObj) {
-      console.warn('API failed, proceeding with fallback navigation');
-
-      const serviceType = serviceObj.type?.toLowerCase() || 'individual';
-      const routeName = serviceObj.service_name
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[()]/g, "");
-
-      let redirectPath = '';
-      let navigateState = { 
-        serviceData: serviceObj,
-        serviceType: serviceType
-      };
-
-      // Create query parameter with service ID for fallback
-      const queryParams = new URLSearchParams({
-        serviceId: selectedService
-      }).toString();
-
-      switch(serviceType) {
-        case 'individual':
-          redirectPath = `/documents/${routeName}?${queryParams}`;
-          break;
-
-        case 'business':
-          redirectPath = `/company/add?${queryParams}`;
-          navigateState.message = 'Please add a company to proceed with this service';
-          break;
-
-        case 'both':
-          redirectPath = `/service/${routeName}/select-type?${queryParams}`;
-          break;
-
-        default:
-          redirectPath = `/documents/${routeName}?${queryParams}`;
-      }
-
-      navigate(redirectPath, { state: navigateState });
-    } else {
-      alert('Unable to proceed. Please try again.');
-    }
-  }
-};
-
-// Helper function to check user companies
-const checkUserCompanies = async (userId) => {
-  try {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const response = await fetch(`https://auditfiling.com/api/v1/users/${userId}/companies`, {
-      headers: {
-        'Authorization': `Bearer ${user.token}`,
-      }
-    });
-
-    if (response.ok) {
-      const companies = await response.json();
-      return companies;
-    }
-    return [];
-  } catch (error) {
-    console.error('Error checking user companies:', error);
-    return [];
-  }
-};
-  // Fetch FAQ dynamically
-useEffect(() => {
-  const fetchFaqs = async () => {
-    if (!menuData?.id) return; // Wait until menu data is available
-
-    try {
-      const res = await fetch(`https://auditfiling.com/api/v1/faq/${menuData.id}`);
-      const data = await res.json();
-      setFaqs(Array.isArray(data) ? data : data.faqs || []);
     } catch (error) {
-      console.error("Error fetching FAQs:", error);
+      console.error('Error in handleProceed:', error);
+
+      // Fallback if API fails
+      const serviceObj = services.find((s) => s.id === parseInt(service_id));
+      if (serviceObj) {
+        const routeName = serviceObj.service_name
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[()]/g, "");
+        const queryParams = new URLSearchParams({ serviceId: service_id }).toString();
+        const redirectPath = `/documents/${routeName}?${queryParams}`;
+
+        console.warn('API failed, proceeding with fallback navigation');
+        navigate(redirectPath, { state: { serviceData: serviceObj } });
+      } else {
+        alert('Unable to proceed. Please try again.');
+      }
     }
   };
 
-  fetchFaqs();
-}, [menuData?.id]); // Re-fetch when menu ID changes 
+
+  // Helper function to check user companies
+
+  // Fetch FAQ dynamically
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      if (!menuData?.id) return; // Wait until menu data is available
+
+      try {
+        const res = await fetch(`https://auditfiling.com/api/v1/faq/${menuData.id}`);
+        const data = await res.json();
+        setFaqs(Array.isArray(data) ? data : data.faqs || []);
+      } catch (error) {
+        console.error("Error fetching FAQs:", error);
+      }
+    };
+
+    fetchFaqs();
+  }, [menuData?.id]); // Re-fetch when menu ID changes 
 
 
   // Loading & error handling
@@ -385,11 +273,10 @@ useEffect(() => {
                 <a
                   href="#menu-overview"
                   onClick={() => handleSectionClick("menu-overview")}
-                  className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
-                    activeSection === "menu-overview"
-                      ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
-                      : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                  }`}
+                  className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${activeSection === "menu-overview"
+                    ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
+                    : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                    }`}
                 >
                   <span className="text-lg leading-tight">Overview</span>
                 </a>
@@ -402,11 +289,10 @@ useEffect(() => {
                     <a
                       href={`#service-${service.id || service.service_id || idx}`}
                       onClick={() => handleServiceClick(service)}
-                      className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200  ${
-                        activeSection === `service-${service.id || service.service_id || idx}`
-                          ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
-                          : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                      }`}
+                      className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200  ${activeSection === `service-${service.id || service.service_id || idx}`
+                        ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
+                        : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                        }`}
                     >
                       {/* <span className="text-sm font-medium text-gray-400 w-6 flex-shrink-0">
                         {idx + 2}.
@@ -426,13 +312,12 @@ useEffect(() => {
                 <a
                   href="#faq-section"
                   onClick={handleFaqClick}
-                  className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${
-                    activeSection === "faq-section"
-                      ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
-                      : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                  }`}
+                  className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${activeSection === "faq-section"
+                    ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
+                    : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                    }`}
                 >
-                
+
                   <span className="text-lg leading-tight">Frequently Asked Questions</span>
                 </a>
               </li>
@@ -542,11 +427,10 @@ useEffect(() => {
                 <button
                   onClick={handleProceed}
                   disabled={!selectedService}
-                  className={`w-full font-semibold py-2 rounded-lg transition duration-200 ${
-                    selectedService
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : "bg-gray-300 text-gray-600 cursor-not-allowed"
-                  }`}
+                  className={`w-full font-semibold py-2 rounded-lg transition duration-200 ${selectedService
+                    ? "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-gray-300 text-gray-600 cursor-not-allowed"
+                    }`}
                 >
                   Proceed
                 </button>
@@ -555,7 +439,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-              {/* <WhatsAppButton/> */}
+      {/* <WhatsAppButton/> */}
 
     </div>
   );
@@ -954,7 +838,7 @@ function FAQItem({ question, answer }) {
 //     };
 
 //     fetchFaqs();
-//   }, [menuData?.id]); // Re-fetch when menu ID changes 
+//   }, [menuData?.id]); // Re-fetch when menu ID changes
 
 //   // Loading & error handling
 //   if (loading) {

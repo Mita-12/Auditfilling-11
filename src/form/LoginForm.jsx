@@ -125,8 +125,8 @@ export default function LoginForm({ isOpen, onClose, onLoginSuccess }) {
 
       if (response.data?.status === "success") {
         setPassError("");
-        setPassMsg(data.message || "Login Successful");
-        handleLoginSuccess(data.user);
+        setPassMsg(response.data.message || "Login Successful");
+        handleLoginSuccess({ id: response.data.user_id, name: response.data.name, token: response.data.access_token });
       } else {
         setPassError(response.data.message || "Invalid Credentials");
       }
@@ -253,13 +253,10 @@ export default function LoginForm({ isOpen, onClose, onLoginSuccess }) {
               className={`px-6 py-2 rounded-full text-white font-semibold shadow transition 
                 ${loginOption === "password" ? !user_name || !password ? "bg-blue-400 cursor-not-allowed" : "bg-teal-500 hover:bg-teal-600"
                   : !user_name || !otp ? "bg-blue-400 cursor-not-allowed" : "bg-teal-500 hover:bg-teal-600"}`}>
-                ${loginOption === "password" ? !user_name || !password ? "bg-blue-400 cursor-not-allowed" : "bg-teal-500 hover:bg-teal-600"
-                  : !user_name || !otp ? "bg-blue-400 cursor-not-allowed" : "bg-teal-500 hover:bg-teal-600"}`}>
               Login
             </button>
           </div>
         </form>
-
 
 
       </div>
