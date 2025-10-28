@@ -473,7 +473,6 @@
 //   );
 // }
 import React, { useEffect, useState } from "react";
-import Header from "../../component/Header";
 import QuickForm from "../../form/QuickForm";
 import WhatsAppPopup from "../../form/WhatsAppPopup";
 import { useNavigate } from "react-router-dom";
@@ -620,7 +619,7 @@ export default function GstPage() {
           .replace(/\s+/g, '-')
           .replace(/[()]/g, '');
 
-        navigate(`/documents/${routeName}`, {
+        navigate(`/proceed/${routeName}`, {
           state: { serviceData: selectedServiceData }
         });
       } else {
@@ -763,14 +762,14 @@ export default function GstPage() {
     );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen ">
       {/* <Header /> */}
 
       <div className="mx-auto w-full px-4 sm:px-6 lg:px-8 mt-20 sm:mt-25 py-6 sm:py-10 flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8">
         {/* Sidebar Navigation - Hidden on mobile */}
         {!isMobile && (
-          <nav className={`flex-none ${isTablet ? 'lg:w-64' : 'xl:w-80'} sticky top-24 self-start bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 h-auto overflow-y-auto shadow-sm`}>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-serif mb-4 sm:mb-5 text-gray-800">
+          <nav className={`flex-none ${isTablet ? 'lg:w-64' : 'xl:w-80'} sticky top-24 self-start bg-white rounded-xl ml-15 sm:rounded-2xl p-4 sm:p-6 h-auto overflow-y-auto `}>
+            <h1 className="text-lg sm:text-xl lg:text-3xl font-serif mb-4 sm:mb-5 text-gray-800">
               {menuData.name || "GST"}
             </h1>
 
@@ -802,7 +801,7 @@ export default function GstPage() {
                         }`}
                     >
 
-                      <span className="text-sm sm:text-lg leading-tight">{service.service_name || service.name}</span>
+                      <span className="text-[15]  leading-tight">{service.service_name || service.name}</span>
                     </a>
                   </li>
                 ))
@@ -821,7 +820,7 @@ export default function GstPage() {
                     }`}
                 >
 
-                  <span className="text-sm sm:text-lg leading-tight">Frequently Asked Questions</span>
+                  <span className="text-[15] leading-tight">Frequently Asked Questions</span>
                 </a>
               </li>
             </ul>
@@ -829,7 +828,7 @@ export default function GstPage() {
         )}
 
         {/* Main Content */}
-        <main className={`flex-1 space-y-6 sm:space-y-8 lg:space-y-12 ${!isMobile ? 'lg:mr-4 xl:mr-8' : ''}`}>
+        <main className={`flex-1 space-y-4   ${!isMobile ? 'lg:mr-2' : ''}`}>
           {/* GST Overview */}
           <section id="menu-overview" className="bg-white rounded-xl sm:rounded-2xl shadow-sm p-4 sm:p-6 scroll-mt-24 sm:scroll-mt-37">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-center mb-4 text-gray-900">
@@ -893,23 +892,23 @@ export default function GstPage() {
 
           {/* Mobile Payment Section */}
           {isMobile && (
-            <div className="bg-white shadow-sm rounded-xl p-4 w-full border border-gray-100 mt-6">
-              <h2 className="text-xl font-semibold text-gray-800 text-center mb-3">
+            <div className="bg-white shadow-sm rounded-xl p-2 w-full border border-gray-100 mt-6">
+              <h2 className="text-xl font-semibold text-gray-800 text-center mb-2">
                 Proceed to Payment
               </h2>
-              <p className="text-gray-500 text-center text-sm mb-4">
+              <p className="text-gray-500 text-center text-sm mb-2">
                 Choose your GST service to continue with payment
               </p>
 
-              <div className="mb-4">
-                <label htmlFor="mobile-service" className="block text-gray-700 font-medium mb-2">
+              <div className="mb-2">
+                <label htmlFor="mobile-service" className="block text-gray-700 font-medium mb-1">
                   Select Service
                 </label>
                 <select
                   id="service"
                   value={selectedService}
                   onChange={(e) => setSelectedService(e.target.value)}
-                  className="w-full border border-gray-300 px-3 py-2 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                  className="w-full border border-gray-300 px-2 py-1 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                 >
                   <option value="">-- Choose a service --</option>
                   {services.map((service) => (
@@ -944,19 +943,19 @@ export default function GstPage() {
         {/* Desktop & Tablet Sidebar - QuickForm & Payment */}
         {!isMobile && (
           <div className={`flex-none ${isTablet ? 'lg:w-60' : 'xl:w-72'} space-y-4 lg:space-y-6`}>
-            <div className="sticky top-24 space-y-4 lg:space-y-6">
+            <div className="sticky top-24 mr-13 space-y-4 lg:space-y-6">
               <QuickForm />
 
               {/* Payment Sidebar */}
-              <div className="bg-white shadow-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 w-full border border-gray-100">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800 text-center mb-2 sm:mb-3">
+              <div className="bg-white shadow-sm rounded-xl sm:rounded-2xl p-1  w-full border border-gray-100">
+                <h1 className="text-lg font-serif font-semibold text-gray-800 text-center mb-1 mt-5">
                   Proceed to Payment
-                </h2>
-                <p className="text-gray-500 text-center text-xs sm:text-sm mb-3 sm:mb-4">
+                </h1>
+                <p className="text-gray-500 text-center text-xs sm:text-sm mb-1 sm:mb-2">
                   Choose your GST service to continue with payment
                 </p>
 
-                <div className="mb-4 sm:mb-6">
+                <div className="mb-1 sm:mb-2">
                   <label htmlFor="desktop-service" className="block text-gray-700 font-medium mb-1 sm:mb-2 text-sm sm:text-base">
                     Select Service
                   </label>
@@ -964,7 +963,7 @@ export default function GstPage() {
                     id="desktop-service"
                     value={selectedService}
                     onChange={(e) => setSelectedService(e.target.value)}
-                    className="w-full border border-gray-300 px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm sm:text-base"
+                    className="w-full border border-gray-300 px-2  py-1  rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm sm:text-base"
                   >
                     <option value="">-- Choose a service --</option>
                     {services.map((service) => (
@@ -978,7 +977,7 @@ export default function GstPage() {
                 <button
                   onClick={handleProceed}
                   disabled={!selectedService}
-                  className={`w-full font-semibold py-2 sm:py-3 rounded-lg transition duration-200 text-sm sm:text-base ${selectedService
+                  className={`w-full font-semibold py-1 sm:py-2 rounded-lg mb-1 px-2 transition duration-200 text-sm sm:text-base ${selectedService
                     ? "bg-blue-600 text-white hover:bg-blue-700"
                     : "bg-gray-300 text-gray-600 cursor-not-allowed"
                     }`}

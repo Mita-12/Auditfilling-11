@@ -22,8 +22,6 @@ import TermsAndConditions from "./page/TermCondition.jsx";
 import ResellerRegistrationForm from "./reseller/Reseller.jsx";
 
 import ServiceProviderForm from "./page/ServiceProvider/ServiceProvider.jsx";
-// import ProceedToPay from "./page/Services/document/ProceedToPay.jsx";
-import DocumentPay from "./page/Services/document/DocumentPay.jsx";
 import LoginForm from "./form/LoginForm.jsx";
 import UserProfile from "./UserProfile/UserProfile.jsx";
 import CompanyDetail from "./UserProfile/CompanyDatail.jsx";
@@ -35,7 +33,11 @@ import Feedback from "./UserProfile/Feedback.jsx";
 import BlogDetailPage from "./page/Blog/BlogDetails.jsx";
 import BlogPage from "./page/Blog/Blog.jsx";
 import PreviewInvoice from "./UserProfile/Invoice.jsx";
-import Checkout from "./page/Services/document/Checkout.jsx";
+import ProceedToPayment from "./page/Services/document/ProceedToPayment.jsx";
+import PaymentSuccess from "./page/Services/document/PaymentSuccess.jsx";
+
+import DocumentUpload from "./page/Services/document/DocumentUpload.jsx";
+import ProceedTo from "./page/Services/document/ProceedTo.jsx";
 
 
 function App() {
@@ -61,7 +63,6 @@ function App() {
           <Route path="/reseller" element={<ResellerRegistrationForm />} />
           <Route path="/service-provider" element={<ServiceProviderForm />} />
           {/* <Route path="/proceed-to-pay" element={<ProceedToPay />} /> */}
-          <Route path="/service/:service" element={<DocumentPay />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/company-details" element={<CompanyDetail />} />
@@ -72,13 +73,19 @@ function App() {
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/blog-detail" element={<BlogDetailPage />} />
           <Route path="/invoice" element={<  PreviewInvoice />} />
-          <Route path="/documents/:service" element={<  DocumentPay />} />
+          <Route path="/proceed/:service" element={<  ProceedTo />} />
           {/* <Route path="/proceed-to-pay/:category" element={<ProceedToPay />} /> */}
 
           <Route
-            path="/service/:serviceName/checkout"
-            element={<Checkout />}
+            path="/document"
+            element={<DocumentUpload />}
           />
+          <Route
+            path="/service/:serviceName/proceed-to-payment"
+            element={<ProceedToPayment />}
+
+          />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
 
 
 

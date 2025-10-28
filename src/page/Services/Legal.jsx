@@ -748,7 +748,7 @@ export default function Legal() {
           .replace(/\s+/g, '-')
           .replace(/[()]/g, '');
 
-        navigate(`/documents/${routeName}`, {
+        navigate(`/proceed/${routeName}`, {
           state: { serviceData: selectedServiceData }
         });
       } else {

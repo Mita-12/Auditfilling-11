@@ -138,11 +138,11 @@ export default function QuickForm() {
   return (
     <aside className="w-full max-w-sm bg-white rounded-xl shadow-sm p-2 h-auto lg:sticky top-28 flex flex-col justify-between space-y-4 mx-auto">
       <div>
-        <h3 className="text-xl font-serif font-bold mb-2 text-center text-gray-800">
+        <h3 className="text-xl font-serif font-bold mb-1 text-center text-gray-800">
           Get <span className="font-bold text-blue-500">Free</span> Consultation
         </h3>
 
-        <form className="space-y-3" onSubmit={handleSubmit}>
+        <form className="space-y-2" onSubmit={handleSubmit}>
           <input
             type="text"
             name="name"

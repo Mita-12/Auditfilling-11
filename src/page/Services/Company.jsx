@@ -694,7 +694,7 @@ export default function Company() {
           .replace(/\s+/g, '-')
           .replace(/[()]/g, '');
 
-        navigate(`/documents/${routeName}`, {
+        navigate(`/proceed/${routeName}`, {
           state: { serviceData: selectedServiceData }
         });
       } else {
@@ -757,12 +757,12 @@ export default function Company() {
 
   // 5️⃣ Render UI
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen ">
       <div className="mx-auto w-full px-2 sm:px-4 lg:px-6 mt-20 sm:mt-25 py-6 sm:py-10 flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8">
         {/* Sidebar Navigation - Hidden on mobile */}
         {!isMobile && (
-          <nav className={`flex-none ${isTablet ? 'lg:w-64' : 'xl:w-80'} sticky top-24 self-start bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 h-auto overflow-y-auto shadow-sm`}>
-            <h1 className="text-lg sm:text-xl lg:text-2xl font-serif text-left mb-4 sm:mb-5 text-gray-800">
+          <nav className={`flex-none ${isTablet ? 'lg:w-64' : 'xl:w-80'} sticky top-24 self-start bg-white ml-20 p-4 sm:p-6 h-auto overflow-y-auto `}>
+            <h1 className="text-xl  font-serif text-left mb-4 sm:mb-5 text-gray-800">
               {menuData.name || menuData.menu_name || "Company"}
             </h1>
 
@@ -937,20 +937,20 @@ export default function Company() {
 
         {/* Desktop & Tablet Sidebar - QuickForm & Payment */}
         {!isMobile && (
-          <div className={`flex-none ${isTablet ? 'lg:w-60' : 'xl:w-72'} space-y-4 lg:space-y-6`}>
-            <div className="sticky top-24 space-y-4 lg:space-y-6">
+          <div className={`flex-none ${isTablet ? 'lg:w-60' : 'xl:w-72'} space-y-4 `}>
+            <div className="sticky top-24 space-y-4 mr-10">
               <QuickForm />
 
               {/* Payment Section */}
-              <div className="bg-white shadow-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 w-full border border-gray-100">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800 text-center mb-2 sm:mb-3">
+              <div className="bg-white shadow-sm rounded-xl sm:rounded-2xl p-3  w-full border border-gray-100">
+                <h1 className="text-xl font-semibold text-gray-800 text-center mb-2 sm:mb-2">
                   Proceed to Payment
-                </h2>
-                <p className="text-gray-500 text-center text-xs sm:text-sm mb-3 sm:mb-4">
+                </h1>
+                <p className="text-gray-500 text-center text-xs sm:text-sm mb-3 ">
                   Choose your Company service to continue with payment
                 </p>
 
-                <div className="mb-4 sm:mb-6">
+                <div className="mb-4">
                   <label htmlFor="desktop-service" className="block text-gray-700 font-medium mb-1 sm:mb-2 text-sm sm:text-base">
                     Select Service
                   </label>
@@ -958,7 +958,7 @@ export default function Company() {
                     id="desktop-service"
                     value={selectedService}
                     onChange={(e) => setSelectedService(e.target.value)}
-                    className="w-full border border-gray-300 px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm sm:text-base"
+                    className="w-full border border-gray-300 px-2  py-1  rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm sm:text-base"
                   >
                     <option value="">-- Choose a service --</option>
                     {services.map((service) => (
@@ -975,7 +975,7 @@ export default function Company() {
                 <button
                   onClick={handleProceed}
                   disabled={!selectedService}
-                  className={`w-full font-semibold py-2 sm:py-3 rounded-lg transition duration-200 text-sm sm:text-base ${selectedService
+                  className={`w-full font-semibold py-2 rounded-lg transition duration-200 text-sm sm:text-base ${selectedService
                     ? "bg-blue-600 text-white hover:bg-blue-700"
                     : "bg-gray-300 text-gray-600 cursor-not-allowed"
                     }`}

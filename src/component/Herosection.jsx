@@ -10,13 +10,13 @@ export default function Herosection() {
       {/* Hero Section */}
       <section className="w-full min-h-[70vh] flex flex-col items-center justify-center bg-white text-[#222222] text-center px-6 md:px-12">
         {/* Hero Heading */}
-        <h1 className="text-5xl font-bold font-serif  mt-15 pt-15 leading-tight">
+        <h1 className="text-5xl font-bold font-serif  mt-10 pt-20 leading-tight">
           Trusted Legal Services 
 
 
           
           <br />
-          for Your <span className="text-black  pt-5">Business & Compliance</span>
+          for Your <span className="text-black ">Business & Compliance</span>
         </h1>
 
         {/* Subheading */}
@@ -47,7 +47,7 @@ export default function Herosection() {
         </div>
 
         {/* Trust Badge */}
-        <div className="mt-12 inline-flex items-center gap-2 bg-white/90 backdrop-blur-md rounded-lg px-6 py-3 shadow-lg border">
+        <div className="mt-10 inline-flex items-center gap-2 bg-white/90 backdrop-blur-md rounded-lg px-6 py-3 shadow-lg border">
           <span className="text-lg">✅</span>
           <p className="text-sm md:text-base text-gray-800 font-medium">
             Trusted by <span className="text-blue-600 font-semibold">500+ Businesses</span> | ⚖️ Expert Legal Professionals
