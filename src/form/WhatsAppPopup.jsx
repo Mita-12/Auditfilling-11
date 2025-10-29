@@ -76,7 +76,9 @@ export default function WhatsAppButton() {
     >
       <FaWhatsapp className="text-2xl animate-pulse" />
       {/* <span className="whitespace-nowrap">Live Chat with Experts</span> */}
-            <span className="whitespace-nowrap">We're here to Help </span>
+            {/* <span className="whitespace-nowrap">We're here to Help </span> */}
+                        <span className="whitespace-nowrap">Let's Chat </span>
+
 
     </a>
   );

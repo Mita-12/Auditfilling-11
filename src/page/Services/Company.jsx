@@ -777,7 +777,7 @@ export default function Company() {
                     : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                     }`}
                 >
-                  <span className="text-sm sm:text-lg leading-tight">Overview</span>
+                  <span className="text-lg leading-tight">Overview</span>
                 </a>
               </li>
 

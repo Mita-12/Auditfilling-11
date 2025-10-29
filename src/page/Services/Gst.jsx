@@ -977,7 +977,7 @@ export default function GstPage() {
                 <button
                   onClick={handleProceed}
                   disabled={!selectedService}
-                  className={`w-full font-semibold py-1 sm:py-2 rounded-lg mb-1 px-2 transition duration-200 text-sm sm:text-base ${selectedService
+                  className={`w-full font-semibold py-1  rounded-lg mb-1 px-2 transition duration-200 text-sm sm:text-base ${selectedService
                     ? "bg-blue-600 text-white hover:bg-blue-700"
                     : "bg-gray-300 text-gray-600 cursor-not-allowed"
                     }`}

@@ -99,6 +99,8 @@ export default function CompanyDetail() {
           `https://auditfiling.com/public/api/v1/user/all_companies/${identifier}`
         );
 
+        console.log(response .data);
+        
         let companiesData = [];
         if (Array.isArray(response.data)) {
           companiesData = response.data;

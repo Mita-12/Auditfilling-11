@@ -213,14 +213,16 @@ const ProceedToPayment = () => {
         }
 
         // Initiate payment
-        const response = await axios.post(`http://192.168.1.19:8000/api/v1/services/payment/initiate`, {
+        const response = await axios.post(`https://auditfiling.com/api/v1/services/payment/initiate`, {
           user_id: String(user.id),
           service_id: String(serviceData.id),
           coupon_code: null,
           amount: String(pricing.amount || payableAmount),
           total_amount: String(payableAmount),
           percent: String(partialPercent || "100"),
-          company_id: company?.id ? String(company.id) : null,
+          // company_id: company?.id ? String(company.id) : null,
+
+          company_id:company?.id ,
           payment_type: paymentType,
         });
 
@@ -234,8 +236,8 @@ const ProceedToPayment = () => {
 
         // Open Razorpay directly
         const options = {
-          key: order.razorpay_key || "rzp_test_xxxxxx",
-          amount: parseFloat(order.amount) * 100,
+          key: "rzp_test_uU1Hri1yyZQCZS",
+          amount: order.amount ,
           currency: order.currency || "INR",
           name: "AuditFiling",
           description: order.service_name || "Service Payment",
@@ -273,7 +275,8 @@ const ProceedToPayment = () => {
   // ✅ Verify Payment
   const verifyPayment = async (response, order) => {
     try {
-      const verifyRes = await axios.post(`http://192.168.1.19:8000/api/v1/services/payment/verify`, {
+      const verifyRes = await axios.post(`https://auditfiling.com/api/v1/services/payment/verify`, {
+        
         razorpay_order_id: order.order_id,
         razorpay_payment_id: response.razorpay_payment_id,
         razorpay_signature: response.razorpay_signature,

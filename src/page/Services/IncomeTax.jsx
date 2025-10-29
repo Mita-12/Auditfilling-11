@@ -399,9 +399,9 @@ export default function IncomeTax({ menuId }) {
 
               {/* Payment Section */}
               <div className="bg-white shadow-sm rounded-2xl p-1 w-full border border-gray-100">
-                <h2 className="text-2xl font-semibold text-gray-800 text-center mb-1">
+                <h1 className="text-lg font-semibold text-gray-800 text-center mb-1">
                   Proceed to Payment
-                </h2>
+                </h1>
                 <p className="text-gray-500 text-center text-sm mb-4">
                   Choose your Income Tax service to continue with payment
                 </p>
@@ -439,7 +439,7 @@ export default function IncomeTax({ menuId }) {
           </div>
         </div>
       </div>
-      {/* <WhatsAppButton/> */}
+      <WhatsAppButton/>
 
     </div>
   );

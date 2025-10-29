@@ -45,14 +45,13 @@ import WhyChooseUs from "./WhyChooseUs";
 function Home() {
   return (
     <>
-
+<WhatsAppPopup />
       <Herosection />
       <ServicesSection />
       <Auditfile />
       <NotificationUpdates />
       <WhyChooseUs />
       <Testimonials />
-      <WhatsAppPopup />
     </>
   );
 }

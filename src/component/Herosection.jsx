@@ -10,7 +10,7 @@ export default function Herosection() {
       {/* Hero Section */}
       <section className="w-full min-h-[70vh] flex flex-col items-center justify-center bg-white text-[#222222] text-center px-6 md:px-12">
         {/* Hero Heading */}
-        <h1 className="text-5xl font-bold font-serif  mt-10 pt-20 leading-tight">
+        <h1 className="text-5xl font-bold font-serif  mt-25 pt-20 leading-tight">
           Trusted Legal Services 
 
 
@@ -97,7 +97,7 @@ export default function Herosection() {
               </p>
             </div>
             <motion.a
-              href="/contact"
+              href="/about"
               className="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 shadow-md transition-colors mt-6"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

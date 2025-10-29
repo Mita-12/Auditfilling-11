@@ -72,7 +72,7 @@ function Header() {
         <div className="container flex justify-center items-center px-10 py-4">
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center gap-8 text-lg z-50">
+          <nav className="hidden md:flex items-center gap-8 ml-15 text-lg z-50">
             {menus.map((menu) => {
               return (
                 <div key={menu.id} className="relative">

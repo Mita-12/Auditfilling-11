@@ -136,34 +136,44 @@ export default function CompletedService() {
   const startIndex = (currentPage - 1) * entriesPerPage;
   const paginatedData = filteredData.slice(startIndex, startIndex + entriesPerPage);
 
-  const handleDownload = async (item) => {
-    if (!item.fileUrl) {
-      alert("No file available for download");
-      return;
+const handleDownload = async (item) => {
+  if (!item.fileUrl) {
+    alert("No file available for download");
+    return;
+  }
+
+  try {
+    console.log("Downloading file:", item.fileUrl);
+
+    const token = localStorage.getItem("token") || localStorage.getItem("user_name");
+
+    const response = await fetch(item.fileUrl, {
+      headers: token ? { "Authorization": `Bearer ${token}` } : {}
+    });
+
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      const text = await response.text();
+      console.error("Download failed response:", text);
+      throw new Error(`Download failed (${response.status})`);
     }
 
-    try {
-      const token = localStorage.getItem("token") || localStorage.getItem("user_name");
-      const response = await fetch(item.fileUrl, {
-        headers: { "Authorization": `Bearer ${token}` }
-      });
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = item.fileName || `${item.requestId}_document.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Error downloading file:", error);
+    alert(`Failed to download file: ${error.message}`);
+  }
+};
 
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = item.fileName || `${item.requestId}_document.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading file:", error);
-      alert("Failed to download file. Please try again.");
-    }
-  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);

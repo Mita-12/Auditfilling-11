@@ -811,11 +811,11 @@ export default function Legal() {
 
   // 5️⃣ Render UI
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen ">
       <div className="mx-auto w-full px-4 sm:px-6 lg:px-8 mt-20 sm:mt-25 py-6 sm:py-10 flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8">
         {/* Sidebar Navigation - Hidden on mobile */}
         {!isMobile && (
-          <nav className={`flex-none ${isTablet ? 'lg:w-64' : 'xl:w-80'} sticky top-24 self-start bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 h-auto overflow-y-auto shadow-sm scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-gray-100 scrollbar-thumb-rounded-full scrollbar-track-rounded-full hover:scrollbar-thumb-blue-400 transition-colors`}>
+          <nav className={`flex-none ${isTablet ? 'lg:w-64' : 'xl:w-80'} sticky top-24 ml-18 self-start bg-white  p-4 sm:p-6 h-auto overflow-y-auto  scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-gray-100 scrollbar-thumb-rounded-full scrollbar-track-rounded-full hover:scrollbar-thumb-blue-400 transition-colors`}>
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-serif mb-4 sm:mb-5 text-gray-800">
               {menuData.name || menuData.menu_name || "Legal"}
             </h1>
@@ -842,7 +842,7 @@ export default function Legal() {
                     <a
                       href={`#service-${service.id || idx}`}
                       onClick={() => handleClick(service)}
-                      className={`flex items-start py-2 px-3 rounded-lg transition-all duration-200 ${activeSection === `service-${service.id || idx}`
+                      className={`flex items-start py-1 px-2 rounded-lg transition-all duration-200 ${activeSection === `service-${service.id || idx}`
                         ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600 font-medium"
                         : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                         }`}
@@ -987,18 +987,18 @@ export default function Legal() {
 
         {/* Desktop & Tablet QuickForm and Payment */}
         {!isMobile && (
-          <div className={`flex-none ${isTablet ? 'lg:w-60' : 'xl:w-72'} space-y-4 lg:space-y-6`}>
-            <div className="sticky top-24 space-y-4 lg:space-y-6">
+          <div className={`flex-none ${isTablet ? 'lg:w-60' : 'xl:w-72'} space-y-4 `}>
+            <div className="sticky top-24 space-y-4 mr-15">
               <QuickForm />
               <div className="bg-white shadow-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 w-full border border-gray-100">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800 text-center mb-2 sm:mb-3">
+                <h1 className="text-lg font-semibold text-gray-800 text-center mb-2 ">
                   Proceed to Payment
-                </h2>
-                <p className="text-gray-500 text-center text-xs sm:text-sm mb-3 sm:mb-4">
+                </h1>
+                <p className="text-gray-500 text-center text-base mb-1 ">
                   Choose your Legal service to continue with payment
                 </p>
 
-                <div className="mb-4 sm:mb-6">
+                <div className="mb-2">
                   <label htmlFor="service-desktop" className="block text-gray-700 font-medium mb-1 sm:mb-2 text-sm sm:text-base">
                     Select Service
                   </label>
@@ -1023,7 +1023,7 @@ export default function Legal() {
                 <button
                   onClick={handleProceed}
                   disabled={!selectedService}
-                  className={`w-full font-semibold py-2 sm:py-3 rounded-lg transition duration-200 text-sm sm:text-base ${selectedService
+                  className={`w-full font-semibold py-1 sm:py-2 rounded-lg transition duration-200 text-sm sm:text-base ${selectedService
                     ? "bg-blue-600 text-white hover:bg-blue-700"
                     : "bg-gray-300 text-gray-600 cursor-not-allowed"
                     }`}
